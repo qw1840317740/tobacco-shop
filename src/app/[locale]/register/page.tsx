@@ -25,8 +25,22 @@ export default function RegisterPage() {
       toast.error("すべての項目を入力してください");
       return;
     }
+    // Email format check
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      toast.error("正しいメールアドレスを入力してください");
+      return;
+    }
+    if (name.trim().length < 2) {
+      toast.error("氏名は2文字以上入力してください");
+      return;
+    }
     if (password.length < 6) {
       toast.error("パスワードは6文字以上必要です");
+      return;
+    }
+    if (!/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) {
+      toast.error("パスワードは英字と数字をそれぞれ含めてください");
       return;
     }
     if (password !== confirmPassword) {

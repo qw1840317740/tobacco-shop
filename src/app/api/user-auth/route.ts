@@ -14,6 +14,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Basic email format check
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { success: false, error: "正しいメールアドレスを入力してください" },
+        { status: 400 }
+      );
+    }
+
     const user = await authenticateUser(email, password);
     if (!user) {
       return NextResponse.json(

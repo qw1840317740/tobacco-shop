@@ -14,9 +14,33 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Email format validation
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { success: false, error: "正しいメールアドレスを入力してください" },
+        { status: 400 }
+      );
+    }
+
+    // Name validation (at least 2 chars, no pure numbers)
+    if (name.trim().length < 2) {
+      return NextResponse.json(
+        { success: false, error: "氏名は2文字以上入力してください" },
+        { status: 400 }
+      );
+    }
+
+    // Password validation (at least 6 chars, must contain letter + number)
     if (password.length < 6) {
       return NextResponse.json(
         { success: false, error: "パスワードは6文字以上必要です" },
+        { status: 400 }
+      );
+    }
+    if (!/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) {
+      return NextResponse.json(
+        { success: false, error: "パスワードは英字と数字をそれぞれ含めてください" },
         { status: 400 }
       );
     }
