@@ -1,0 +1,114 @@
+"use client";
+
+import { useCartStore } from "@/stores/cart-store";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
+import { toast } from "sonner";
+import { formatPrice } from "@/lib/utils";
+
+interface Product {
+  id: string;
+  slug: string;
+  name: string;
+  price: number;
+  comparePrice?: number;
+  image: string;
+  type: string;
+  region: string;
+  inStock?: boolean;
+  strength?: number;
+  desc?: string;
+}
+
+export function ProductCard({ product, dark }: { product: Product; dark?: boolean }) {
+  const addItem = useCartStore((s) => s.addItem);
+
+  const handleAdd = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem({
+      productId: product.id,
+      slug: product.slug,
+      name: product.name,
+      price: product.price,
+      comparePrice: product.comparePrice,
+      image: product.image,
+    });
+    toast.success(`${product.name} をカートに追加しました`);
+  };
+
+  const discount = product.comparePrice
+    ? Math.round((1 - product.price / product.comparePrice) * 100)
+    : 0;
+
+  return (
+    <div className={`group relative overflow-hidden rounded-2xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-1.5 ${
+      dark
+        ? "bg-gradient-to-br from-stone-800/80 to-stone-900/80 border border-stone-700/30 backdrop-blur-sm"
+        : "bg-white/70 border border-stone-200/50 backdrop-blur-sm shadow-sm"
+    }`}>
+      <Link href={`/products/${product.slug}`}>
+        <div className={`relative aspect-square overflow-hidden ${dark ? "bg-stone-800" : "bg-stone-50"}`}>
+          <img
+            src={product.image}
+            alt={product.name}
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
+          />
+          {/* Subtle vignette overlay */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+
+          {discount > 0 && (
+            <div className="absolute left-3 top-3 rounded-lg bg-gradient-to-r from-red-500 to-red-600 px-2 py-0.5 text-[10px] font-bold text-white shadow-lg shadow-red-500/25">
+              -{discount}%
+            </div>
+          )}
+          {product.inStock === false && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-[2px]">
+              <span className="rounded-lg bg-white px-3 py-1 text-xs font-medium text-stone-700">SOLD OUT</span>
+            </div>
+          )}
+          {product.inStock !== false && (
+            <div className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-black/40 to-transparent p-3 pt-8 transition-transform duration-300 group-hover:translate-y-0">
+              <button
+                onClick={handleAdd}
+                className="w-full rounded-xl bg-primary py-2 text-xs font-semibold text-white shadow-lg transition-colors hover:bg-primary/90"
+              >
+                カートに追加
+              </button>
+            </div>
+          )}
+        </div>
+      </Link>
+      <div className="p-4">
+        <div className="flex items-center gap-1.5">
+          <Badge variant="secondary" className={`rounded-md text-[10px] font-medium ${dark ? "bg-stone-700/60 text-stone-300 border-stone-600/30" : "bg-stone-100 border-stone-200/50"}`}>{product.region}</Badge>
+          <Badge variant="secondary" className={`rounded-md text-[10px] font-medium ${dark ? "bg-stone-700/60 text-stone-300 border-stone-600/30" : "bg-stone-100 border-stone-200/50"}`}>{product.type.replace("_", " ")}</Badge>
+        </div>
+        <Link href={`/products/${product.slug}`}>
+          <h3 className={`mt-2 text-sm font-semibold leading-snug transition-colors line-clamp-1 ${
+            dark ? "text-white group-hover:text-red-400" : "text-stone-800 group-hover:text-primary"
+          }`}>
+            {product.name}
+          </h3>
+        </Link>
+        <div className="mt-2 flex items-baseline gap-2">
+          <span className="text-lg font-bold text-primary">{formatPrice(product.price)}</span>
+          {product.comparePrice && (
+            <span className={`text-sm line-through ${dark ? "text-stone-500" : "text-stone-400"}`}>{formatPrice(product.comparePrice)}</span>
+          )}
+        </div>
+        {/* Mobile add */}
+        {product.inStock !== false && (
+          <button
+            onClick={handleAdd}
+            className="mt-3 w-full rounded-xl bg-primary py-2 text-xs font-semibold text-white transition-colors hover:bg-primary/90 sm:hidden"
+          >
+            カートに追加
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,75 @@
+import { NextRequest, NextResponse } from "next/server";
+import { createUser, getUserProfile, updateUserProfile, getUserById } from "@/lib/user-store";
+import { verifyUserSession, createUserSession } from "@/lib/user-auth";
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { email, password, name } = body;
+
+    if (!email || !password || !name) {
+      return NextResponse.json(
+        { success: false, error: "すべての項目を入力してください" },
+        { status: 400 }
+      );
+    }
+
+    if (password.length < 6) {
+      return NextResponse.json(
+        { success: false, error: "パスワードは6文字以上必要です" },
+        { status: 400 }
+      );
+    }
+
+    const user = await createUser(email, password, name);
+    const { cookieString } = createUserSession(user);
+    const profile = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      phone: user.phone,
+      role: user.role,
+      ageVerified: user.ageVerified,
+      ageDocStatus: user.ageDocStatus,
+    };
+    return NextResponse.json(
+      { success: true, user: profile },
+      { headers: { "Set-Cookie": cookieString } }
+    );
+  } catch (err: any) {
+    return NextResponse.json(
+      { success: false, error: err.message || "登録に失敗しました" },
+      { status: 400 }
+    );
+  }
+}
+
+export async function GET(request: NextRequest) {
+  const session = verifyUserSession(request.headers.get("cookie"));
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  const profile = await getUserProfile(session.userId);
+  if (!profile) {
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
+  }
+  return NextResponse.json({ success: true, user: profile });
+}
+
+export async function PUT(request: NextRequest) {
+  const session = verifyUserSession(request.headers.get("cookie"));
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  try {
+    const body = await request.json();
+    const { name, phone, birthdate } = body;
+    const profile = await updateUserProfile(session.userId, { name, phone, birthdate });
+    if (!profile) {
+      return NextResponse.json({ error: "Update failed" }, { status: 500 });
+    }
+    return NextResponse.json({ success: true, user: profile });
+  } catch {
+    return NextResponse.json({ error: "Update failed" }, { status: 500 });
+  }
+}
