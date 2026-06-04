@@ -216,7 +216,6 @@ export default async function HomePage() {
             {[
               { num: "500+", label: "銘柄数" },
               { num: "1", label: "国" },
-              { num: "20+", label: "年の実績" },
               { num: "100%", label: "正規品" },
             ].map((s) => (
               <div key={s.label} className="group rounded-2xl p-4 text-center backdrop-blur-sm bg-white/5 border border-white/10 transition-all hover:bg-white/10 hover:border-white/20">
