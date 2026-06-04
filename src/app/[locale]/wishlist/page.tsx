@@ -13,7 +13,6 @@ interface Product {
   slug: string;
   name: string;
   price: number;
-  comparePrice?: number;
   image: string;
   region: string;
 }
@@ -66,7 +65,6 @@ export default function WishlistPage() {
       slug: product.slug,
       name: product.name,
       price: product.price,
-      comparePrice: product.comparePrice,
       image: product.image,
     });
     toast.success(`${product.name} をカートに追加しました`);

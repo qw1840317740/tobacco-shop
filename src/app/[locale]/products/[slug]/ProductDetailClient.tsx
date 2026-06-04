@@ -17,7 +17,6 @@ interface Product {
   slug: string;
   name: string;
   price: number;
-  comparePrice?: number;
   image: string;
   type: string;
   region: string;
@@ -47,7 +46,6 @@ export function ProductDetailClient({ product }: { product: Product }) {
         slug: product.slug,
         name: product.name,
         price: product.price,
-        comparePrice: product.comparePrice,
         image: product.image,
       });
     }
@@ -66,14 +64,10 @@ export function ProductDetailClient({ product }: { product: Product }) {
           <div className="flex items-center gap-2">
             <Badge variant="secondary">{product.region}</Badge>
             <Badge variant="secondary">{product.type}</Badge>
-            {product.comparePrice && <Badge className="bg-red-100 text-red-700">セール</Badge>}
           </div>
           <h1 className="mt-3 font-heading text-3xl font-bold text-stone-800">{product.name}</h1>
           <div className="mt-3 flex items-baseline gap-3">
             <span className="text-3xl font-bold text-primary">{formatPrice(product.price)}</span>
-            {product.comparePrice && (
-              <span className="text-xl text-stone-400 line-through">{formatPrice(product.comparePrice)}</span>
-            )}
           </div>
           <Separator className="my-6" />
           <div className="space-y-3">

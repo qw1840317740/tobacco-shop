@@ -18,7 +18,6 @@ export interface Product {
   slug: string;
   name: string;
   price: number;
-  comparePrice?: number;
   image: string;
   type: string;
   categoryId: string;
@@ -41,14 +40,13 @@ function toCategory(row: {
 
 function toProduct(row: {
   id: string; slug: string; name: string; price: { toNumber(): number };
-  comparePrice: { toNumber(): number } | null; image: string; type: string;
+  image: string; type: string;
   categoryId: string; region: string; strength: number; inStock: boolean;
   featured: boolean; desc: string;
 }): Product {
   return {
     id: row.id, slug: row.slug, name: row.name,
     price: row.price.toNumber(),
-    comparePrice: row.comparePrice?.toNumber() ?? undefined,
     image: row.image, type: row.type, categoryId: row.categoryId,
     region: row.region, strength: row.strength, inStock: row.inStock,
     featured: row.featured, desc: row.desc,

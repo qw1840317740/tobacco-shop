@@ -6,7 +6,6 @@ export interface CartItem {
   slug: string;
   name: string;
   price: number;
-  comparePrice?: number;
   image: string;
   quantity: number;
 }

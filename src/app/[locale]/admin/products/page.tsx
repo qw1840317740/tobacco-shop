@@ -10,7 +10,6 @@ interface Product {
   slug: string;
   name: string;
   price: number;
-  comparePrice?: number;
   image: string;
   type: string;
   categoryId: string;
@@ -29,7 +28,7 @@ interface Category {
 }
 
 const EMPTY_PRODUCT = {
-  slug: "", name: "", price: 0, comparePrice: undefined as number | undefined,
+  slug: "", name: "", price: 0,
   image: "", type: "CIGARETTE", categoryId: "", region: "Japan",
   strength: 3, inStock: true, featured: false, desc: "",
 };
@@ -133,7 +132,7 @@ export default function AdminProductsPage() {
 
   const openDrawer = (product: Product) => {
     setEditId(product.id);
-    setEditForm({ slug: product.slug, name: product.name, price: product.price, comparePrice: product.comparePrice, image: product.image, type: product.type, categoryId: product.categoryId, region: product.region, strength: product.strength, inStock: product.inStock, featured: product.featured, desc: product.desc });
+    setEditForm({ slug: product.slug, name: product.name, price: product.price, image: product.image, type: product.type, categoryId: product.categoryId, region: product.region, strength: product.strength, inStock: product.inStock, featured: product.featured, desc: product.desc });
     setDrawerOpen(true);
   };
 
@@ -242,9 +241,6 @@ export default function AdminProductsPage() {
                   prefix="$"
                   type="number"
                 />
-                {product.comparePrice && (
-                  <span className="text-xs text-stone-400 line-through">${product.comparePrice}</span>
-                )}
               </div>
               <p className="mt-1 text-xs text-stone-400">{product.region} · {product.type}</p>
 
@@ -393,10 +389,6 @@ function ProductForm({
         <div>
           <label className="text-xs font-medium text-stone-500">価格 (¥) *</label>
           <input type="number" step="1" value={form.price} onChange={(e) => setForm((f) => ({ ...f, price: Number(e.target.value) }))} className="mt-1 w-full rounded-lg border px-3 py-2 text-sm" />
-        </div>
-        <div>
-          <label className="text-xs font-medium text-stone-500">比較価格</label>
-          <input type="number" step="1" value={form.comparePrice ?? ""} onChange={(e) => setForm((f) => ({ ...f, comparePrice: e.target.value ? Number(e.target.value) : undefined }))} className="mt-1 w-full rounded-lg border px-3 py-2 text-sm" />
         </div>
       </div>
       <div>

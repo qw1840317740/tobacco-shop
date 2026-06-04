@@ -10,7 +10,6 @@ interface Product {
   slug: string;
   name: string;
   price: number;
-  comparePrice?: number;
   image: string;
   type: string;
   region: string;
