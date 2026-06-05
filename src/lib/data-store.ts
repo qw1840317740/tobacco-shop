@@ -16,13 +16,14 @@ export interface Category {
 export interface Product {
   id: string;
   slug: string;
+  code: string;
   name: string;
+  nameZh: string;
   price: number;
   image: string;
   type: string;
   categoryId: string;
   region: string;
-  strength: number;
   inStock: boolean;
   featured: boolean;
   desc: string;
@@ -39,16 +40,17 @@ function toCategory(row: {
 }
 
 function toProduct(row: {
-  id: string; slug: string; name: string; price: { toNumber(): number };
+  id: string; slug: string; code: string; name: string; nameZh: string;
+  price: { toNumber(): number };
   image: string; type: string;
-  categoryId: string; region: string; strength: number; inStock: boolean;
+  categoryId: string; region: string; inStock: boolean;
   featured: boolean; desc: string;
 }): Product {
   return {
-    id: row.id, slug: row.slug, name: row.name,
+    id: row.id, slug: row.slug, code: row.code ?? "", name: row.name, nameZh: row.nameZh ?? "",
     price: row.price.toNumber(),
     image: row.image, type: row.type, categoryId: row.categoryId,
-    region: row.region, strength: row.strength, inStock: row.inStock,
+    region: row.region, inStock: row.inStock,
     featured: row.featured, desc: row.desc,
   };
 }

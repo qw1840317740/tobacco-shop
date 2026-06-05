@@ -15,24 +15,15 @@ import { Breadcrumb } from "@/components/layout/Breadcrumb";
 interface Product {
   id: string;
   slug: string;
+  code?: string;
   name: string;
+  nameZh?: string;
   price: number;
   image: string;
   type: string;
   region: string;
-  strength: number;
   inStock: boolean;
   desc: string;
-}
-
-function StrengthDots({ level }: { level: number }) {
-  return (
-    <div className="flex gap-1">
-      {[1, 2, 3, 4, 5].map((i) => (
-        <div key={i} className={`h-3 w-3 rounded-full ${i <= level ? "bg-primary" : "bg-stone-200"}`} />
-      ))}
-    </div>
-  );
 }
 
 export function ProductDetailClient({ product }: { product: Product }) {
@@ -62,19 +53,21 @@ export function ProductDetailClient({ product }: { product: Product }) {
         </div>
         <div>
           <div className="flex items-center gap-2">
+            {product.code && (
+              <Badge className="bg-primary/10 text-primary font-mono">#{product.code}</Badge>
+            )}
             <Badge variant="secondary">{product.region}</Badge>
             <Badge variant="secondary">{product.type}</Badge>
           </div>
           <h1 className="mt-3 font-heading text-3xl font-bold text-stone-800">{product.name}</h1>
+          {product.nameZh && (
+            <p className="mt-1 text-base text-stone-500">{product.nameZh}</p>
+          )}
           <div className="mt-3 flex items-baseline gap-3">
             <span className="text-3xl font-bold text-primary">{formatPrice(product.price)}</span>
           </div>
           <Separator className="my-6" />
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-stone-500">濃さ / Strength</span>
-              <StrengthDots level={product.strength ?? 3} />
-            </div>
             <div className="flex items-center justify-between">
               <span className="text-sm text-stone-500">在庫状況</span>
               <span className={`text-sm font-semibold ${product.inStock !== false ? "text-green-700" : "text-red-600"}`}>
@@ -110,7 +103,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
         <TabsContent value="description" className="mt-4">
           <Card className="p-6">
             <p className="leading-relaxed text-stone-600">
-              {product.name}は{product.region}産の高品質なたばこです。豊かな風味と滑らかな吸い心地が特徴で、日本のたばこ愛好家に愛されています。
+              {product.desc || `${product.name}は${product.region}産の高品質なたばこです。豊かな風味と滑らかな吸い心地が特徴で、日本のたばこ愛好家に愛されています。`}
             </p>
           </Card>
         </TabsContent>

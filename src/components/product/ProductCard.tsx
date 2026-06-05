@@ -2,7 +2,6 @@
 
 import { useCartStore } from "@/stores/cart-store";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { formatPrice } from "@/lib/utils";
@@ -10,13 +9,13 @@ import { formatPrice } from "@/lib/utils";
 interface Product {
   id: string;
   slug: string;
+  code?: string;
   name: string;
   price: number;
   image: string;
   type: string;
   region: string;
   inStock?: boolean;
-  strength?: number;
   desc?: string;
 }
 
@@ -50,7 +49,6 @@ export function ProductCard({ product, dark }: { product: Product; dark?: boolea
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
             loading="lazy"
           />
-          {/* Subtle vignette overlay */}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
 
           {product.inStock === false && (
@@ -72,8 +70,10 @@ export function ProductCard({ product, dark }: { product: Product; dark?: boolea
       </Link>
       <div className="p-4">
         <div className="flex items-center gap-1.5">
+          {product.code && (
+            <Badge variant="secondary" className={`rounded-md text-[10px] font-mono font-medium ${dark ? "bg-stone-700/60 text-stone-300 border-stone-600/30" : "bg-primary/10 text-primary border-stone-200/50"}`}>#{product.code}</Badge>
+          )}
           <Badge variant="secondary" className={`rounded-md text-[10px] font-medium ${dark ? "bg-stone-700/60 text-stone-300 border-stone-600/30" : "bg-stone-100 border-stone-200/50"}`}>{product.region}</Badge>
-          <Badge variant="secondary" className={`rounded-md text-[10px] font-medium ${dark ? "bg-stone-700/60 text-stone-300 border-stone-600/30" : "bg-stone-100 border-stone-200/50"}`}>{product.type.replace("_", " ")}</Badge>
         </div>
         <Link href={`/products/${product.slug}`}>
           <h3 className={`mt-2 text-sm font-semibold leading-snug transition-colors line-clamp-1 ${

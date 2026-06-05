@@ -25,15 +25,15 @@ model Category {
 model Product {
   id           String   @id
   slug         String   @unique
+  code         String   @default("")
   name         String
+  nameZh       String   @default("")
   price        Decimal  @db.Decimal(10, 2)
-  comparePrice Decimal? @db.Decimal(10, 2)
   image        String   @default("")
   type         String   @default("CIGARETTE")
   categoryId   String
   category     Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   region       String   @default("Japan")
-  strength     Int      @default(3)
   inStock      Boolean  @default(true)
   featured     Boolean  @default(false)
   desc         String   @default("")
