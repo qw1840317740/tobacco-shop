@@ -26,10 +26,13 @@ const groupStyles: Record<string, { gradient: string; badge: string; accent: str
 
 export default async function BrandsPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ group?: string }>;
 }) {
   const { locale } = await params;
+  const { group: filterGroup } = await searchParams;
   setRequestLocale(locale);
   const tBrands = await getTranslations("brands");
 
@@ -65,7 +68,9 @@ export default async function BrandsPage({
         <p className="mt-2 text-stone-500">{tBrands("subtitle")}</p>
       </div>
 
-      {groupOrder.map((groupKey) => {
+      {groupOrder
+        .filter((gk) => !filterGroup || gk === filterGroup)
+        .map((groupKey) => {
         const items = groups[groupKey];
         if (!items || items.length === 0) return null;
         const style = groupStyles[groupKey] || groupStyles.jt_japan;

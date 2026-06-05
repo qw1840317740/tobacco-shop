@@ -166,7 +166,7 @@ export default async function HomePage() {
                   return (
                     <Link
                       key={gd.key}
-                      href="/categories"
+                      href={`/categories?group=${gd.key}`}
                       className={`group relative overflow-hidden rounded-3xl ${gd.bg} p-[1px] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] ${gd.shadow} ${gd.hoverShadow}`}
                       style={{ animationDelay: `${idx * 150}ms` }}
                     >
@@ -210,9 +210,9 @@ export default async function HomePage() {
             );
           })()}
 
-          {/* Popular brands — pill carousel */}
+          {/* Popular brands grid */}
           <div className="mt-10">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-5">
               <span className="text-xs font-bold tracking-wider text-stone-400 uppercase">
                 {locale === "en" ? "Popular Brands" : locale === "zh" ? "热门品牌" : "人気ブランド"}
               </span>
@@ -220,35 +220,29 @@ export default async function HomePage() {
                 {t("viewAll")} →
               </Link>
             </div>
-            <div className="relative -mx-4 px-4">
-              {/* Fade edges */}
-              <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 z-10 bg-gradient-to-r from-stone-50 to-transparent" />
-              <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 z-10 bg-gradient-to-l from-stone-50 to-transparent" />
-              <div className="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide">
-                {categories
-                  .filter((c) => c.count > 0)
-                  .sort((a, b) => b.count - a.count)
-                  .map((cat, i) => (
-                    <Link
-                      key={cat.id}
-                      href={`/categories/${cat.slug}`}
-                      className="group flex shrink-0 snap-start items-center gap-3 rounded-2xl border border-stone-200/50 bg-white px-5 py-3.5 shadow-sm transition-all duration-300 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5"
-                      style={{ animationDelay: `${i * 50}ms` }}
-                    >
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 text-sm font-bold text-primary transition-all duration-300 group-hover:from-primary group-hover:to-primary group-hover:text-white group-hover:shadow-md group-hover:shadow-primary/25">
-                        {cat.nameJa.charAt(0)}
-                      </div>
-                      <div>
-                        <span className="block text-sm font-semibold text-stone-700 group-hover:text-primary transition-colors whitespace-nowrap">
-                          {cat.nameJa}
-                        </span>
-                        <span className="block text-[11px] text-stone-400">
-                          {cat.count}{locale === "en" ? " items" : locale === "zh" ? "件" : "商品"}
-                        </span>
-                      </div>
-                    </Link>
-                  ))}
-              </div>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+              {categories
+                .filter((c) => c.count > 0)
+                .sort((a, b) => b.count - a.count)
+                .map((cat) => (
+                  <Link
+                    key={cat.id}
+                    href={`/categories/${cat.slug}`}
+                    className="group flex items-center gap-3 rounded-2xl border border-stone-200/50 bg-white px-4 py-3.5 shadow-sm transition-all duration-300 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5"
+                  >
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 text-sm font-bold text-primary transition-all duration-300 group-hover:from-primary group-hover:to-primary group-hover:text-white group-hover:shadow-md group-hover:shadow-primary/25">
+                      {cat.nameJa.charAt(0)}
+                    </div>
+                    <div className="min-w-0">
+                      <span className="block text-sm font-semibold text-stone-700 group-hover:text-primary transition-colors truncate">
+                        {locale === "en" && cat.nameEn ? cat.nameEn : locale === "zh" && cat.nameZh ? cat.nameZh : cat.nameJa}
+                      </span>
+                      <span className="block text-[11px] text-stone-400">
+                        {cat.count}{locale === "en" ? " items" : locale === "zh" ? "件" : "商品"}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
             </div>
           </div>
         </div>
