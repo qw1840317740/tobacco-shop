@@ -37,6 +37,9 @@ model Product {
   region       String   @default("Japan")
   inStock      Boolean  @default(true)
   featured     Boolean  @default(false)
+  sticks       Int      @default(20)
+  tar          Decimal  @db.Decimal(4, 1) @default(0)
+  nicotine     Decimal  @db.Decimal(4, 2) @default(0)
   desc         String   @default("")
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

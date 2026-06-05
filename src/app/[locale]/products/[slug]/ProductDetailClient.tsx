@@ -25,6 +25,9 @@ interface Product {
   type: string;
   region: string;
   inStock: boolean;
+  sticks: number;
+  tar: number;
+  nicotine: number;
   desc: string;
 }
 
@@ -80,6 +83,8 @@ export function ProductDetailClient({ product }: { product: Product }) {
             <span className="text-3xl font-bold text-primary">{formatPrice(product.price)}</span>
           </div>
           <Separator className="my-6" />
+
+          {/* Product specs */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-sm text-stone-500">{tProduct("stockStatus")}</span>
@@ -87,7 +92,26 @@ export function ProductDetailClient({ product }: { product: Product }) {
                 {product.inStock !== false ? tCommon("inStock") : tCommon("outOfStock")}
               </span>
             </div>
+            {product.sticks > 0 && (
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-stone-500">{tProduct("sticks")}</span>
+                <span className="text-sm font-semibold text-stone-700">{product.sticks}{tProduct("sticksUnit")}</span>
+              </div>
+            )}
+            {product.tar > 0 && (
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-stone-500">{tProduct("tar")}</span>
+                <span className="text-sm font-semibold text-stone-700">{product.tar} mg</span>
+              </div>
+            )}
+            {product.nicotine > 0 && (
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-stone-500">{tProduct("nicotine")}</span>
+                <span className="text-sm font-semibold text-stone-700">{product.nicotine} mg</span>
+              </div>
+            )}
           </div>
+
           <Separator className="my-6" />
           <div className="flex items-center gap-3">
             <select

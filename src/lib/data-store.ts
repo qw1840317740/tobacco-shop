@@ -27,6 +27,9 @@ export interface Product {
   region: string;
   inStock: boolean;
   featured: boolean;
+  sticks: number;
+  tar: number;
+  nicotine: number;
   desc: string;
 }
 
@@ -45,14 +48,16 @@ function toProduct(row: {
   price: { toNumber(): number };
   image: string; type: string;
   categoryId: string; region: string; inStock: boolean;
-  featured: boolean; desc: string;
+  featured: boolean; sticks: number; tar: { toNumber(): number }; nicotine: { toNumber(): number };
+  desc: string;
 }): Product {
   return {
     id: row.id, slug: row.slug, code: row.code ?? "", name: row.name, nameEn: row.nameEn ?? "", nameZh: row.nameZh ?? "",
     price: row.price.toNumber(),
     image: row.image, type: row.type, categoryId: row.categoryId,
     region: row.region, inStock: row.inStock,
-    featured: row.featured, desc: row.desc,
+    featured: row.featured, sticks: row.sticks ?? 20, tar: row.tar?.toNumber() ?? 0, nicotine: row.nicotine?.toNumber() ?? 0,
+    desc: row.desc,
   };
 }
 
