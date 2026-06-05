@@ -11,6 +11,7 @@ import { useCartStore } from "@/stores/cart-store";
 import { toast } from "sonner";
 import { formatPrice } from "@/lib/utils";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { useTranslations, useLocale } from "next-intl";
 
 interface Product {
   id: string;
@@ -29,6 +30,13 @@ interface Product {
 export function ProductDetailClient({ product }: { product: Product }) {
   const addItem = useCartStore((s) => s.addItem);
   const [qty, setQty] = useState(1);
+  const tCommon = useTranslations("common");
+  const tProduct = useTranslations("product");
+  const tNav = useTranslations("nav");
+  const locale = useLocale();
+
+  const regionLabel = tProduct(`regions.${product.region}`) || product.region;
+  const typeLabel = tProduct(`types.${product.type}`) || product.type;
 
   const handleAdd = () => {
     for (let i = 0; i < qty; i++) {
@@ -40,12 +48,12 @@ export function ProductDetailClient({ product }: { product: Product }) {
         image: product.image,
       });
     }
-    toast.success(`${product.name} x${qty} をカートに追加しました`);
+    toast.success(tCommon("addedToCartToast", { name: product.name, qty }));
   };
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-      <Breadcrumb items={[{ label: "商品一覧", href: "/products" }, { label: product.name }]} />
+      <Breadcrumb items={[{ label: tNav("products"), href: "/products" }, { label: product.name }]} />
 
       <div className="grid gap-8 lg:grid-cols-2">
         <div className="aspect-square overflow-hidden rounded-xl bg-stone-100">
@@ -56,11 +64,11 @@ export function ProductDetailClient({ product }: { product: Product }) {
             {product.code && (
               <Badge className="bg-primary/10 text-primary font-mono">#{product.code}</Badge>
             )}
-            <Badge variant="secondary">{product.region}</Badge>
-            <Badge variant="secondary">{product.type}</Badge>
+            <Badge variant="secondary">{regionLabel}</Badge>
+            <Badge variant="secondary">{typeLabel}</Badge>
           </div>
           <h1 className="mt-3 font-heading text-3xl font-bold text-stone-800">{product.name}</h1>
-          {product.nameZh && (
+          {locale === "zh" && product.nameZh && (
             <p className="mt-1 text-base text-stone-500">{product.nameZh}</p>
           )}
           <div className="mt-3 flex items-baseline gap-3">
@@ -69,9 +77,9 @@ export function ProductDetailClient({ product }: { product: Product }) {
           <Separator className="my-6" />
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-stone-500">在庫状況</span>
+              <span className="text-sm text-stone-500">{tProduct("stockStatus")}</span>
               <span className={`text-sm font-semibold ${product.inStock !== false ? "text-green-700" : "text-red-600"}`}>
-                {product.inStock !== false ? "在庫あり" : "在庫切れ"}
+                {product.inStock !== false ? tCommon("inStock") : tCommon("outOfStock")}
               </span>
             </div>
           </div>
@@ -89,7 +97,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
               disabled={product.inStock === false}
               onClick={handleAdd}
             >
-              カートに追加
+              {tCommon("addToCart")}
             </Button>
           </div>
         </div>
@@ -97,20 +105,20 @@ export function ProductDetailClient({ product }: { product: Product }) {
 
       <Tabs defaultValue="description" className="mt-12">
         <TabsList>
-          <TabsTrigger value="description">商品説明</TabsTrigger>
-          <TabsTrigger value="reviews">レビュー</TabsTrigger>
+          <TabsTrigger value="description">{tProduct("description")}</TabsTrigger>
+          <TabsTrigger value="reviews">{tProduct("reviews")}</TabsTrigger>
         </TabsList>
         <TabsContent value="description" className="mt-4">
           <Card className="p-6">
             <p className="leading-relaxed text-stone-600">
-              {product.desc || `${product.name}は${product.region}産の高品質なたばこです。豊かな風味と滑らかな吸い心地が特徴で、日本のたばこ愛好家に愛されています。`}
+              {product.desc || `${product.name}${tProduct("defaultDescription")}`}
             </p>
           </Card>
         </TabsContent>
         <TabsContent value="reviews" className="mt-4">
           <Card className="p-6 text-center">
-            <p className="text-stone-400">まだレビューはありません。最初のレビューを書きませんか？</p>
-            <Button variant="outline" className="mt-4">レビューを書く</Button>
+            <p className="text-stone-400">{tProduct("noReviews")}</p>
+            <Button variant="outline" className="mt-4">{tProduct("writeReview")}</Button>
           </Card>
         </TabsContent>
       </Tabs>

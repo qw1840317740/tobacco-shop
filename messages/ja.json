@@ -26,7 +26,13 @@
     "emptyCart": "カートは空です",
     "noResults": "商品が見つかりません",
     "loadMore": "もっと見る",
-    "back": "戻る"
+    "back": "戻る",
+    "wishlist": "お気に入り",
+    "loading": "読み込み中...",
+    "wishlistEmpty": "お気に入り商品はまだありません。",
+    "viewProducts": "商品一覧を見る",
+    "removedFromWishlist": "お気に入りから削除しました",
+    "addedToCartToast": "{name} x{qty} をカートに追加しました"
   },
   "ageGate": {
     "title": "年齢確認",
@@ -72,10 +78,25 @@
     "relatedProducts": "関連商品",
     "region": "産地",
     "type": "種類",
-    "strength": "強さ",
+    "stockStatus": "在庫状況",
     "writeReview": "レビューを書く",
     "addToWishlist": "お気に入りに追加",
-    "sku": "商品番号"
+    "sku": "商品番号",
+    "noReviews": "まだレビューはありません。最初のレビューを書きませんか？",
+    "defaultDescription": "は日本産の高品質なたばこです。豊かな風味と滑らかな吸い心地が特徴で、日本のたばこ愛好家に愛されています。",
+    "productCount": "のプレミアムたばこ商品",
+    "regions": {
+      "Japan": "日本",
+      "America": "アメリカ",
+      "Europe": "ヨーロッパ"
+    },
+    "types": {
+      "CIGARETTE": "紙巻たばこ",
+      "CIGAR": "葉巻",
+      "PIPE": "パイプたばこ",
+      "HAND_ROLL": "手巻きたばこ",
+      "ACCESSORY": "喫煙具"
+    }
   },
   "checkout": {
     "title": "ご注文",

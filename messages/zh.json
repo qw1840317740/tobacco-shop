@@ -26,7 +26,13 @@
     "emptyCart": "购物车为空",
     "noResults": "未找到商品",
     "loadMore": "加载更多",
-    "back": "返回"
+    "back": "返回",
+    "wishlist": "收藏夹",
+    "loading": "加载中...",
+    "wishlistEmpty": "收藏夹中暂无商品。",
+    "viewProducts": "查看商品列表",
+    "removedFromWishlist": "已从收藏夹移除",
+    "addedToCartToast": "{name} x{qty} 已加入购物车"
   },
   "ageGate": {
     "title": "年龄验证",
@@ -72,10 +78,25 @@
     "relatedProducts": "相关商品",
     "region": "产地",
     "type": "类型",
-    "strength": "浓度",
+    "stockStatus": "库存状态",
     "writeReview": "写评价",
     "addToWishlist": "加入收藏",
-    "sku": "商品编号"
+    "sku": "商品编号",
+    "noReviews": "暂无评价，快来写第一条吧！",
+    "defaultDescription": "是日本产的高品质香烟，以丰富的口感和顺滑的吸烟体验著称，深受日本烟民喜爱。",
+    "productCount": "款优质烟草商品",
+    "regions": {
+      "Japan": "日本",
+      "America": "美国",
+      "Europe": "欧洲"
+    },
+    "types": {
+      "CIGARETTE": "卷烟",
+      "CIGAR": "雪茄",
+      "PIPE": "烟斗丝",
+      "HAND_ROLL": "手卷烟",
+      "ACCESSORY": "烟具"
+    }
   },
   "checkout": {
     "title": "结算",

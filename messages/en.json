@@ -26,7 +26,13 @@
     "emptyCart": "Your cart is empty",
     "noResults": "No products found",
     "loadMore": "Load More",
-    "back": "Back"
+    "back": "Back",
+    "wishlist": "Wishlist",
+    "loading": "Loading...",
+    "wishlistEmpty": "Your wishlist is empty.",
+    "viewProducts": "View Products",
+    "removedFromWishlist": "Removed from wishlist",
+    "addedToCartToast": "{name} x{qty} added to cart"
   },
   "ageGate": {
     "title": "Age Verification",
@@ -72,10 +78,25 @@
     "relatedProducts": "Related Products",
     "region": "Region",
     "type": "Type",
-    "strength": "Strength",
+    "stockStatus": "Availability",
     "writeReview": "Write a Review",
     "addToWishlist": "Add to Wishlist",
-    "sku": "SKU"
+    "sku": "SKU",
+    "noReviews": "No reviews yet. Be the first to write one!",
+    "defaultDescription": "is a premium Japanese tobacco with rich flavor and smooth draw, loved by tobacco enthusiasts.",
+    "productCount": "premium tobacco products",
+    "regions": {
+      "Japan": "Japan",
+      "America": "America",
+      "Europe": "Europe"
+    },
+    "types": {
+      "CIGARETTE": "Cigarette",
+      "CIGAR": "Cigar",
+      "PIPE": "Pipe Tobacco",
+      "HAND_ROLL": "Hand Rolling",
+      "ACCESSORY": "Accessory"
+    }
   },
   "checkout": {
     "title": "Checkout",

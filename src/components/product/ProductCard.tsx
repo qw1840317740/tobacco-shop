@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { formatPrice } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface Product {
   id: string;
@@ -21,6 +22,8 @@ interface Product {
 
 export function ProductCard({ product, dark }: { product: Product; dark?: boolean }) {
   const addItem = useCartStore((s) => s.addItem);
+  const tCommon = useTranslations("common");
+  const tProduct = useTranslations("product");
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -32,8 +35,11 @@ export function ProductCard({ product, dark }: { product: Product; dark?: boolea
       price: product.price,
       image: product.image,
     });
-    toast.success(`${product.name} をカートに追加しました`);
+    toast.success(tCommon("addedToCartToast", { name: product.name, qty: 1 }));
   };
+
+  const regionLabel = tProduct(`regions.${product.region}`) || product.region;
+  const typeLabel = tProduct(`types.${product.type}`) || product.type;
 
   return (
     <div className={`group relative overflow-hidden rounded-2xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-1.5 ${
@@ -53,7 +59,7 @@ export function ProductCard({ product, dark }: { product: Product; dark?: boolea
 
           {product.inStock === false && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-[2px]">
-              <span className="rounded-lg bg-white px-3 py-1 text-xs font-medium text-stone-700">SOLD OUT</span>
+              <span className="rounded-lg bg-white px-3 py-1 text-xs font-medium text-stone-700">{tCommon("outOfStock")}</span>
             </div>
           )}
           {product.inStock !== false && (
@@ -62,7 +68,7 @@ export function ProductCard({ product, dark }: { product: Product; dark?: boolea
                 onClick={handleAdd}
                 className="w-full rounded-xl bg-primary py-2 text-xs font-semibold text-white shadow-lg transition-colors hover:bg-primary/90"
               >
-                カートに追加
+                {tCommon("addToCart")}
               </button>
             </div>
           )}
@@ -73,7 +79,7 @@ export function ProductCard({ product, dark }: { product: Product; dark?: boolea
           {product.code && (
             <Badge variant="secondary" className={`rounded-md text-[10px] font-mono font-medium ${dark ? "bg-stone-700/60 text-stone-300 border-stone-600/30" : "bg-primary/10 text-primary border-stone-200/50"}`}>#{product.code}</Badge>
           )}
-          <Badge variant="secondary" className={`rounded-md text-[10px] font-medium ${dark ? "bg-stone-700/60 text-stone-300 border-stone-600/30" : "bg-stone-100 border-stone-200/50"}`}>{product.region}</Badge>
+          <Badge variant="secondary" className={`rounded-md text-[10px] font-medium ${dark ? "bg-stone-700/60 text-stone-300 border-stone-600/30" : "bg-stone-100 border-stone-200/50"}`}>{regionLabel}</Badge>
         </div>
         <Link href={`/products/${product.slug}`}>
           <h3 className={`mt-2 text-sm font-semibold leading-snug transition-colors line-clamp-1 ${
@@ -91,7 +97,7 @@ export function ProductCard({ product, dark }: { product: Product; dark?: boolea
             onClick={handleAdd}
             className="mt-3 w-full rounded-xl bg-primary py-2 text-xs font-semibold text-white transition-colors hover:bg-primary/90 sm:hidden"
           >
-            カートに追加
+            {tCommon("addToCart")}
           </button>
         )}
       </div>
