@@ -212,11 +212,11 @@ export default async function HomePage() {
               日本製たばこの最高品質を追求し、500銘柄以上のプレミアムたばこを厳選してお届けしております。
             </p>
           </div>
-          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="mt-10 grid grid-cols-3 gap-4">
             {[
               { num: "500+", label: "銘柄数" },
-              { num: "1", label: "国" },
               { num: "100%", label: "正規品" },
+              { num: "🇯🇵", label: "日本製" },
             ].map((s) => (
               <div key={s.label} className="group rounded-2xl p-4 text-center backdrop-blur-sm bg-white/5 border border-white/10 transition-all hover:bg-white/10 hover:border-white/20">
                 <p className="font-heading text-2xl font-bold text-red-400 transition-transform group-hover:scale-110 sm:text-3xl">{s.num}</p>

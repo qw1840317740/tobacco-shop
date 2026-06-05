@@ -50,8 +50,11 @@ export default function ContactPage() {
                 className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />
             </div>
-            <Button className="w-full bg-primary text-white hover:bg-primary/90">
-              送信する
+            <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800">
+              ※ 現在、お問い合わせフォームは準備中です。お急ぎの方はお電話またはメールにてご連絡ください。
+            </div>
+            <Button className="w-full bg-primary text-white hover:bg-primary/90 opacity-50 cursor-not-allowed" disabled>
+              送信する（準備中）
             </Button>
           </div>
         </Card>
