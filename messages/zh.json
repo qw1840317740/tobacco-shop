@@ -237,6 +237,10 @@
     "ploom": "Ploom加热烟",
     "productCount": "{count}件商品",
     "viewProducts": "查看商品",
-    "noProducts": "暂无商品"
+    "noProducts": "暂无商品",
+    "comingSoon": "即将上架",
+    "priceRange": "¥{min}起",
+    "fromJapan": "日本制造",
+    "heatedTobacco": "加热烟"
   }
 }

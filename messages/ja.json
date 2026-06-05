@@ -237,6 +237,10 @@
     "ploom": "Ploom加熱たばこ",
     "productCount": "{count}商品",
     "viewProducts": "商品を見る",
-    "noProducts": "商品がありません"
+    "noProducts": "商品がありません",
+    "comingSoon": "商品準備中",
+    "priceRange": "¥{min}〜",
+    "fromJapan": "日本製",
+    "heatedTobacco": "加熱たばこ"
   }
 }

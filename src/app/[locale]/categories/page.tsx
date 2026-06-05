@@ -1,9 +1,28 @@
-import { getAllCategories } from "@/lib/data-store";
+import { getAllCategories, getProductsByCategory } from "@/lib/data-store";
 import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { getTranslations } from "next-intl/server";
 import { setRequestLocale } from "next-intl/server";
+import { formatPrice } from "@/lib/utils";
+
+const groupStyles: Record<string, { gradient: string; badge: string; accent: string }> = {
+  jt_japan: {
+    gradient: "from-amber-500/10 via-orange-500/5 to-transparent",
+    badge: "bg-amber-100 text-amber-700",
+    accent: "border-amber-300/50",
+  },
+  jt_international: {
+    gradient: "from-blue-500/10 via-sky-500/5 to-transparent",
+    badge: "bg-blue-100 text-blue-700",
+    accent: "border-blue-300/50",
+  },
+  ploom: {
+    gradient: "from-purple-500/10 via-violet-500/5 to-transparent",
+    badge: "bg-purple-100 text-purple-700",
+    accent: "border-purple-300/50",
+  },
+};
 
 export default async function BrandsPage({
   params,
@@ -15,6 +34,18 @@ export default async function BrandsPage({
   const tBrands = await getTranslations("brands");
 
   const categories = await getAllCategories();
+
+  // Get price ranges for categories with products
+  const priceRanges: Record<string, { min: number; max: number }> = {};
+  for (const cat of categories) {
+    if (cat.count > 0) {
+      const products = await getProductsByCategory(cat.id);
+      if (products.length > 0) {
+        const prices = products.map((p) => p.price);
+        priceRanges[cat.id] = { min: Math.min(...prices), max: Math.max(...prices) };
+      }
+    }
+  }
 
   // Group by group field
   const groups: Record<string, typeof categories> = {};
@@ -37,38 +68,76 @@ export default async function BrandsPage({
       {groupOrder.map((groupKey) => {
         const items = groups[groupKey];
         if (!items || items.length === 0) return null;
+        const style = groupStyles[groupKey] || groupStyles.jt_japan;
 
         return (
-          <div key={groupKey} className="mb-10">
-            <div className="mb-4 flex items-center gap-3">
-              <div className="h-px flex-1 bg-gradient-to-r from-primary/30 to-transparent" />
-              <h2 className="text-lg font-bold text-stone-700">{tBrands(groupKey as any)}</h2>
-              <div className="h-px flex-1 bg-gradient-to-l from-primary/30 to-transparent" />
+          <div key={groupKey} className="mb-12">
+            {/* Group header */}
+            <div className="mb-5 flex items-center gap-4">
+              <div className={`h-1.5 w-1.5 rounded-full ${groupKey === "jt_japan" ? "bg-amber-500" : groupKey === "jt_international" ? "bg-blue-500" : "bg-purple-500"}`} />
+              <h2 className="text-xl font-bold text-stone-700">{tBrands(groupKey as any)}</h2>
+              <div className="h-px flex-1 bg-stone-200" />
+              <span className="text-xs text-stone-400">{items.length} brands</span>
             </div>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
               {items.map((cat) => {
                 const localizedName = locale === "en" && cat.nameEn ? cat.nameEn
                   : locale === "zh" && cat.nameZh ? cat.nameZh
                   : cat.nameJa;
-                const productCount = cat.count || 0;
+                const hasProducts = cat.count > 0;
+                const range = priceRanges[cat.id];
 
                 return (
                   <Link
                     key={cat.id}
                     href={`/categories/${cat.slug}`}
-                    className="group relative overflow-hidden rounded-xl border border-stone-200/60 bg-white p-4 transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:-translate-y-0.5"
+                    className={`group relative overflow-hidden rounded-2xl border transition-all duration-300 ${
+                      hasProducts
+                        ? `border-stone-200/60 bg-white hover:border-primary/30 hover:shadow-xl hover:-translate-y-1`
+                        : `border-stone-100 bg-stone-50/50 opacity-60 hover:opacity-80`
+                    }`}
                   >
-                    <div className="flex flex-col items-center gap-2 text-center">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary/10 to-primary/5 text-primary transition-colors group-hover:from-primary/20 group-hover:to-primary/10">
-                        <span className="text-lg font-bold">{localizedName.charAt(0)}</span>
+                    {/* Top accent line */}
+                    <div className={`h-1 bg-gradient-to-r ${style.gradient}`} />
+
+                    <div className="p-5">
+                      {/* Brand initial + name */}
+                      <div className="flex items-start gap-3">
+                        <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-sm font-bold transition-colors ${
+                          hasProducts
+                            ? `${style.badge}`
+                            : "bg-stone-100 text-stone-400"
+                        }`}>
+                          {localizedName.charAt(0)}
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className={`text-sm font-bold leading-tight transition-colors line-clamp-2 ${
+                            hasProducts ? "text-stone-800 group-hover:text-primary" : "text-stone-400"
+                          }`}>
+                            {localizedName}
+                          </h3>
+                          {/* Show Japanese name when not in ja locale */}
+                          {locale !== "ja" && cat.nameJa !== localizedName && (
+                            <p className="mt-0.5 text-[11px] text-stone-400 line-clamp-1">{cat.nameJa}</p>
+                          )}
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-sm font-semibold text-stone-700 transition-colors group-hover:text-primary">
-                          {localizedName}
-                        </h3>
-                        <p className="mt-0.5 text-xs text-stone-400">
-                          {tBrands("productCount", { count: productCount })}
-                        </p>
+
+                      {/* Bottom info */}
+                      <div className="mt-4 flex items-center justify-between">
+                        {hasProducts ? (
+                          <>
+                            <span className="text-xs font-semibold text-primary">
+                              {range ? tBrands("priceRange", { min: range.min }) : ""}
+                            </span>
+                            <Badge variant="secondary" className="rounded-md text-[10px] font-medium">
+                              {tBrands("productCount", { count: cat.count })}
+                            </Badge>
+                          </>
+                        ) : (
+                          <span className="text-xs text-stone-400">{tBrands("comingSoon")}</span>
+                        )}
                       </div>
                     </div>
                   </Link>

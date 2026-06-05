@@ -237,6 +237,10 @@
     "ploom": "Ploom Heated Tobacco",
     "productCount": "{count} items",
     "viewProducts": "View Products",
-    "noProducts": "No products"
+    "noProducts": "No products",
+    "comingSoon": "Coming Soon",
+    "priceRange": "From ¥{min}",
+    "fromJapan": "Made in Japan",
+    "heatedTobacco": "Heated Tobacco"
   }
 }
