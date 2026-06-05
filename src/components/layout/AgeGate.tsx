@@ -83,6 +83,24 @@ export default function AgeGate() {
             <p className="text-xs text-stone-500">
               {t("warning")}
             </p>
+
+            {/* Legal declarations */}
+            <div className="mt-4 rounded-lg border border-red-800/20 bg-red-950/20 p-3">
+              <ul className="space-y-1 text-left text-xs text-red-300">
+                <li className="flex items-start gap-1.5">
+                  <span className="mt-0.5 text-red-400">⚠</span>
+                  {t("declaration1")}
+                </li>
+                <li className="flex items-start gap-1.5">
+                  <span className="mt-0.5 text-red-400">⚠</span>
+                  {t("declaration2")}
+                </li>
+                <li className="flex items-start gap-1.5">
+                  <span className="mt-0.5 text-red-400">⚠</span>
+                  {t("declaration3")}
+                </li>
+              </ul>
+            </div>
           </>
         )}
       </Card>

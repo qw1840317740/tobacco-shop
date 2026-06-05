@@ -77,10 +77,15 @@ export default function AgeVerificationPage() {
   };
 
   const docTypeOptions = [
+    { value: "my_number", label: "個人番号カード（マイナンバーカード）" },
     { value: "drivers_license", label: "運転免許証" },
     { value: "passport", label: "パスポート" },
-    { value: "my_number", label: "マイナンバーカード" },
     { value: "residence_card", label: "在留カード" },
+    { value: "special_permanent", label: "特別永住者証明書" },
+    { value: "pension_book", label: "国民年金手帳" },
+    { value: "disability_book", label: "身体障害者手帳・各種福祉手帳" },
+    { value: "family_register", label: "戸籍謄本／抄本" },
+    { value: "resident_register", label: "住民票の写し" },
   ];
 
   const statusMap: Record<string, { label: string; variant: "default" | "secondary" | "destructive" | "outline"; color: string }> = {

@@ -40,7 +40,10 @@
     "warning": "进入本网站即表示您确认已达到在您所在地区购买烟草产品的法定年龄。",
     "confirm": "我已达到法定年龄",
     "deny": "我未成年",
-    "denyMessage": "抱歉，您必须达到法定吸烟年龄才能访问本网站。"
+    "denyMessage": "抱歉，您必须达到法定吸烟年龄才能访问本网站。",
+    "declaration1": "法律禁止未满20岁者吸烟",
+    "declaration2": "不向未满20岁者销售烟草",
+    "declaration3": "销售烟草时将通过公定证明书进行年龄确认及本人确认"
   },
   "nav": {
     "home": "首页",
@@ -154,6 +157,14 @@
     "emailTaken": "该邮箱已被注册",
     "passwordMismatch": "两次密码不一致",
     "passwordTooShort": "密码至少需要6个字符"
+  },
+  "compliance": {
+    "healthWarning": "吸烟会增加肺癌、脑中风等疾病的风险。法律禁止未满20岁者吸烟。",
+    "healthWarningHeated": "加热烟气的蒸汽含有致癌物质等有害物质。法律禁止未满20岁者吸烟。",
+    "identityConfirm": "我确认下单人与年龄认证书件确认为同一人。",
+    "addressMatch": "※ 商品的配送地址原则上必须与公定证明书上记载的居住地址一致。",
+    "noFreeShipping": "※ 根据法律规定，烟草配送的运费由购买者承担。",
+    "shippingNote": "根据烟草事业法第36条，运费由购买者承担。"
   },
   "ageDoc": {
     "title": "年龄认证证件上传",

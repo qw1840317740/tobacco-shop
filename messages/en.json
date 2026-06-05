@@ -40,7 +40,10 @@
     "warning": "By entering this site, you confirm that you are of legal age to purchase tobacco products in your jurisdiction.",
     "confirm": "I am of legal age",
     "deny": "I am under age",
-    "denyMessage": "Sorry, you must be of legal smoking age to access this site."
+    "denyMessage": "Sorry, you must be of legal smoking age to access this site.",
+    "declaration1": "Smoking under the age of 20 is prohibited by law",
+    "declaration2": "We do not sell tobacco to persons under 20",
+    "declaration3": "Age and identity verification via official documents is required for tobacco purchases"
   },
   "nav": {
     "home": "Home",
@@ -154,6 +157,14 @@
     "emailTaken": "This email is already registered",
     "passwordMismatch": "Passwords do not match",
     "passwordTooShort": "Password must be at least 6 characters"
+  },
+  "compliance": {
+    "healthWarning": "Smoking increases the risk of lung cancer, stroke, and other diseases. Smoking under age 20 is prohibited by law.",
+    "healthWarningHeated": "Heated tobacco vapor contains carcinogens and other harmful substances. Smoking under age 20 is prohibited by law.",
+    "identityConfirm": "I confirm that I am the same person whose identity was verified via official documentation.",
+    "addressMatch": "※ Delivery address must match the residential address on your official identification document.",
+    "noFreeShipping": "※ By law, shipping costs for tobacco products must be borne by the purchaser.",
+    "shippingNote": "Pursuant to Article 36 of the Tobacco Business Act, shipping fees are the responsibility of the purchaser."
   },
   "ageDoc": {
     "title": "Age Verification Document Upload",

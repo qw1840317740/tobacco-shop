@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { formatPrice } from "@/lib/utils";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 const BANK_INFO = {
   bank: "三菱UFJ銀行",
@@ -31,11 +32,14 @@ export default function CheckoutPage() {
   const [shippingPhone, setShippingPhone] = useState("");
   const [shippingPostalCode, setShippingPostalCode] = useState("");
   const [shippingAddress, setShippingAddress] = useState("");
+  const [identityConfirmed, setIdentityConfirmed] = useState(false);
   const params = useParams();
   const locale = (params?.locale as string) || "ja";
+  const tCompliance = useTranslations("compliance");
+  const tCheckout = useTranslations("checkout");
 
   const subtotal = totalPrice();
-  const shipping = subtotal > 5000 ? 0 : 600;
+  const shipping = 600;
   const tax = subtotal * 0.1;
   const total = subtotal + shipping + tax;
 
@@ -259,7 +263,13 @@ export default function CheckoutPage() {
           {/* Step 3: Confirm */}
           {step === "confirm" && (
             <Card className="p-6">
-              <h2 className="font-heading text-lg font-semibold">注文確認</h2>
+              <h2 className="font-heading text-lg font-semibold">{tCheckout("orderSummary")}</h2>
+
+              {/* Health warning */}
+              <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-800 leading-relaxed">
+                ⚠️ {tCompliance("healthWarning")}
+              </div>
+
               <div className="mt-4 space-y-2 text-sm">
                 {items.map((item) => (
                   <div key={item.productId} className="flex justify-between">
@@ -269,23 +279,50 @@ export default function CheckoutPage() {
                 ))}
               </div>
               <div className="mt-3 p-3 rounded-lg bg-stone-50 text-sm">
-                <p className="text-stone-600">配送先: {shippingName} / {shippingAddress}</p>
+                <p className="text-stone-600">{tCheckout("shippingInfo")}: {shippingName} / {shippingAddress}</p>
               </div>
+
+              {/* Address match warning */}
+              <div className="mt-3 rounded-lg border border-amber-200 bg-amber-50 p-2.5 text-xs text-amber-800 leading-relaxed">
+                📍 {tCompliance("addressMatch")}
+              </div>
+
               <Separator className="my-4" />
               <div className="space-y-1 text-sm">
-                <div className="flex justify-between"><span>小計</span><span>{formatPrice(subtotal)}</span></div>
-                <div className="flex justify-between"><span>送料</span><span>{shipping === 0 ? "無料" : formatPrice(shipping)}</span></div>
-                <div className="flex justify-between"><span>税（10%）</span><span>{formatPrice(tax)}</span></div>
+                <div className="flex justify-between"><span>{tCheckout("orderSummary").includes("Summary") ? "Subtotal" : "小計"}</span><span>{formatPrice(subtotal)}</span></div>
+                <div className="flex justify-between">
+                  <span>{tCheckout("orderSummary").includes("Summary") ? "Shipping" : "送料"}</span>
+                  <span>{formatPrice(shipping)}</span>
+                </div>
+                <div className="flex justify-between"><span>{tCheckout("orderSummary").includes("Summary") ? "Tax (10%)" : "税（10%）"}</span><span>{formatPrice(tax)}</span></div>
                 <Separator />
-                <div className="flex justify-between text-base font-bold"><span>合計</span><span className="text-primary">{formatPrice(total)}</span></div>
+                <div className="flex justify-between text-base font-bold"><span>{tCheckout("orderSummary").includes("Summary") ? "Total" : "合計"}</span><span className="text-primary">{formatPrice(total)}</span></div>
               </div>
+
+              {/* Shipping note */}
+              <div className="mt-3 rounded-lg border border-stone-200 bg-stone-50 p-2.5 text-xs text-stone-500 leading-relaxed">
+                📦 {tCompliance("shippingNote")}
+              </div>
+
               <div className="mt-4 rounded-lg border border-stone-200 bg-stone-50 p-3 text-xs text-stone-500">
-                支払い方法：<strong className="text-stone-700">銀行振込</strong>（ご注文確定後、3営業日以内にお振込みください）
+                {tCheckout("orderSummary").includes("Summary") ? "Payment" : "支払い方法"}：<strong className="text-stone-700">{tCheckout("orderSummary").includes("Summary") ? "Bank Transfer" : "銀行振込"}</strong>
               </div>
+
+              {/* Identity confirmation checkbox */}
+              <label className="mt-4 flex items-start gap-3 rounded-lg border border-primary/20 bg-primary/5 p-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={identityConfirmed}
+                  onChange={(e) => setIdentityConfirmed(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 shrink-0 rounded border-stone-300"
+                />
+                <span className="text-xs leading-relaxed text-stone-700">{tCompliance("identityConfirm")}</span>
+              </label>
+
               <div className="mt-6 flex gap-3">
-                <Button variant="outline" onClick={() => setStep("payment")} className="flex-1">戻る</Button>
-                <Button className="flex-1 bg-primary text-white hover:bg-primary/90" onClick={handleConfirm} disabled={submitting}>
-                  {submitting ? "処理中..." : "注文を確定する"}
+                <Button variant="outline" onClick={() => setStep("payment")} className="flex-1">←</Button>
+                <Button className="flex-1 bg-primary text-white hover:bg-primary/90" onClick={handleConfirm} disabled={submitting || !identityConfirmed}>
+                  {submitting ? "..." : tCheckout("placeOrder")}
                 </Button>
               </div>
             </Card>
