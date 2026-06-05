@@ -27,6 +27,7 @@ model Product {
   slug         String   @unique
   code         String   @default("")
   name         String
+  nameEn       String   @default("")
   nameZh       String   @default("")
   price        Decimal  @db.Decimal(10, 2)
   image        String   @default("")

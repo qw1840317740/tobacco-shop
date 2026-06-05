@@ -5,13 +5,15 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { formatPrice } from "@/lib/utils";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 interface Product {
   id: string;
   slug: string;
   code?: string;
   name: string;
+  nameEn?: string;
+  nameZh?: string;
   price: number;
   image: string;
   type: string;
@@ -20,10 +22,19 @@ interface Product {
   desc?: string;
 }
 
+function getLocalizedName(product: Product, locale: string): string {
+  if (locale === "en" && product.nameEn) return product.nameEn;
+  if (locale === "zh" && product.nameZh) return product.nameZh;
+  return product.name;
+}
+
 export function ProductCard({ product, dark }: { product: Product; dark?: boolean }) {
   const addItem = useCartStore((s) => s.addItem);
   const tCommon = useTranslations("common");
   const tProduct = useTranslations("product");
+  const locale = useLocale();
+
+  const displayName = getLocalizedName(product, locale);
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -31,15 +42,14 @@ export function ProductCard({ product, dark }: { product: Product; dark?: boolea
     addItem({
       productId: product.id,
       slug: product.slug,
-      name: product.name,
+      name: displayName,
       price: product.price,
       image: product.image,
     });
-    toast.success(tCommon("addedToCartToast", { name: product.name, qty: 1 }));
+    toast.success(tCommon("addedToCartToast", { name: displayName, qty: 1 }));
   };
 
   const regionLabel = tProduct(`regions.${product.region}`) || product.region;
-  const typeLabel = tProduct(`types.${product.type}`) || product.type;
 
   return (
     <div className={`group relative overflow-hidden rounded-2xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-1.5 ${
@@ -51,7 +61,7 @@ export function ProductCard({ product, dark }: { product: Product; dark?: boolea
         <div className={`relative aspect-square overflow-hidden ${dark ? "bg-stone-800" : "bg-stone-50"}`}>
           <img
             src={product.image}
-            alt={product.name}
+            alt={displayName}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
             loading="lazy"
           />
@@ -85,7 +95,7 @@ export function ProductCard({ product, dark }: { product: Product; dark?: boolea
           <h3 className={`mt-2 text-sm font-semibold leading-snug transition-colors line-clamp-1 ${
             dark ? "text-white group-hover:text-red-400" : "text-stone-800 group-hover:text-primary"
           }`}>
-            {product.name}
+            {displayName}
           </h3>
         </Link>
         <div className="mt-2 flex items-baseline gap-2">

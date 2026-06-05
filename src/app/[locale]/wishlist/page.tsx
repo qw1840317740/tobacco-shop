@@ -7,12 +7,14 @@ import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/stores/cart-store";
 import { toast } from "sonner";
 import { formatPrice } from "@/lib/utils";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 interface Product {
   id: string;
   slug: string;
   name: string;
+  nameEn?: string;
+  nameZh?: string;
   price: number;
   image: string;
   region: string;
@@ -37,6 +39,13 @@ export default function WishlistPage() {
   const tCommon = useTranslations("common");
   const tProduct = useTranslations("product");
   const tNav = useTranslations("nav");
+  const locale = useLocale();
+
+  function getLocalizedName(p: Product): string {
+    if (locale === "en" && p.nameEn) return p.nameEn;
+    if (locale === "zh" && p.nameZh) return p.nameZh;
+    return p.name;
+  }
 
   const loadWishlist = useCallback(async () => {
     const ids = getWishlistIds();
@@ -64,14 +73,15 @@ export default function WishlistPage() {
   }, [loadWishlist]);
 
   const handleAddToCart = (product: Product) => {
+    const dn = getLocalizedName(product);
     addItem({
       productId: product.id,
       slug: product.slug,
-      name: product.name,
+      name: dn,
       price: product.price,
       image: product.image,
     });
-    toast.success(tCommon("addedToCartToast", { name: product.name, qty: 1 }));
+    toast.success(tCommon("addedToCartToast", { name: dn, qty: 1 }));
   };
 
   const handleRemove = (id: string) => {
@@ -97,11 +107,12 @@ export default function WishlistPage() {
         <div className="mt-8 space-y-4">
           {items.map((item) => {
             const regionLabel = tProduct(`regions.${item.region}`) || item.region;
+            const displayName = getLocalizedName(item);
             return (
               <Card key={item.id} className="flex items-center gap-4 p-4">
-                <img src={item.image} alt={item.name} className="h-20 w-20 rounded-lg object-cover" />
+                <img src={item.image} alt={displayName} className="h-20 w-20 rounded-lg object-cover" />
                 <div className="flex-1">
-                  <Link href={`/products/${item.slug}`} className="font-medium text-sm hover:text-primary">{item.name}</Link>
+                  <Link href={`/products/${item.slug}`} className="font-medium text-sm hover:text-primary">{displayName}</Link>
                   <p className="text-xs text-stone-400">{regionLabel}</p>
                 </div>
                 <div className="text-right">

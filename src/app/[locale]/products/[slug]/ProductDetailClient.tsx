@@ -18,6 +18,7 @@ interface Product {
   slug: string;
   code?: string;
   name: string;
+  nameEn?: string;
   nameZh?: string;
   price: number;
   image: string;
@@ -25,6 +26,12 @@ interface Product {
   region: string;
   inStock: boolean;
   desc: string;
+}
+
+function getLocalizedName(product: Product, locale: string): string {
+  if (locale === "en" && product.nameEn) return product.nameEn;
+  if (locale === "zh" && product.nameZh) return product.nameZh;
+  return product.name;
 }
 
 export function ProductDetailClient({ product }: { product: Product }) {
@@ -35,6 +42,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
   const tNav = useTranslations("nav");
   const locale = useLocale();
 
+  const displayName = getLocalizedName(product, locale);
   const regionLabel = tProduct(`regions.${product.region}`) || product.region;
   const typeLabel = tProduct(`types.${product.type}`) || product.type;
 
@@ -43,21 +51,21 @@ export function ProductDetailClient({ product }: { product: Product }) {
       addItem({
         productId: product.id,
         slug: product.slug,
-        name: product.name,
+        name: displayName,
         price: product.price,
         image: product.image,
       });
     }
-    toast.success(tCommon("addedToCartToast", { name: product.name, qty }));
+    toast.success(tCommon("addedToCartToast", { name: displayName, qty }));
   };
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-      <Breadcrumb items={[{ label: tNav("products"), href: "/products" }, { label: product.name }]} />
+      <Breadcrumb items={[{ label: tNav("products"), href: "/products" }, { label: displayName }]} />
 
       <div className="grid gap-8 lg:grid-cols-2">
         <div className="aspect-square overflow-hidden rounded-xl bg-stone-100">
-          <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
+          <img src={product.image} alt={displayName} className="h-full w-full object-cover" />
         </div>
         <div>
           <div className="flex items-center gap-2">
@@ -67,10 +75,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
             <Badge variant="secondary">{regionLabel}</Badge>
             <Badge variant="secondary">{typeLabel}</Badge>
           </div>
-          <h1 className="mt-3 font-heading text-3xl font-bold text-stone-800">{product.name}</h1>
-          {locale === "zh" && product.nameZh && (
-            <p className="mt-1 text-base text-stone-500">{product.nameZh}</p>
-          )}
+          <h1 className="mt-3 font-heading text-3xl font-bold text-stone-800">{displayName}</h1>
           <div className="mt-3 flex items-baseline gap-3">
             <span className="text-3xl font-bold text-primary">{formatPrice(product.price)}</span>
           </div>
@@ -111,7 +116,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
         <TabsContent value="description" className="mt-4">
           <Card className="p-6">
             <p className="leading-relaxed text-stone-600">
-              {product.desc || `${product.name}${tProduct("defaultDescription")}`}
+              {product.desc || `${displayName}${tProduct("defaultDescription")}`}
             </p>
           </Card>
         </TabsContent>

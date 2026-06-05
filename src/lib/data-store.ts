@@ -18,6 +18,7 @@ export interface Product {
   slug: string;
   code: string;
   name: string;
+  nameEn: string;
   nameZh: string;
   price: number;
   image: string;
@@ -40,14 +41,14 @@ function toCategory(row: {
 }
 
 function toProduct(row: {
-  id: string; slug: string; code: string; name: string; nameZh: string;
+  id: string; slug: string; code: string; name: string; nameEn: string; nameZh: string;
   price: { toNumber(): number };
   image: string; type: string;
   categoryId: string; region: string; inStock: boolean;
   featured: boolean; desc: string;
 }): Product {
   return {
-    id: row.id, slug: row.slug, code: row.code ?? "", name: row.name, nameZh: row.nameZh ?? "",
+    id: row.id, slug: row.slug, code: row.code ?? "", name: row.name, nameEn: row.nameEn ?? "", nameZh: row.nameZh ?? "",
     price: row.price.toNumber(),
     image: row.image, type: row.type, categoryId: row.categoryId,
     region: row.region, inStock: row.inStock,
