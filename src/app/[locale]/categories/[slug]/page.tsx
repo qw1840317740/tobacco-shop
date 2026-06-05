@@ -37,7 +37,7 @@ export default async function CategoryPage({
           <span className="text-xs font-medium uppercase tracking-wider text-primary">{groupLabel}</span>
         )}
         <h1 className="mt-1 font-heading text-3xl font-bold text-stone-800">{localizedName}</h1>
-        <p className="mt-2 text-stone-500">{products.length} {tBrands("productCount", { count: products.length })}</p>
+        <p className="mt-2 text-stone-500">{tBrands("productCount", { count: products.length })}</p>
       </div>
       {products.length > 0 ? (
         <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
