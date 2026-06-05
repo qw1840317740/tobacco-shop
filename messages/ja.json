@@ -52,7 +52,8 @@
     "accessories": "喫煙具",
     "guide": "初心者ガイド",
     "about": "店舗情報",
-    "contact": "お問い合わせ"
+    "contact": "お問い合わせ",
+    "brands": "ブランド一覧"
   },
   "home": {
     "hero": "日本製プレミアムたばこを探す",
@@ -216,5 +217,15 @@
     "headerPlaceholder": "商品を検索...",
     "noSuggestions": "該当する商品がありません",
     "viewAll": "すべての検索結果を見る"
+  },
+  "brands": {
+    "title": "ブランド一覧",
+    "subtitle": "お好みのブランドをお選びください",
+    "jt_japan": "JT日本ブランド",
+    "jt_international": "JT国際ブランド",
+    "ploom": "Ploom加熱たばこ",
+    "productCount": "{count}商品",
+    "viewProducts": "商品を見る",
+    "noProducts": "商品がありません"
   }
 }

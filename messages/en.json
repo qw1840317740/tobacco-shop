@@ -52,7 +52,8 @@
     "accessories": "Accessories",
     "guide": "Beginner's Guide",
     "about": "About Us",
-    "contact": "Contact"
+    "contact": "Contact",
+    "brands": "Brands"
   },
   "home": {
     "hero": "Discover Premium Japanese Cigarettes",
@@ -216,5 +217,15 @@
     "headerPlaceholder": "Search products...",
     "noSuggestions": "No matching products",
     "viewAll": "View all results"
+  },
+  "brands": {
+    "title": "Brands",
+    "subtitle": "Choose your preferred brand",
+    "jt_japan": "JT Japanese Brands",
+    "jt_international": "JT International Brands",
+    "ploom": "Ploom Heated Tobacco",
+    "productCount": "{count} items",
+    "viewProducts": "View Products",
+    "noProducts": "No products"
   }
 }

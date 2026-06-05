@@ -5,7 +5,9 @@ export interface Category {
   slug: string;
   name: string;
   nameJa: string;
+  nameEn: string;
   nameZh: string;
+  group: string;
   description: string;
   image: string;
   count: number;
@@ -34,11 +36,11 @@ export interface Product {
 }
 
 function toCategory(row: {
-  id: string; slug: string; name: string; nameJa: string; nameZh: string;
-  description: string; image: string; count: number; sortOrder: number; visible: boolean;
+  id: string; slug: string; name: string; nameJa: string; nameEn: string; nameZh: string;
+  group: string; description: string; image: string; count: number; sortOrder: number; visible: boolean;
 }): Category {
   return {
-    id: row.id, slug: row.slug, name: row.name, nameJa: row.nameJa, nameZh: row.nameZh,
+    id: row.id, slug: row.slug, name: row.name, nameJa: row.nameJa, nameEn: row.nameEn ?? "", nameZh: row.nameZh, group: row.group ?? "",
     description: row.description, image: row.image, count: row.count, sortOrder: row.sortOrder, visible: row.visible,
   };
 }

@@ -52,7 +52,8 @@
     "accessories": "烟具",
     "guide": "新手指南",
     "about": "关于我们",
-    "contact": "联系我们"
+    "contact": "联系我们",
+    "brands": "品牌列表"
   },
   "home": {
     "hero": "探索日本优质香烟",
@@ -216,5 +217,15 @@
     "headerPlaceholder": "搜索商品...",
     "noSuggestions": "没有匹配的商品",
     "viewAll": "查看全部结果"
+  },
+  "brands": {
+    "title": "品牌列表",
+    "subtitle": "选择您喜爱的品牌",
+    "jt_japan": "JT日本品牌",
+    "jt_international": "JT国际品牌",
+    "ploom": "Ploom加热烟",
+    "productCount": "{count}件商品",
+    "viewProducts": "查看商品",
+    "noProducts": "暂无商品"
   }
 }

@@ -31,7 +31,7 @@ export default function Header() {
 
   const navItems = [
     { href: "/products", label: tNav("products") },
-    { href: "/categories/cigarettes", label: tNav("cigarettes") },
+    { href: "/categories", label: tNav("brands") },
     { href: "/guide", label: tNav("guide") },
   ];
 

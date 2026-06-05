@@ -11,7 +11,9 @@ model Category {
   slug        String   @unique
   name        String
   nameJa      String
+  nameEn      String   @default("")
   nameZh      String
+  group       String   @default("")
   description String   @default("")
   image       String   @default("")
   count       Int      @default(0)
