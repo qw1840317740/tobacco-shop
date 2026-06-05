@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useCartStore } from "@/stores/cart-store";
 import { useUIStore } from "@/stores/ui-store";
 import AuthButton from "@/components/auth/AuthButton";
+import { SearchDropdown } from "./SearchDropdown";
 
 function CartBadge() {
   const totalItems = useCartStore((s) => s.totalItems);
@@ -79,13 +80,7 @@ export default function Header() {
           <AuthButton isHome={isHome} />
 
           {/* Search */}
-          <Link href="/search" className={`hidden sm:inline-flex size-9 items-center justify-center rounded-lg transition-colors ${
-            isHome ? "text-stone-400 hover:bg-white/10 hover:text-white" : "hover:bg-muted hover:text-foreground"
-          }`}>
-            <svg className="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-            </svg>
-          </Link>
+          <SearchDropdown isHome={isHome} />
 
           {/* Cart */}
           <Button

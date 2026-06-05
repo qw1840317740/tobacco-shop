@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/stores/cart-store";
 import { toast } from "sonner";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, getLocalizedName } from "@/lib/utils";
 import { useTranslations, useLocale } from "next-intl";
 
 interface Product {
@@ -41,12 +41,6 @@ export default function WishlistPage() {
   const tNav = useTranslations("nav");
   const locale = useLocale();
 
-  function getLocalizedName(p: Product): string {
-    if (locale === "en" && p.nameEn) return p.nameEn;
-    if (locale === "zh" && p.nameZh) return p.nameZh;
-    return p.name;
-  }
-
   const loadWishlist = useCallback(async () => {
     const ids = getWishlistIds();
     if (ids.length === 0) {
@@ -73,7 +67,7 @@ export default function WishlistPage() {
   }, [loadWishlist]);
 
   const handleAddToCart = (product: Product) => {
-    const dn = getLocalizedName(product);
+    const dn = getLocalizedName(product, locale);
     addItem({
       productId: product.id,
       slug: product.slug,
@@ -107,7 +101,7 @@ export default function WishlistPage() {
         <div className="mt-8 space-y-4">
           {items.map((item) => {
             const regionLabel = tProduct(`regions.${item.region}`) || item.region;
-            const displayName = getLocalizedName(item);
+            const displayName = getLocalizedName(item, locale);
             return (
               <Card key={item.id} className="flex items-center gap-4 p-4">
                 <img src={item.image} alt={displayName} className="h-20 w-20 rounded-lg object-cover" />

@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "@/i18n/navigation";
 import { useCartStore } from "@/stores/cart-store";
 import { toast } from "sonner";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, getLocalizedName } from "@/lib/utils";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { useTranslations, useLocale } from "next-intl";
 
@@ -29,12 +29,6 @@ interface Product {
   tar: number;
   nicotine: number;
   desc: string;
-}
-
-function getLocalizedName(product: Product, locale: string): string {
-  if (locale === "en" && product.nameEn) return product.nameEn;
-  if (locale === "zh" && product.nameZh) return product.nameZh;
-  return product.name;
 }
 
 export function ProductDetailClient({ product }: { product: Product }) {

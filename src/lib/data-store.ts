@@ -124,6 +124,25 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
   return row ? toProduct(row) : null;
 }
 
+export async function searchProducts(query: string, limit?: number): Promise<Product[]> {
+  const rows = await db.product.findMany({
+    where: {
+      OR: [
+        { code:   { contains: query, mode: "insensitive" } },
+        { name:   { contains: query, mode: "insensitive" } },
+        { nameEn: { contains: query, mode: "insensitive" } },
+        { nameZh: { contains: query, mode: "insensitive" } },
+        { region: { contains: query, mode: "insensitive" } },
+        { type:   { contains: query, mode: "insensitive" } },
+        { desc:   { contains: query, mode: "insensitive" } },
+      ],
+    },
+    orderBy: { createdAt: "desc" },
+    ...(limit ? { take: limit } : {}),
+  });
+  return rows.map(toProduct);
+}
+
 export async function addProduct(prod: Omit<Product, "id"> & { id?: string }): Promise<Product> {
   const data = { id: `prod_${Date.now()}`, ...prod };
   const row = await db.product.create({ data });

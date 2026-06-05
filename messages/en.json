@@ -204,5 +204,17 @@
     "address2": "Building / Room",
     "city": "City",
     "prefecture": "Prefecture"
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search by name or code...",
+    "button": "Search",
+    "loading": "Searching...",
+    "noResults": "No products matching \"{query}\"",
+    "resultCount": "{count} products found",
+    "emptyHint": "Enter a keyword to search",
+    "headerPlaceholder": "Search products...",
+    "noSuggestions": "No matching products",
+    "viewAll": "View all results"
   }
 }

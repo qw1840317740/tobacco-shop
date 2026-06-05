@@ -204,5 +204,17 @@
     "address2": "楼栋/房间号",
     "city": "城市",
     "prefecture": "都道府县"
+  },
+  "search": {
+    "title": "搜索",
+    "placeholder": "按名称或烟号搜索...",
+    "button": "搜索",
+    "loading": "搜索中...",
+    "noResults": "没有匹配「{query}」的商品",
+    "resultCount": "找到 {count} 件商品",
+    "emptyHint": "请输入关键词搜索",
+    "headerPlaceholder": "搜索商品...",
+    "noSuggestions": "没有匹配的商品",
+    "viewAll": "查看全部结果"
   }
 }

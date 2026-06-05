@@ -204,5 +204,17 @@
     "address2": "建物名・部屋番号",
     "city": "市区町村",
     "prefecture": "都道府県"
+  },
+  "search": {
+    "title": "検索",
+    "placeholder": "商品名・烟号で検索...",
+    "button": "検索",
+    "loading": "検索中...",
+    "noResults": "「{query}」に一致する商品はありません",
+    "resultCount": "{count}件の商品が見つかりました",
+    "emptyHint": "キーワードを入力してください",
+    "headerPlaceholder": "商品を検索...",
+    "noSuggestions": "該当する商品がありません",
+    "viewAll": "すべての検索結果を見る"
   }
 }

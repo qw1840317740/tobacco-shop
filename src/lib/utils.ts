@@ -9,3 +9,13 @@ export function cn(...inputs: ClassValue[]) {
 export function formatPrice(price: number): string {
   return `¥${Math.round(price).toLocaleString()}`;
 }
+
+/** 根据语言获取本地化商品名称 */
+export function getLocalizedName(
+  product: { name: string; nameEn?: string; nameZh?: string },
+  locale: string
+): string {
+  if (locale === "en" && product.nameEn) return product.nameEn;
+  if (locale === "zh" && product.nameZh) return product.nameZh;
+  return product.name;
+}

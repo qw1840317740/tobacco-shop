@@ -4,7 +4,7 @@ import { useCartStore } from "@/stores/cart-store";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "@/i18n/navigation";
 import { toast } from "sonner";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, getLocalizedName } from "@/lib/utils";
 import { useTranslations, useLocale } from "next-intl";
 
 interface Product {
@@ -20,12 +20,6 @@ interface Product {
   region: string;
   inStock?: boolean;
   desc?: string;
-}
-
-function getLocalizedName(product: Product, locale: string): string {
-  if (locale === "en" && product.nameEn) return product.nameEn;
-  if (locale === "zh" && product.nameZh) return product.nameZh;
-  return product.name;
 }
 
 export function ProductCard({ product, dark }: { product: Product; dark?: boolean }) {
