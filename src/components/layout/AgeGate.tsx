@@ -14,8 +14,8 @@ export default function AgeGate() {
   const locale = (params?.locale as string) || "ja";
 
   const handleConfirm = () => {
-    document.cookie = "age_verified=true; path=/; max-age=31536000; samesite=lax";
-    // Full page reload to trigger middleware re-check with cookie
+    // Session cookie — no max-age means it expires when browser closes
+    document.cookie = "age_verified=true; path=/; samesite=lax";
     window.location.href = `/${locale}`;
   };
 

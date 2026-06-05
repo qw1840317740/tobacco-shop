@@ -54,7 +54,9 @@ export function proxy(request: NextRequest) {
   // Run i18n middleware first
   const response = intlMiddleware(request);
 
-  // Age verification check
+  // Age verification check — uses cookie set by client (sessionStorage-based)
+  // The client-side AgeGate sets this cookie on confirm; it has no max-age so it
+  // becomes a session cookie that expires when the browser is closed.
   const ageVerified = request.cookies.get("age_verified")?.value;
   const isAgeVerifyPage = pathname.includes("/age-verify");
 
