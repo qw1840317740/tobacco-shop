@@ -101,104 +101,148 @@ export default async function HomePage() {
       </div>
 
       {/* ===== BRAND SHOWCASE ===== */}
-      <section className="py-16 sm:py-20 bg-gradient-to-b from-stone-50/80 to-white">
-        <div className="pointer-events-none absolute right-0 top-0 h-96 w-96 rounded-full bg-primary/3 blur-[120px]" />
+      <section className="relative py-16 sm:py-20 overflow-hidden">
+        {/* Animated background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-50 via-white to-stone-50/80" />
+        <div className="pointer-events-none absolute -left-40 top-1/4 h-80 w-80 rounded-full bg-amber-200/20 blur-[100px] animate-pulse" />
+        <div className="pointer-events-none absolute -right-40 bottom-1/4 h-80 w-80 rounded-full bg-blue-200/20 blur-[100px] animate-pulse" style={{ animationDelay: "1s" }} />
+        <div className="pointer-events-none absolute left-1/2 top-0 h-60 w-60 rounded-full bg-purple-200/15 blur-[80px] animate-pulse" style={{ animationDelay: "2s" }} />
+
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
-          {/* Brand groups */}
-          <div className="mb-16">
-            <div className="mb-8 flex items-end justify-between">
-              <div>
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="h-px w-8 bg-gradient-to-r from-primary to-transparent" />
-                  <span className="text-[10px] font-bold tracking-[0.25em] text-primary uppercase">Brands</span>
-                </div>
-                <h2 className="font-heading text-3xl font-bold text-stone-800 sm:text-4xl">{t("brandsTitle")}</h2>
-                <p className="mt-1 text-sm text-stone-500">{t("brandsSubtitle")}</p>
-              </div>
-              <Link href="/categories" className="hidden sm:flex items-center gap-1 text-sm font-medium text-primary hover:gap-2 transition-all">
-                {t("viewAll")} <span>→</span>
-              </Link>
+          {/* Section header */}
+          <div className="mb-12 text-center">
+            <div className="inline-flex items-center gap-2 rounded-full bg-primary/5 px-4 py-1.5 mb-4">
+              <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+              <span className="text-[11px] font-bold tracking-[0.2em] text-primary uppercase">Brands</span>
             </div>
+            <h2 className="font-heading text-3xl font-bold text-stone-800 sm:text-4xl">{t("brandsTitle")}</h2>
+            <p className="mt-2 text-sm text-stone-400">{t("brandsSubtitle")}</p>
+          </div>
 
-            {/* 3 Group cards */}
-            <div className="grid gap-4 sm:grid-cols-3">
-              {(() => {
-                const groupMeta: Record<string, { key: string; colors: string; hoverColors: string; icon: string }> = {
-                  jt_japan: { key: "jt_japan", colors: "from-amber-50 to-orange-50 border-amber-200/60", hoverColors: "hover:from-amber-100 hover:to-orange-100 hover:border-amber-300", icon: "🇯🇵" },
-                  jt_international: { key: "jt_international", colors: "from-blue-50 to-sky-50 border-blue-200/60", hoverColors: "hover:from-blue-100 hover:to-sky-100 hover:border-blue-300", icon: "🌍" },
-                  ploom: { key: "ploom", colors: "from-purple-50 to-violet-50 border-purple-200/60", hoverColors: "hover:from-purple-100 hover:to-violet-100 hover:border-purple-300", icon: "🔥" },
-                };
+          {/* 3 Group showcase cards */}
+          {(() => {
+            const groups: Record<string, number> = {};
+            const gProducts: Record<string, number> = {};
+            for (const cat of categories) {
+              const g = cat.group || "other";
+              groups[g] = (groups[g] || 0) + 1;
+              gProducts[g] = (gProducts[g] || 0) + cat.count;
+            }
 
-                const groupOrder = ["jt_japan", "jt_international", "ploom"];
-                const groupNames: Record<string, string> = {};
-                const groupBrandCounts: Record<string, number> = {};
-                const groupProductCounts: Record<string, number> = {};
+            const groupData = [
+              {
+                key: "jt_japan",
+                icon: "🇯🇵",
+                bg: "bg-gradient-to-br from-amber-500 via-orange-500 to-red-500",
+                shadow: "shadow-amber-500/25",
+                hoverShadow: "hover:shadow-amber-500/40",
+                label: locale === "en" ? "JT Japanese Brands" : locale === "zh" ? "JT日本品牌" : "JT日本ブランド",
+                desc: locale === "en" ? "Premium domestic brands" : locale === "zh" ? "日本本土优质品牌" : "国内プレミアムブランド",
+              },
+              {
+                key: "jt_international",
+                icon: "🌍",
+                bg: "bg-gradient-to-br from-blue-500 via-sky-500 to-cyan-500",
+                shadow: "shadow-blue-500/25",
+                hoverShadow: "hover:shadow-blue-500/40",
+                label: locale === "en" ? "JT International Brands" : locale === "zh" ? "JT国际品牌" : "JT国際ブランド",
+                desc: locale === "en" ? "World-famous brands" : locale === "zh" ? "世界知名品牌" : "世界的ブランド",
+              },
+              {
+                key: "ploom",
+                icon: "🔥",
+                bg: "bg-gradient-to-br from-purple-500 via-violet-500 to-fuchsia-500",
+                shadow: "shadow-purple-500/25",
+                hoverShadow: "hover:shadow-purple-500/40",
+                label: locale === "en" ? "Ploom Heated Tobacco" : locale === "zh" ? "Ploom加热烟" : "Ploom加熱たばこ",
+                desc: locale === "en" ? "Next-gen heated tobacco" : locale === "zh" ? "新一代加热不燃烧" : "次世代加熱たばこ",
+              },
+            ];
 
-                for (const cat of categories) {
-                  const g = cat.group || "other";
-                  if (!groupNames[g]) { groupNames[g] = ""; groupBrandCounts[g] = 0; groupProductCounts[g] = 0; }
-                  groupBrandCounts[g]++;
-                  groupProductCounts[g] += cat.count;
-                }
-
-                // Get translations for group names
-                const jtJapanLabel = categories.find(c => c.group === "jt_japan") ? "JT日本ブランド" : "";
-                const jtIntlLabel = categories.find(c => c.group === "jt_international") ? "JT国際ブランド" : "";
-                const ploomLabel = categories.find(c => c.group === "ploom") ? "Ploom加熱たばこ" : "";
-
-                return groupOrder.map((gk) => {
-                  const meta = groupMeta[gk];
-                  if (!meta || !groupBrandCounts[gk]) return null;
+            return (
+              <div className="grid gap-5 sm:grid-cols-3">
+                {groupData.map((gd, idx) => {
+                  if (!groups[gd.key]) return null;
                   return (
                     <Link
-                      key={gk}
+                      key={gd.key}
                       href="/categories"
-                      className={`group relative overflow-hidden rounded-2xl border bg-gradient-to-br p-6 transition-all duration-300 ${meta.colors} ${meta.hoverColors}`}
+                      className={`group relative overflow-hidden rounded-3xl ${gd.bg} p-[1px] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] ${gd.shadow} ${gd.hoverShadow}`}
+                      style={{ animationDelay: `${idx * 150}ms` }}
                     >
-                      <div className="flex items-center gap-3 mb-3">
-                        <span className="text-2xl">{meta.icon}</span>
-                        <h3 className="text-base font-bold text-stone-700 group-hover:text-primary transition-colors">
-                          {gk === "jt_japan" ? jtJapanLabel : gk === "jt_international" ? jtIntlLabel : ploomLabel}
-                        </h3>
-                      </div>
-                      <div className="flex items-center gap-4 text-sm">
-                        <span className="text-stone-500">
-                          {t("brandCount", { count: groupBrandCounts[gk] })}
-                        </span>
-                        <span className="text-stone-400">•</span>
-                        <span className="font-semibold text-primary">
-                          {groupProductCounts[gk]}{locale === "en" ? " items" : locale === "zh" ? "件商品" : "商品"}
-                        </span>
-                      </div>
-                      <div className="absolute bottom-3 right-3 text-xs text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                        →
+                      <div className="relative h-full rounded-3xl bg-gradient-to-br from-white/95 to-white/80 backdrop-blur-sm p-6 sm:p-8">
+                        {/* Floating icon */}
+                        <div className="absolute -right-3 -top-3 text-5xl opacity-10 transition-all duration-500 group-hover:opacity-20 group-hover:scale-125">
+                          {gd.icon}
+                        </div>
+
+                        <div className="relative">
+                          <span className="text-3xl">{gd.icon}</span>
+                          <h3 className="mt-3 font-heading text-xl font-bold text-stone-800 transition-colors group-hover:text-primary">
+                            {gd.label}
+                          </h3>
+                          <p className="mt-1 text-sm text-stone-400">{gd.desc}</p>
+
+                          {/* Stats */}
+                          <div className="mt-5 flex items-center gap-3">
+                            <div className="rounded-full bg-stone-900/5 px-3 py-1">
+                              <span className="text-xs font-bold text-stone-700">
+                                {groups[gd.key]} {locale === "en" ? "brands" : locale === "zh" ? "品牌" : "ブランド"}
+                              </span>
+                            </div>
+                            <div className="rounded-full bg-primary/10 px-3 py-1">
+                              <span className="text-xs font-bold text-primary">
+                                {gProducts[gd.key]} {locale === "en" ? "items" : locale === "zh" ? "商品" : "商品"}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Arrow */}
+                          <div className="mt-5 flex items-center gap-1 text-xs font-medium text-primary opacity-0 translate-x-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1">
+                            {locale === "en" ? "Explore" : locale === "zh" ? "浏览" : "見る"} →
+                          </div>
+                        </div>
                       </div>
                     </Link>
                   );
-                });
-              })()}
-            </div>
+                })}
+              </div>
+            );
+          })()}
 
-            {/* Popular brands horizontal scroll */}
-            <div className="mt-6 -mx-4 px-4 overflow-x-auto scrollbar-hide">
-              <div className="flex gap-3 pb-2">
+          {/* Popular brands — pill carousel */}
+          <div className="mt-10">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-xs font-bold tracking-wider text-stone-400 uppercase">
+                {locale === "en" ? "Popular Brands" : locale === "zh" ? "热门品牌" : "人気ブランド"}
+              </span>
+              <Link href="/categories" className="text-xs font-medium text-primary hover:underline">
+                {t("viewAll")} →
+              </Link>
+            </div>
+            <div className="relative -mx-4 px-4">
+              {/* Fade edges */}
+              <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 z-10 bg-gradient-to-r from-stone-50 to-transparent" />
+              <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 z-10 bg-gradient-to-l from-stone-50 to-transparent" />
+              <div className="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide">
                 {categories
                   .filter((c) => c.count > 0)
                   .sort((a, b) => b.count - a.count)
-                  .map((cat) => (
+                  .map((cat, i) => (
                     <Link
                       key={cat.id}
                       href={`/categories/${cat.slug}`}
-                      className="group flex shrink-0 items-center gap-3 rounded-xl border border-stone-200/60 bg-white px-4 py-3 transition-all hover:border-primary/30 hover:shadow-md"
+                      className="group flex shrink-0 snap-start items-center gap-3 rounded-2xl border border-stone-200/50 bg-white px-5 py-3.5 shadow-sm transition-all duration-300 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5"
+                      style={{ animationDelay: `${i * 50}ms` }}
                     >
-                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-xs font-bold text-primary">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 text-sm font-bold text-primary transition-all duration-300 group-hover:from-primary group-hover:to-primary group-hover:text-white group-hover:shadow-md group-hover:shadow-primary/25">
                         {cat.nameJa.charAt(0)}
                       </div>
                       <div>
-                        <span className="text-sm font-semibold text-stone-700 group-hover:text-primary transition-colors whitespace-nowrap">
+                        <span className="block text-sm font-semibold text-stone-700 group-hover:text-primary transition-colors whitespace-nowrap">
                           {cat.nameJa}
                         </span>
-                        <span className="ml-2 text-xs text-stone-400">
+                        <span className="block text-[11px] text-stone-400">
                           {cat.count}{locale === "en" ? " items" : locale === "zh" ? "件" : "商品"}
                         </span>
                       </div>
@@ -207,9 +251,12 @@ export default async function HomePage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Featured Products */}
-          <div>
+      {/* ===== FEATURED PRODUCTS ===== */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
             <div className="mb-8 flex items-end justify-between">
               <div>
                 <div className="flex items-center gap-3 mb-3">
@@ -250,7 +297,6 @@ export default async function HomePage() {
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
-          </div>
         </div>
       </section>
 
