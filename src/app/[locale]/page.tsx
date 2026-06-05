@@ -1,8 +1,9 @@
 import { getTranslations } from "next-intl/server";
+import { setRequestLocale, getLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/product/ProductCard";
-import { getCategories, getFeaturedProducts, getProducts } from "@/lib/data-store";
+import { getCategories, getFeaturedProducts, getProducts, getProductsByCategory } from "@/lib/data-store";
 import { formatPrice } from "@/lib/utils";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
 
@@ -13,6 +14,7 @@ const HERO_IMAGES = {
 
 export default async function HomePage() {
   const t = await getTranslations("home");
+  const locale = await getLocale();
 
   const [categories, featuredProducts, allProducts] = await Promise.all([
     getCategories(),
@@ -20,7 +22,6 @@ export default async function HomePage() {
     getProducts(),
   ]);
 
-  const category = categories[0] ?? null;
   const editorsPick = featuredProducts[0] ?? allProducts[0] ?? null;
   const featuredCards = featuredProducts
     .filter((p) => p.id !== editorsPick?.id)
@@ -99,55 +100,110 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* ===== CATEGORY + FEATURED (merged) ===== */}
+      {/* ===== BRAND SHOWCASE ===== */}
       <section className="py-16 sm:py-20 bg-gradient-to-b from-stone-50/80 to-white">
         <div className="pointer-events-none absolute right-0 top-0 h-96 w-96 rounded-full bg-primary/3 blur-[120px]" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
-          {/* Category showcase — compact horizontal */}
+          {/* Brand groups */}
           <div className="mb-16">
             <div className="mb-8 flex items-end justify-between">
               <div>
                 <div className="flex items-center gap-3 mb-3">
                   <div className="h-px w-8 bg-gradient-to-r from-primary to-transparent" />
-                  <span className="text-[10px] font-bold tracking-[0.25em] text-primary uppercase">Categories</span>
+                  <span className="text-[10px] font-bold tracking-[0.25em] text-primary uppercase">Brands</span>
                 </div>
-                <h2 className="font-heading text-3xl font-bold text-stone-800 sm:text-4xl">カテゴリー</h2>
+                <h2 className="font-heading text-3xl font-bold text-stone-800 sm:text-4xl">{t("brandsTitle")}</h2>
+                <p className="mt-1 text-sm text-stone-500">{t("brandsSubtitle")}</p>
               </div>
-              <Link href="/products" className="hidden sm:flex items-center gap-1 text-sm font-medium text-primary hover:gap-2 transition-all">
-                すべて見る <span>→</span>
+              <Link href="/categories" className="hidden sm:flex items-center gap-1 text-sm font-medium text-primary hover:gap-2 transition-all">
+                {t("viewAll")} <span>→</span>
               </Link>
             </div>
-            <div className="grid gap-4 grid-cols-1 md:grid-cols-3 md:h-[280px]">
-              {category && (
-                <Link
-                  href={`/categories/${category.slug}`}
-                  className="group relative md:col-span-2 overflow-hidden rounded-2xl shadow-lg"
-                >
-                  <img src={category.image} alt={category.nameJa} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/5" />
-                  <div className="absolute inset-x-0 bottom-0 p-5">
-                    <span className="rounded-full bg-white/10 px-3 py-1 text-[10px] font-bold tracking-wider text-red-300 uppercase backdrop-blur-sm border border-white/10">{category.count}+</span>
-                    <h3 className="mt-2 font-heading text-xl font-bold text-white">{category.nameJa}</h3>
-                    <p className="mt-1 text-sm text-stone-300">{category.description}</p>
-                  </div>
-                </Link>
-              )}
-              <div className="flex flex-col gap-4">
-                <div className="relative flex-1 overflow-hidden rounded-2xl p-5 flex flex-col justify-center bg-gradient-to-br from-stone-900 to-stone-800">
-                  <div className="pointer-events-none absolute -left-8 top-0 h-32 w-32 rounded-full bg-primary/10 blur-[60px]" />
-                  <div className="relative">
-                    <div className="h-px w-8 bg-gradient-to-r from-primary to-transparent mb-3" />
-                    <p className="text-sm leading-relaxed text-stone-400">
-                      日本たばこ（JT）をはじめ、国内全メーカーの紙巻たばこを取り扱う専門店です。
-                    </p>
-                  </div>
-                </div>
-                <Link
-                  href="/products"
-                  className="group flex-1 overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-red-700 p-5 flex items-center justify-center text-white shadow-lg shadow-primary/20 transition-all hover:shadow-primary/30 hover:scale-[1.01]"
-                >
-                  <span className="font-heading text-base font-bold transition-transform group-hover:translate-x-1">全商品を見る →</span>
-                </Link>
+
+            {/* 3 Group cards */}
+            <div className="grid gap-4 sm:grid-cols-3">
+              {(() => {
+                const groupMeta: Record<string, { key: string; colors: string; hoverColors: string; icon: string }> = {
+                  jt_japan: { key: "jt_japan", colors: "from-amber-50 to-orange-50 border-amber-200/60", hoverColors: "hover:from-amber-100 hover:to-orange-100 hover:border-amber-300", icon: "🇯🇵" },
+                  jt_international: { key: "jt_international", colors: "from-blue-50 to-sky-50 border-blue-200/60", hoverColors: "hover:from-blue-100 hover:to-sky-100 hover:border-blue-300", icon: "🌍" },
+                  ploom: { key: "ploom", colors: "from-purple-50 to-violet-50 border-purple-200/60", hoverColors: "hover:from-purple-100 hover:to-violet-100 hover:border-purple-300", icon: "🔥" },
+                };
+
+                const groupOrder = ["jt_japan", "jt_international", "ploom"];
+                const groupNames: Record<string, string> = {};
+                const groupBrandCounts: Record<string, number> = {};
+                const groupProductCounts: Record<string, number> = {};
+
+                for (const cat of categories) {
+                  const g = cat.group || "other";
+                  if (!groupNames[g]) { groupNames[g] = ""; groupBrandCounts[g] = 0; groupProductCounts[g] = 0; }
+                  groupBrandCounts[g]++;
+                  groupProductCounts[g] += cat.count;
+                }
+
+                // Get translations for group names
+                const jtJapanLabel = categories.find(c => c.group === "jt_japan") ? "JT日本ブランド" : "";
+                const jtIntlLabel = categories.find(c => c.group === "jt_international") ? "JT国際ブランド" : "";
+                const ploomLabel = categories.find(c => c.group === "ploom") ? "Ploom加熱たばこ" : "";
+
+                return groupOrder.map((gk) => {
+                  const meta = groupMeta[gk];
+                  if (!meta || !groupBrandCounts[gk]) return null;
+                  return (
+                    <Link
+                      key={gk}
+                      href="/categories"
+                      className={`group relative overflow-hidden rounded-2xl border bg-gradient-to-br p-6 transition-all duration-300 ${meta.colors} ${meta.hoverColors}`}
+                    >
+                      <div className="flex items-center gap-3 mb-3">
+                        <span className="text-2xl">{meta.icon}</span>
+                        <h3 className="text-base font-bold text-stone-700 group-hover:text-primary transition-colors">
+                          {gk === "jt_japan" ? jtJapanLabel : gk === "jt_international" ? jtIntlLabel : ploomLabel}
+                        </h3>
+                      </div>
+                      <div className="flex items-center gap-4 text-sm">
+                        <span className="text-stone-500">
+                          {t("brandCount", { count: groupBrandCounts[gk] })}
+                        </span>
+                        <span className="text-stone-400">•</span>
+                        <span className="font-semibold text-primary">
+                          {groupProductCounts[gk]}{locale === "en" ? " items" : locale === "zh" ? "件商品" : "商品"}
+                        </span>
+                      </div>
+                      <div className="absolute bottom-3 right-3 text-xs text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                        →
+                      </div>
+                    </Link>
+                  );
+                });
+              })()}
+            </div>
+
+            {/* Popular brands horizontal scroll */}
+            <div className="mt-6 -mx-4 px-4 overflow-x-auto scrollbar-hide">
+              <div className="flex gap-3 pb-2">
+                {categories
+                  .filter((c) => c.count > 0)
+                  .sort((a, b) => b.count - a.count)
+                  .map((cat) => (
+                    <Link
+                      key={cat.id}
+                      href={`/categories/${cat.slug}`}
+                      className="group flex shrink-0 items-center gap-3 rounded-xl border border-stone-200/60 bg-white px-4 py-3 transition-all hover:border-primary/30 hover:shadow-md"
+                    >
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-xs font-bold text-primary">
+                        {cat.nameJa.charAt(0)}
+                      </div>
+                      <div>
+                        <span className="text-sm font-semibold text-stone-700 group-hover:text-primary transition-colors whitespace-nowrap">
+                          {cat.nameJa}
+                        </span>
+                        <span className="ml-2 text-xs text-stone-400">
+                          {cat.count}{locale === "en" ? " items" : locale === "zh" ? "件" : "商品"}
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
               </div>
             </div>
           </div>

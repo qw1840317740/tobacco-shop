@@ -73,7 +73,10 @@
     "reason3Title": "Direct from Japan",
     "reason3Desc": "Authentic products",
     "reason4Title": "Expert Guides",
-    "reason4Desc": "For beginners & experts"
+    "reason4Desc": "For beginners & experts",
+    "brandsTitle": "Brands",
+    "brandsSubtitle": "Shop by Brand",
+    "brandCount": "{count} brands"
   },
   "product": {
     "description": "Description",

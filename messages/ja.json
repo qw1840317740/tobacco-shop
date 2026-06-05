@@ -73,7 +73,10 @@
     "reason3Title": "日本から直送",
     "reason3Desc": "正規品のみ",
     "reason4Title": "専門ガイド",
-    "reason4Desc": "初心者から上級者まで"
+    "reason4Desc": "初心者から上級者まで",
+    "brandsTitle": "ブランド",
+    "brandsSubtitle": "ブランドから選ぶ",
+    "brandCount": "{count}ブランド"
   },
   "product": {
     "description": "商品説明",

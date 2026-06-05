@@ -73,7 +73,10 @@
     "reason3Title": "日本直邮",
     "reason3Desc": "正品保证",
     "reason4Title": "专业指南",
-    "reason4Desc": "从入门到精通"
+    "reason4Desc": "从入门到精通",
+    "brandsTitle": "品牌",
+    "brandsSubtitle": "按品牌选购",
+    "brandCount": "{count}个品牌"
   },
   "product": {
     "description": "商品描述",
