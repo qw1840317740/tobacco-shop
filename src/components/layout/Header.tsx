@@ -8,6 +8,7 @@ import { useCartStore } from "@/stores/cart-store";
 import { useUIStore } from "@/stores/ui-store";
 import AuthButton from "@/components/auth/AuthButton";
 import { SearchDropdown } from "./SearchDropdown";
+import Image from "next/image";
 
 function CartBadge() {
   const totalItems = useCartStore((s) => s.totalItems);
@@ -46,10 +47,13 @@ export default function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center group">
-          <img
+          <Image
             src="/images/logo.png"
             alt="TABACOYA"
+            width={40}
+            height={40}
             className="h-9 sm:h-10 w-auto object-contain rounded-lg"
+            priority
           />
         </Link>
 

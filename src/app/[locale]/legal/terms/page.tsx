@@ -1,5 +1,12 @@
 import { Link } from "@/i18n/navigation";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "利用規約",
+  description:
+    "TABACOYAの利用規約。たばこ製品のオンライン販売に関するご利用条件、年齢確認、支払い、配送、返品について定めています。",
+};
 
 export default function TermsPage() {
   return (

@@ -1,5 +1,33 @@
 import { Link } from "@/i18n/navigation";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const data: Record<string, { title: string; description: string }> = {
+    ja: {
+      title: "当店について",
+      description:
+        "TABACOYA（タバコ屋）は日本製たばこの専門オンラインショップ。2001年設立、500銘柄以上のプレミアムたばこを正規品として全国にお届けします。",
+    },
+    en: {
+      title: "About Us",
+      description:
+        "TABACOYA is a specialty online shop for authentic Japanese cigarettes. Established in 2001, we deliver 500+ premium brands across Japan with guaranteed authenticity.",
+    },
+    zh: {
+      title: "关于我们",
+      description:
+        "TABACOYA是日本制造香烟的专营网店。成立于2001年，以正品保证向全国配送500种以上的优质香烟。",
+    },
+  };
+  const d = data[locale] ?? data.ja;
+  return { title: d.title, description: d.description };
+}
 
 export default function AboutPage() {
   return (

@@ -4,6 +4,34 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Link } from "@/i18n/navigation";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const data: Record<string, { title: string; description: string }> = {
+    ja: {
+      title: "お問い合わせ",
+      description:
+        "TABACOYAへのお問い合わせはこちら。商品・ご注文・配送・返品に関するご質問にお答えします。平日9:00〜18:00対応。",
+    },
+    en: {
+      title: "Contact Us",
+      description:
+        "Contact TABACOYA for questions about products, orders, shipping, and returns. We respond on weekdays 9:00–18:00 JST.",
+    },
+    zh: {
+      title: "联系我们",
+      description:
+        "TABACOYA联系方式。商品、订单、配送、退货相关问题请在此咨询。工作日9:00〜18:00。",
+    },
+  };
+  const d = data[locale] ?? data.ja;
+  return { title: d.title, description: d.description };
+}
 
 export default function ContactPage() {
   return (

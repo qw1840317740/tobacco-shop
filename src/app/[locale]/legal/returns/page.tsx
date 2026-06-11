@@ -1,5 +1,12 @@
 import { Link } from "@/i18n/navigation";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "返品ポリシー",
+  description:
+    "TABACOYAの返品ポリシー。商品不良・誤配送の場合の返品・交換手続き、返金方法についてご説明します。",
+};
 
 export default function ReturnPolicyPage() {
   return (

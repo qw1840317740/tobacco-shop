@@ -1,6 +1,44 @@
 import { getTranslations } from "next-intl/server";
 import { setRequestLocale, getLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import type { Metadata } from "next";
+import Image from "next/image";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+
+  const data: Record<string, { title: string; description: string }> = {
+    ja: {
+      title: "日本製たばこ専門オンラインショップ",
+      description:
+        "TABACOYA（タバコ屋）は日本製たばこの専門オンラインショップ。JT国内ブランド・国際ブランド・Ploom加熱たばこなど500銘柄以上を厳選してお届けします。",
+    },
+    en: {
+      title: "Premium Japanese Cigarettes Online Shop",
+      description:
+        "TABACOYA is a specialty online shop for authentic Japanese cigarettes. Browse 500+ curated brands including JT domestic, international, and Ploom heated tobacco.",
+    },
+    zh: {
+      title: "日本制造香烟专营网店",
+      description:
+        "TABACOYA是日本制造香烟的专营网店。精选JT国内品牌、国际品牌、Ploom加热烟等500种以上的优质香烟。",
+    },
+  };
+  const d = data[locale] ?? data.ja;
+
+  return {
+    title: d.title,
+    description: d.description,
+    openGraph: {
+      title: `${d.title} | TABACOYA`,
+      description: d.description,
+    },
+  };
+}
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/product/ProductCard";
 import { getCategories, getFeaturedProducts, getProducts, getProductsByCategory } from "@/lib/data-store";
@@ -33,10 +71,13 @@ export default async function HomePage() {
       {/* ===== HERO — Split-screen ===== */}
       <section className="relative min-h-[85vh] grid lg:grid-cols-2">
         <div className="relative hidden lg:block">
-          <img
+          <Image
             src={HERO_IMAGES.main}
             alt="Premium Japanese cigarettes"
-            className="absolute inset-0 h-full w-full object-cover"
+            fill
+            className="object-cover"
+            priority
+            sizes="(max-width: 1024px) 100vw, 50vw"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-stone-950/60" />
           <div className="absolute bottom-12 left-12 rounded-2xl border border-white/10 bg-black/40 p-5 backdrop-blur-xl shadow-2xl">
@@ -48,7 +89,7 @@ export default async function HomePage() {
         <div className="relative flex items-center bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950 px-8 py-16 lg:px-16">
           <div className="pointer-events-none absolute -right-32 top-1/4 h-64 w-64 rounded-full bg-primary/5 blur-[100px]" />
           <div className="absolute inset-0 lg:hidden">
-            <img src={HERO_IMAGES.main} alt="" className="h-full w-full object-cover" />
+            <Image src={HERO_IMAGES.main} alt="" fill className="object-cover" priority sizes="100vw" />
             <div className="absolute inset-0 bg-black/80" />
           </div>
 
@@ -267,7 +308,7 @@ export default async function HomePage() {
               {editorsPick && (
                 <div className="col-span-2 row-span-2 hidden lg:block">
                   <div className="group relative h-full overflow-hidden rounded-2xl shadow-2xl">
-                    <img src={editorsPick.image} alt={editorsPick.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                    <Image src={editorsPick.image} alt={editorsPick.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" sizes="(max-width: 1024px) 100vw, 50vw" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 p-6">
                       <span className="rounded-full bg-white/10 px-3 py-1 text-[10px] font-bold tracking-wider text-red-300 uppercase backdrop-blur-sm border border-white/10">Editor&apos;s Pick</span>
@@ -297,7 +338,7 @@ export default async function HomePage() {
       {/* ===== ABOUT STRIP (compact) ===== */}
       <section className="relative py-16 sm:py-20">
         <div className="absolute inset-0">
-          <img src={HERO_IMAGES.barn} alt="Tobacco barn" className="h-full w-full object-cover" loading="lazy" />
+          <Image src={HERO_IMAGES.barn} alt="Tobacco barn" fill className="object-cover" loading="lazy" sizes="100vw" />
           <div className="absolute inset-0 bg-gradient-to-b from-stone-900/90 via-stone-900/80 to-stone-900/90" />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6">

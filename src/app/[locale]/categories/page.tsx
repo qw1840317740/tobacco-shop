@@ -1,4 +1,34 @@
 import { getAllCategories, getProductsByCategory } from "@/lib/data-store";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const data: Record<string, { title: string; description: string }> = {
+    ja: {
+      title: "ブランド一覧",
+      description:
+        "TABACOYA取扱いの全ブランド一覧。JT日本ブランド・JT国際ブランド・Ploom加熱たばこからお好きな銘柄をお探しください。",
+    },
+    en: {
+      title: "All Brands",
+      description:
+        "Browse all cigarette brands available at TABACOYA. Find your favorite from JT Japanese, JT International, and Ploom heated tobacco brands.",
+    },
+    zh: {
+      title: "品牌一览",
+      description:
+        "TABACOYA全品牌一览。从JT日本品牌、JT国际品牌和Ploom加热烟中找到您喜欢的品牌。",
+    },
+  };
+  const d = data[locale] ?? data.ja;
+  return { title: d.title, description: d.description };
+}
+
+// Must be separate from generateMetadata import — this file also imports getTranslations below.
 import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";

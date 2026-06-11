@@ -1,5 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 export default function Footer() {
   const t = useTranslations("footer");
@@ -19,9 +20,11 @@ export default function Footer() {
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="inline-block rounded-lg bg-white/10 p-2">
-              <img
+              <Image
                 src="/images/logo.png"
                 alt="TABACOYA"
+                width={36}
+                height={36}
                 className="h-9 w-auto object-contain"
               />
             </div>

@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { formatPrice, getLocalizedName } from "@/lib/utils";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { useTranslations, useLocale } from "next-intl";
+import Image from "next/image";
 
 interface Product {
   id: string;
@@ -67,8 +68,8 @@ export function ProductDetailClient({ product }: { product: Product }) {
       </div>
 
       <div className="grid gap-8 lg:grid-cols-2">
-        <div className="aspect-square overflow-hidden rounded-xl bg-stone-100">
-          <img src={product.image} alt={displayName} className="h-full w-full object-cover" />
+        <div className="relative aspect-square overflow-hidden rounded-xl bg-stone-100">
+          <Image src={product.image} alt={displayName} fill className="object-cover" priority sizes="(max-width: 1024px) 100vw, 50vw" />
         </div>
         <div>
           <div className="flex items-center gap-2">

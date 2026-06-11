@@ -1,5 +1,12 @@
 import { Link } from "@/i18n/navigation";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "年齢確認ポリシー",
+  description:
+    "TABACOYAの年齢確認ポリシー。たばこ製品の販売における年齢確認の方法、身分証明書、20歳未満の購入禁止について説明しています。",
+};
 
 export default function AgeVerificationPage() {
   return (

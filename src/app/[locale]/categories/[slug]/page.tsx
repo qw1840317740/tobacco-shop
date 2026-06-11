@@ -2,10 +2,44 @@ import { notFound } from "next/navigation";
 import { getCategoryBySlug, getProductsByCategory } from "@/lib/data-store";
 import { ProductCard } from "@/components/product/ProductCard";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { BreadcrumbJsonLd } from "@/components/seo-json-ld";
 import { Badge } from "@/components/ui/badge";
 import { getTranslations } from "next-intl/server";
 import { setRequestLocale } from "next-intl/server";
 import { formatPrice } from "@/lib/utils";
+import type { Metadata } from "next";
+
+const SITE_URL = "https://tabacoya.jp";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const category = await getCategoryBySlug(slug);
+  if (!category) return {};
+
+  const name =
+    locale === "en" && category.nameEn
+      ? category.nameEn
+      : locale === "zh" && category.nameZh
+        ? category.nameZh
+        : category.nameJa;
+
+  const desc =
+    category.description ||
+    `${name}の全商品一覧。TABACOYAで${name}のたばこをオンライン購入。`;
+
+  return {
+    title: name,
+    description: desc.slice(0, 160),
+    openGraph: {
+      title: `${name} | TABACOYA`,
+      description: desc.slice(0, 160),
+    },
+  };
+}
 
 const groupStyles: Record<string, { gradient: string; badge: string; icon: string }> = {
   jt_japan: {
@@ -57,6 +91,10 @@ export default async function CategoryPage({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+      <BreadcrumbJsonLd items={[
+        { name: tNav("brands"), url: `${SITE_URL}/${locale}/categories` },
+        { name: localizedName, url: `${SITE_URL}/${locale}/categories/${slug}` },
+      ]} />
       <Breadcrumb items={[
         { label: tNav("brands"), href: "/categories" },
         { label: localizedName },

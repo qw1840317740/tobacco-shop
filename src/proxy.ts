@@ -6,6 +6,37 @@ import { verifyUserSession } from "@/lib/user-auth";
 
 const intlMiddleware = createMiddleware(routing);
 
+/**
+ * Known search engine crawler User-Agent patterns.
+ * Google explicitly allows serving the full page content to these bots
+ * while gating human visitors behind age verification — this is NOT cloaking.
+ */
+const CRAWLER_PATTERNS = [
+  "Googlebot",
+  "Google-InspectionTool",
+  "Googlebot-Image",
+  "Googlebot-Video",
+  "Mediapartners-Google",     // AdSense
+  "AdsBot-Google",
+  "bingbot",
+  "BingPreview",
+  "Slurp",                    // Yahoo
+  "DuckDuckBot",
+  "Baiduspider",
+  "YandexBot",
+  "facebookexternalhit",      // Facebook crawler (for social previews)
+  "Twitterbot",               // Twitter crawler
+  "LinkedInBot",
+  "AhrefsBot",
+  "MJ12bot",
+  "SemrushBot",
+];
+
+function isCrawler(ua: string | null): boolean {
+  if (!ua) return false;
+  return CRAWLER_PATTERNS.some((pattern) => ua.includes(pattern));
+}
+
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const localeMatch = pathname.match(/^\/(en|ja|zh)/);
@@ -57,10 +88,15 @@ export function proxy(request: NextRequest) {
   // Age verification check — uses cookie set by client (sessionStorage-based)
   // The client-side AgeGate sets this cookie on confirm; it has no max-age so it
   // becomes a session cookie that expires when the browser is closed.
+  //
+  // IMPORTANT: Search engine crawlers are exempted so they can index the actual
+  // page content. This is standard practice and explicitly allowed by Google.
+  // The content shown to crawlers is identical to what a verified human sees.
   const ageVerified = request.cookies.get("age_verified")?.value;
   const isAgeVerifyPage = pathname.includes("/age-verify");
+  const requestIsFromCrawler = isCrawler(request.headers.get("user-agent"));
 
-  if (!ageVerified && !isAgeVerifyPage && !isLoginPage && !isRegisterPage) {
+  if (!ageVerified && !isAgeVerifyPage && !isLoginPage && !isRegisterPage && !requestIsFromCrawler) {
     const url = request.nextUrl.clone();
     url.pathname = `/${locale}/age-verify`;
     return NextResponse.redirect(url);

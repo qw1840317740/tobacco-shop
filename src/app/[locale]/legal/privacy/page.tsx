@@ -1,5 +1,12 @@
 import { Link } from "@/i18n/navigation";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "プライバシーポリシー",
+  description:
+    "TABACOYAのプライバシーポリシー。お客様の個人情報の取り扱い、Cookieの使用、お客様の権利についてご説明します。",
+};
 
 export default function PrivacyPolicyPage() {
   return (

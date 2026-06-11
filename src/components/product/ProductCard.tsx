@@ -6,6 +6,7 @@ import { Link } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { formatPrice, getLocalizedName } from "@/lib/utils";
 import { useTranslations, useLocale } from "next-intl";
+import Image from "next/image";
 
 interface Product {
   id: string;
@@ -53,11 +54,13 @@ export function ProductCard({ product, dark }: { product: Product; dark?: boolea
     }`}>
       <Link href={`/products/${product.slug}`}>
         <div className={`relative aspect-square overflow-hidden ${dark ? "bg-stone-800" : "bg-stone-50"}`}>
-          <img
+          <Image
             src={product.image}
             alt={displayName}
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-110"
             loading="lazy"
+            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
 

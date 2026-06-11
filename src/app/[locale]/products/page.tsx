@@ -1,6 +1,36 @@
 import { getProducts } from "@/lib/data-store";
 import { ProductCard } from "@/components/product/ProductCard";
 import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+
+  const data: Record<string, { title: string; description: string }> = {
+    ja: {
+      title: "商品一覧",
+      description:
+        "日本製たばこ500銘柄以上の商品一覧。JT国内ブランド・国際ブランド・Ploom加熱たばこを幅広く取り揃えています。",
+    },
+    en: {
+      title: "All Products",
+      description:
+        "Browse our full collection of 500+ authentic Japanese cigarettes, including JT domestic brands, international brands, and Ploom heated tobacco.",
+    },
+    zh: {
+      title: "全部商品",
+      description:
+        "浏览500种以上的日本制造香烟全系列，包括JT国内品牌、国际品牌和Ploom加热烟。",
+    },
+  };
+  const d = data[locale] ?? data.ja;
+
+  return { title: d.title, description: d.description };
+}
 
 export default async function ProductsPage() {
   const products = await getProducts();
