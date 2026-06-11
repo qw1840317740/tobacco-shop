@@ -56,7 +56,8 @@
     "guide": "Beginner's Guide",
     "about": "About Us",
     "contact": "Contact",
-    "brands": "Brands"
+    "brands": "Brands",
+    "blog": "Blog"
   },
   "home": {
     "hero": "Discover Premium Japanese Cigarettes",
@@ -245,5 +246,15 @@
     "priceRange": "From ¥{min}",
     "fromJapan": "Made in Japan",
     "heatedTobacco": "Heated Tobacco"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Deep dives into the world of Japanese tobacco",
+    "readMore": "Read more",
+    "publishedOn": "Published on {date}",
+    "backToBlog": "← Back to Blog",
+    "allArticles": "All Articles",
+    "noArticles": "No articles yet",
+    "brandHistory": "Brand History"
   }
 }

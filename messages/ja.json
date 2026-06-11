@@ -56,7 +56,8 @@
     "guide": "初心者ガイド",
     "about": "店舗情報",
     "contact": "お問い合わせ",
-    "brands": "ブランド一覧"
+    "brands": "ブランド一覧",
+    "blog": "ブログ"
   },
   "home": {
     "hero": "日本製プレミアムたばこを探す",
@@ -245,5 +246,15 @@
     "priceRange": "¥{min}〜",
     "fromJapan": "日本製",
     "heatedTobacco": "加熱たばこ"
+  },
+  "blog": {
+    "title": "ブログ",
+    "subtitle": "日本たばこの魅力を深掘りする記事",
+    "readMore": "続きを読む",
+    "publishedOn": "{date}に公開",
+    "backToBlog": "← ブログ一覧に戻る",
+    "allArticles": "記事一覧",
+    "noArticles": "記事はまだありません",
+    "brandHistory": "ブランド史"
   }
 }

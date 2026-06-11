@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { getCategories, getProducts } from "@/lib/data-store";
+import { getAllPosts } from "@/lib/blog-data";
 
 const SITE_URL = "https://tabacoya.jp";
 const LOCALES = ["ja", "en", "zh"];
@@ -19,8 +20,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getProducts(),
   ]);
 
+  const blogPosts = getAllPosts();
+
   // Static pages (no locale prefix needed — one entry per locale)
-  const staticPaths = ["", "/products", "/categories", "/about", "/guide", "/contact"];
+  const staticPaths = ["", "/products", "/categories", "/about", "/guide", "/contact", "/blog"];
   const staticEntries: MetadataRoute.Sitemap = [];
   for (const path of staticPaths) {
     for (const locale of LOCALES) {
@@ -70,5 +73,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  return [...staticEntries, ...categoryEntries, ...productEntries];
+  // Blog article pages
+  const blogEntries: MetadataRoute.Sitemap = [];
+  for (const post of blogPosts) {
+    for (const locale of LOCALES) {
+      blogEntries.push({
+        url: `${SITE_URL}/${locale}/blog/${post.slug}`,
+        lastModified: new Date(post.publishedAt),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+      });
+    }
+  }
+
+  return [...staticEntries, ...categoryEntries, ...productEntries, ...blogEntries];
 }

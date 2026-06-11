@@ -34,6 +34,7 @@ export default function Header() {
     { href: "/products", label: tNav("products") },
     { href: "/categories", label: tNav("brands") },
     { href: "/guide", label: tNav("guide") },
+    { href: "/blog", label: tNav("blog") },
   ];
 
   return (

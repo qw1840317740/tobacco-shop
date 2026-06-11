@@ -89,3 +89,45 @@ export function BreadcrumbJsonLd({
     />
   );
 }
+
+export function ArticleJsonLd({
+  headline,
+  description,
+  image,
+  datePublished,
+  authorName,
+  url,
+}: {
+  headline: string;
+  description: string;
+  image: string;
+  datePublished: string;
+  authorName: string;
+  url: string;
+}) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline,
+    description,
+    image,
+    datePublished,
+    url,
+    author: {
+      "@type": "Organization",
+      name: authorName,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "TABACOYA",
+      url: "https://tabacoya.jp",
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}

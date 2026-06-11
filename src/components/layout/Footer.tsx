@@ -41,6 +41,7 @@ export default function Footer() {
             <ul className="space-y-2.5 text-sm">
               <li><Link href="/products" className="text-stone-500 transition-colors hover:text-primary">{tNav("products")}</Link></li>
               <li><Link href="/guide" className="text-stone-500 transition-colors hover:text-primary">{tNav("guide")}</Link></li>
+              <li><Link href="/blog" className="text-stone-500 transition-colors hover:text-primary">{tNav("blog")}</Link></li>
               <li><Link href="/about" className="text-stone-500 transition-colors hover:text-primary">{tNav("about")}</Link></li>
               <li><Link href="/contact" className="text-stone-500 transition-colors hover:text-primary">{tNav("contact")}</Link></li>
             </ul>

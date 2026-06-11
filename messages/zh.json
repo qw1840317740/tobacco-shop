@@ -56,7 +56,8 @@
     "guide": "新手指南",
     "about": "关于我们",
     "contact": "联系我们",
-    "brands": "品牌列表"
+    "brands": "品牌列表",
+    "blog": "博客"
   },
   "home": {
     "hero": "探索日本优质香烟",
@@ -245,5 +246,15 @@
     "priceRange": "¥{min}起",
     "fromJapan": "日本制造",
     "heatedTobacco": "加热烟"
+  },
+  "blog": {
+    "title": "博客",
+    "subtitle": "深入探索日本香烟的世界",
+    "readMore": "阅读全文",
+    "publishedOn": "发布于 {date}",
+    "backToBlog": "← 返回博客",
+    "allArticles": "全部文章",
+    "noArticles": "暂无文章",
+    "brandHistory": "品牌历史"
   }
 }
