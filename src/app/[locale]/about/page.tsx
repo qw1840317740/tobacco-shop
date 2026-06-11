@@ -1,6 +1,7 @@
 import { Link } from "@/i18n/navigation";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { getTranslations } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -36,6 +37,7 @@ export default async function AboutPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("about");
 
   return (

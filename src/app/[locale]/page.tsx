@@ -45,10 +45,15 @@ export async function generateMetadata({
   };
 }
 
-export default async function HomePage() {
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("home");
   const tBrands = await getTranslations("brands");
-  const locale = await getLocale();
 
   const [categories, featuredProducts, allProducts] = await Promise.all([
     getCategories(),

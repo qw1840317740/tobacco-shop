@@ -1,6 +1,7 @@
 import { getProducts } from "@/lib/data-store";
 import { ProductCard } from "@/components/product/ProductCard";
 import { getTranslations } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -32,7 +33,13 @@ export async function generateMetadata({
   return { title: d.title, description: d.description };
 }
 
-export default async function ProductsPage() {
+export default async function ProductsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const products = await getProducts();
   const t = await getTranslations("nav");
   const tProduct = await getTranslations("product");

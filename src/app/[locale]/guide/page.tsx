@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { getTranslations } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import Image from "next/image";
 import type { Metadata } from "next";
 
@@ -43,6 +44,7 @@ export default async function GuidePage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("guidePage");
 
   // Access the guides array from translations
