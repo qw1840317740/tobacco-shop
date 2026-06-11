@@ -68,6 +68,7 @@ export default async function CategoryPage({
   setRequestLocale(locale);
   const tBrands = await getTranslations("brands");
   const tNav = await getTranslations("nav");
+  const tCommon = await getTranslations("common");
 
   const category = await getCategoryBySlug(slug);
   if (!category) notFound();
@@ -139,7 +140,7 @@ export default async function CategoryPage({
                 <span className="text-sm font-bold text-stone-700">{products.length}</span>
               </div>
               <div className="flex items-center gap-2 rounded-lg bg-white/70 px-3 py-1.5">
-                <span className="text-xs text-stone-400">{locale === "en" ? "Price" : locale === "zh" ? "价格" : "価格"}</span>
+                <span className="text-xs text-stone-400">{tCommon("price")}</span>
                 <span className="text-sm font-bold text-primary">
                   {minPrice === maxPrice ? formatPrice(minPrice) : `${formatPrice(minPrice)} 〜 ${formatPrice(maxPrice)}`}
                 </span>
@@ -163,8 +164,7 @@ export default async function CategoryPage({
         <div className="mt-8">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-lg font-semibold text-stone-700">
-              {locale === "en" ? "All Products" : locale === "zh" ? "全部商品" : "全商品"}
-            </h2>
+              {tBrands("viewProducts")}            </h2>
             <span className="text-sm text-stone-400">{tBrands("productCount", { count: products.length })}</span>
           </div>
           <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">

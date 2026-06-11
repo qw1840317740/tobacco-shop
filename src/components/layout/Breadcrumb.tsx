@@ -1,5 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import { ChevronRight, Home } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface BreadcrumbItem {
   label: string;
@@ -7,11 +8,13 @@ interface BreadcrumbItem {
 }
 
 export function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
+  const t = useTranslations("nav");
+
   return (
     <nav className="mb-6 flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-stone-50 to-stone-100/50 px-4 py-2.5 text-sm border border-stone-200/50 backdrop-blur-sm">
       <Link href="/" className="flex items-center gap-1 text-stone-400 transition-colors hover:text-primary">
         <Home className="h-3.5 w-3.5" />
-        <span className="hidden sm:inline">ホーム</span>
+        <span className="hidden sm:inline">{t("home")}</span>
       </Link>
       {items.map((item, i) => (
         <span key={i} className="flex items-center gap-1.5">
