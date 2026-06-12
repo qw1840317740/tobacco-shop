@@ -87,10 +87,6 @@ export default async function HomePage({
           </div>
 
           <div className="relative max-w-lg">
-            <div className="mb-5 flex items-center gap-3">
-              <div className="h-px w-12 bg-gradient-to-r from-primary to-primary/40" />
-              <span className="text-xs font-bold tracking-[0.3em] text-primary/70 uppercase">Est. 2001</span>
-            </div>
             <h1 className="font-heading text-4xl font-bold leading-[1.15] text-white sm:text-5xl">
               {t("heroTitle")}
               <br />
