@@ -67,20 +67,20 @@ export default async function HomePage({
     .slice(0, 5);
 
   return (
-    <div className="overflow-hidden">
+    <div>
       {/* ===== HERO — Split-screen ===== */}
       <section className="relative min-h-[85vh] grid lg:grid-cols-2">
         <div className="relative hidden lg:block">
           <Image src={HERO_IMAGES.main} alt="Premium Japanese cigarettes" fill className="object-cover" priority sizes="(max-width: 1024px) 100vw, 50vw" />
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-stone-950/60" />
-          <div className="absolute bottom-12 left-12 rounded-2xl border border-white/10 bg-black/40 p-5 backdrop-blur-xl shadow-2xl">
+          <div className="absolute bottom-12 left-12 rounded-2xl border border-white/10 bg-black/70 p-5 shadow-2xl">
             <p className="text-4xl font-heading font-bold text-red-400">500+</p>
             <p className="mt-1 text-sm text-stone-300">{t("heroBrands")}</p>
           </div>
         </div>
 
         <div className="relative flex items-center bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950 px-8 py-16 lg:px-16">
-          <div className="pointer-events-none absolute -right-32 top-1/4 h-64 w-64 rounded-full bg-primary/5 blur-[100px]" />
+          <div className="pointer-events-none absolute -right-32 top-1/4 h-64 w-64 rounded-full bg-primary/5 opacity-50" />
           <div className="absolute inset-0 lg:hidden">
             <Image src={HERO_IMAGES.main} alt="" fill className="object-cover" priority sizes="100vw" />
             <div className="absolute inset-0 bg-black/80" />
@@ -104,7 +104,7 @@ export default async function HomePage({
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
                 </span>
               </Link>
-              <Link href="/guide" className="inline-flex h-12 items-center rounded-full border border-stone-700 bg-white/5 px-6 text-sm font-medium text-stone-300 backdrop-blur-sm transition-all hover:border-stone-500 hover:bg-white/10 hover:text-white">
+              <Link href="/guide" className="inline-flex h-12 items-center rounded-full border border-stone-700 bg-stone-800/50 px-6 text-sm font-medium text-stone-300 transition-all hover:border-stone-500 hover:bg-stone-800 hover:text-white">
                 {t("heroCtaGuide")}
               </Link>
             </div>
@@ -115,7 +115,7 @@ export default async function HomePage({
       {/* ===== MARQUEE STRIP ===== */}
       <div className="relative bg-gradient-to-r from-primary via-red-700 to-primary py-2 overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Ccircle%20cx%3D%221%22%20cy%3D%221%22%20r%3D%221%22%20fill%3D%22white%22%20fill-opacity%3D%220.1%22%2F%3E%3C%2Fsvg%3E')] opacity-50" />
-        <div className="relative flex animate-[marquee_30s_linear_infinite] whitespace-nowrap">
+        <div className="relative flex animate-[marquee_30s_linear_infinite] whitespace-nowrap" style={{ willChange: 'transform' }}>
           {[...Array(3)].map((_, i) => (
             <span key={i} className="mx-8 text-xs font-bold tracking-widest text-red-100 uppercase">
               {t("marqueeText")}
@@ -127,9 +127,6 @@ export default async function HomePage({
       {/* ===== BRAND SHOWCASE ===== */}
       <section className="relative py-16 sm:py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-stone-50 via-white to-stone-50/80" />
-        <div className="pointer-events-none absolute -left-40 top-1/4 h-80 w-80 rounded-full bg-amber-200/20 blur-[100px] animate-pulse" />
-        <div className="pointer-events-none absolute -right-40 bottom-1/4 h-80 w-80 rounded-full bg-blue-200/20 blur-[100px] animate-pulse" style={{ animationDelay: "1s" }} />
-        <div className="pointer-events-none absolute left-1/2 top-0 h-60 w-60 rounded-full bg-purple-200/15 blur-[80px] animate-pulse" style={{ animationDelay: "2s" }} />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mb-12 text-center">
@@ -162,7 +159,7 @@ export default async function HomePage({
                   if (!groups[gd.key]) return null;
                   return (
                     <Link key={gd.key} href={`/categories?group=${gd.key}`} className={`group relative overflow-hidden rounded-3xl ${gd.bg} p-[1px] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] ${gd.shadow} ${gd.hoverShadow}`} style={{ animationDelay: `${idx * 150}ms` }}>
-                      <div className="relative h-full rounded-3xl bg-gradient-to-br from-white/95 to-white/80 backdrop-blur-sm p-6 sm:p-8">
+                      <div className="relative h-full rounded-3xl bg-white/90 p-6 sm:p-8">
                         <div className="absolute -right-3 -top-3 text-5xl opacity-10 transition-all duration-500 group-hover:opacity-20 group-hover:scale-125">{gd.icon}</div>
                         <div className="relative">
                           <span className="text-3xl">{gd.icon}</span>
@@ -234,7 +231,7 @@ export default async function HomePage({
                   <Image src={editorsPick.image} alt={editorsPick.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" sizes="(max-width: 1024px) 100vw, 50vw" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 p-6">
-                    <span className="rounded-full bg-white/10 px-3 py-1 text-[10px] font-bold tracking-wider text-red-300 uppercase backdrop-blur-sm border border-white/10">Editor&apos;s Pick</span>
+                    <span className="rounded-full bg-black/50 px-3 py-1 text-[10px] font-bold tracking-wider text-red-300 uppercase border border-white/10">Editor&apos;s Pick</span>
                     <h3 className="mt-2 font-heading text-xl font-bold text-white">{editorsPick.name}</h3>
                     <p className="mt-1 text-sm text-stone-400 line-clamp-2">{editorsPick.desc}</p>
                     <div className="mt-3 flex items-center gap-3">
@@ -273,7 +270,7 @@ export default async function HomePage({
               { num: "100%", label: t("statAuthentic") },
               { num: "🇯🇵", label: t("statMadeInJapan") },
             ].map((s) => (
-              <div key={s.label} className="group rounded-2xl p-4 text-center backdrop-blur-sm bg-white/5 border border-white/10 transition-all hover:bg-white/10 hover:border-white/20">
+              <div key={s.label} className="group rounded-2xl p-4 text-center bg-white/5 border border-white/10 transition-all hover:bg-white/10 hover:border-white/20">
                 <p className="font-heading text-2xl font-bold text-red-400 transition-transform group-hover:scale-110 sm:text-3xl">{s.num}</p>
                 <p className="mt-1 text-sm font-medium text-white">{s.label}</p>
               </div>
@@ -283,9 +280,7 @@ export default async function HomePage({
       </section>
 
       {/* ===== NEWSLETTER ===== */}
-      <section className="relative py-12 overflow-hidden bg-gradient-to-br from-primary via-red-700 to-red-900">
-        <div className="pointer-events-none absolute -left-20 top-0 h-48 w-48 rounded-full bg-white/5 blur-[80px]" />
-        <div className="pointer-events-none absolute -right-20 bottom-0 h-48 w-48 rounded-full bg-white/5 blur-[80px]" />
+      <section className="relative py-12 bg-gradient-to-br from-primary via-red-700 to-red-900">
         <div className="relative mx-auto max-w-2xl px-4 text-center sm:px-6">
           <span className="text-[10px] font-bold tracking-[0.3em] text-red-200/80 uppercase">Newsletter</span>
           <h2 className="mt-2 font-heading text-2xl font-bold text-white sm:text-3xl">{t("newsletterTitle")}</h2>

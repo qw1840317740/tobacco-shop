@@ -38,10 +38,10 @@ export default function Header() {
   ];
 
   return (
-    <header className={`sticky top-0 z-40 backdrop-blur-lg transition-colors duration-500 ${
+    <header className={`sticky top-0 z-40 backdrop-blur-sm transition-colors duration-300 ${
       isHome
-        ? "bg-stone-950/80 border-b border-white/5"
-        : "bg-background/80 border-b border-border"
+        ? "bg-stone-950/95 border-b border-white/5"
+        : "bg-background/95 border-b border-border"
     }`}>
       {/* Subtle top accent line */}
       <div className="h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent" />

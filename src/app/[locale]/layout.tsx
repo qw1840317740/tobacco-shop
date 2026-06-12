@@ -70,8 +70,6 @@ export default async function LocaleLayout({
         <OrganizationJsonLd />
         <Header />
         <main className="flex-1 bg-gradient-to-b from-stone-50/50 to-white">
-          {/* Subtle dot grid texture */}
-          <div className="pointer-events-none fixed inset-0 opacity-[0.015]" style={{ backgroundImage: "radial-gradient(circle, #000 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
           <div className="relative">
             {children}
           </div>
