@@ -2,7 +2,10 @@ import { getProducts } from "@/lib/data-store";
 import { ProductCard } from "@/components/product/ProductCard";
 import { getTranslations } from "next-intl/server";
 import { setRequestLocale } from "next-intl/server";
+import { routing } from "@/lib/routing";
 import type { Metadata } from "next";
+
+const SITE_URL = "https://tabacoya.jp";
 
 export async function generateMetadata({
   params,
@@ -30,7 +33,20 @@ export async function generateMetadata({
   };
   const d = data[locale] ?? data.ja;
 
-  return { title: d.title, description: d.description };
+  const languages: Record<string, string> = {};
+  for (const loc of routing.locales) {
+    languages[loc] = `${SITE_URL}/${loc}/products`;
+  }
+  languages["x-default"] = `${SITE_URL}/${routing.defaultLocale}/products`;
+
+  return {
+    title: d.title,
+    description: d.description,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/products`,
+      languages,
+    },
+  };
 }
 
 export default async function ProductsPage({

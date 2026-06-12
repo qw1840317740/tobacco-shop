@@ -1,4 +1,5 @@
 import { db } from "./db";
+import { randomUUID } from "crypto";
 
 export interface Category {
   id: string;
@@ -84,7 +85,7 @@ export async function getCategoryBySlug(slug: string): Promise<Category | null> 
 }
 
 export async function addCategory(cat: Omit<Category, "id"> & { id?: string }): Promise<Category> {
-  const data = { id: `cat_${Date.now()}`, ...cat };
+  const data = { id: `cat_${randomUUID()}`, ...cat };
   const row = await db.category.create({ data });
   return toCategory(row);
 }
@@ -146,7 +147,7 @@ export async function searchProducts(query: string, limit?: number): Promise<Pro
 }
 
 export async function addProduct(prod: Omit<Product, "id"> & { id?: string }): Promise<Product> {
-  const data = { id: `prod_${Date.now()}`, ...prod };
+  const data = { id: `prod_${randomUUID()}`, ...prod };
   const row = await db.product.create({ data });
   return toProduct(row);
 }

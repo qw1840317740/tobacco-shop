@@ -1,26 +1,28 @@
 "use client";
 
 import { useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import { useAuthStore } from "@/stores/auth-store";
 import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const params = useParams();
-  const locale = (params?.locale as string) || "ja";
+  const locale = useLocale();
   const router = useRouter();
   const setUser = useAuthStore((s) => s.setUser);
+  const t = useTranslations("auth");
 
   const handleLogin = async () => {
     if (!email.trim() || !password.trim()) {
-      toast.error("メールアドレスとパスワードを入力してください");
+      toast.error(t("fillEmailAndPassword"));
       return;
     }
     setLoading(true);
@@ -33,13 +35,13 @@ export default function LoginPage() {
       const data = await res.json();
       if (res.ok && data.success) {
         setUser(data.user);
-        toast.success("ログインしました");
+        toast.success(t("loginSuccess"));
         router.push(`/${locale}`);
       } else {
-        toast.error(data.error || "ログインに失敗しました");
+        toast.error(data.error || t("loginFailed"));
       }
     } catch {
-      toast.error("通信エラーが発生しました");
+      toast.error(t("loginFailed"));
     } finally {
       setLoading(false);
     }
@@ -53,14 +55,14 @@ export default function LoginPage() {
           <div className="inline-block rounded-lg bg-white/10 p-2.5">
             <img src="/images/logo.png" alt="TABACOYA" className="h-10 w-auto object-contain" />
           </div>
-          <p className="mt-2 text-sm text-stone-400">ログイン</p>
+          <p className="mt-2 text-sm text-stone-400">{t("loginTitle")}</p>
           <div className="mx-auto mt-4 h-px w-16 bg-primary" />
         </div>
 
         {/* Form */}
         <div className="p-6 space-y-4">
           <div>
-            <label className="mb-1 block text-xs font-medium text-stone-500">メールアドレス</label>
+            <label className="mb-1 block text-xs font-medium text-stone-500">{t("email")}</label>
             <Input
               type="email"
               value={email}
@@ -71,7 +73,7 @@ export default function LoginPage() {
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-stone-500">パスワード</label>
+            <label className="mb-1 block text-xs font-medium text-stone-500">{t("password")}</label>
             <Input
               type="password"
               value={password}
@@ -85,11 +87,11 @@ export default function LoginPage() {
             onClick={handleLogin}
             disabled={loading}
           >
-            {loading ? "ログイン中..." : "ログイン"}
+            {loading ? t("loggingIn") : t("loginButton")}
           </Button>
           <p className="text-center text-xs text-stone-400">
-            アカウントをお持ちでない方は{" "}
-            <Link href="/register" className="text-primary hover:underline">新規登録</Link>
+            {t("noAccount")}{" "}
+            <Link href="/register" className="text-primary hover:underline">{t("registerTitle")}</Link>
           </p>
         </div>
       </Card>

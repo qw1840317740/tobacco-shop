@@ -1,5 +1,8 @@
 import { getAllCategories, getProductsByCategory } from "@/lib/data-store";
+import { routing } from "@/lib/routing";
 import type { Metadata } from "next";
+
+const SITE_URL = "https://tabacoya.jp";
 
 export async function generateMetadata({
   params,
@@ -25,7 +28,21 @@ export async function generateMetadata({
     },
   };
   const d = data[locale] ?? data.ja;
-  return { title: d.title, description: d.description };
+
+  const languages: Record<string, string> = {};
+  for (const loc of routing.locales) {
+    languages[loc] = `${SITE_URL}/${loc}/categories`;
+  }
+  languages["x-default"] = `${SITE_URL}/${routing.defaultLocale}/categories`;
+
+  return {
+    title: d.title,
+    description: d.description,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/categories`,
+      languages,
+    },
+  };
 }
 
 // Must be separate from generateMetadata import — this file also imports getTranslations below.

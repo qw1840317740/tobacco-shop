@@ -2,7 +2,10 @@ import { Link } from "@/i18n/navigation";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { getTranslations } from "next-intl/server";
 import { setRequestLocale } from "next-intl/server";
+import { routing } from "@/lib/routing";
 import type { Metadata } from "next";
+
+const SITE_URL = "https://tabacoya.jp";
 
 export async function generateMetadata({
   params,
@@ -28,7 +31,21 @@ export async function generateMetadata({
     },
   };
   const d = data[locale] ?? data.ja;
-  return { title: d.title, description: d.description };
+
+  const languages: Record<string, string> = {};
+  for (const loc of routing.locales) {
+    languages[loc] = `${SITE_URL}/${loc}/about`;
+  }
+  languages["x-default"] = `${SITE_URL}/${routing.defaultLocale}/about`;
+
+  return {
+    title: d.title,
+    description: d.description,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/about`,
+      languages,
+    },
+  };
 }
 
 export default async function AboutPage({

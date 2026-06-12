@@ -1,12 +1,50 @@
 import { Link } from "@/i18n/navigation";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { routing } from "@/lib/routing";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "プライバシーポリシー",
-  description:
-    "TABACOYAのプライバシーポリシー。お客様の個人情報の取り扱い、Cookieの使用、お客様の権利についてご説明します。",
-};
+const SITE_URL = "https://tabacoya.jp";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const data: Record<string, { title: string; description: string }> = {
+    ja: {
+      title: "プライバシーポリシー",
+      description:
+        "TABACOYAのプライバシーポリシー。お客様の個人情報の取り扱い、Cookieの使用、お客様の権利についてご説明します。",
+    },
+    en: {
+      title: "Privacy Policy",
+      description:
+        "TABACOYA privacy policy. Learn how we handle your personal information, cookies, and your rights.",
+    },
+    zh: {
+      title: "隐私政策",
+      description:
+        "TABACOYA隐私政策。了解我们如何处理您的个人信息、Cookie的使用以及您的权利。",
+    },
+  };
+  const d = data[locale] ?? data.ja;
+
+  const languages: Record<string, string> = {};
+  for (const loc of routing.locales) {
+    languages[loc] = `${SITE_URL}/${loc}/legal/privacy`;
+  }
+  languages["x-default"] = `${SITE_URL}/${routing.defaultLocale}/legal/privacy`;
+
+  return {
+    title: d.title,
+    description: d.description,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/legal/privacy`,
+      languages,
+    },
+  };
+}
 
 export default function PrivacyPolicyPage() {
   return (

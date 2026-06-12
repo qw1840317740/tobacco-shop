@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
 import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 interface OrderItem {
   productId: string;
@@ -30,17 +31,19 @@ interface Order {
   createdAt: string;
 }
 
-const statusMap: Record<string, { label: string; color: string }> = {
-  pending: { label: "未入金", color: "bg-amber-100 text-amber-700" },
-  paid: { label: "入金確認済", color: "bg-blue-100 text-blue-700" },
-  shipped: { label: "発送済", color: "bg-green-100 text-green-700" },
-  delivered: { label: "配達完了", color: "bg-stone-100 text-stone-600" },
-  cancelled: { label: "キャンセル", color: "bg-red-100 text-red-600" },
+const statusColorMap: Record<string, string> = {
+  pending: "bg-amber-100 text-amber-700",
+  paid: "bg-blue-100 text-blue-700",
+  shipped: "bg-green-100 text-green-700",
+  delivered: "bg-stone-100 text-stone-600",
+  cancelled: "bg-red-100 text-red-600",
 };
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const t = useTranslations("orders");
+  const tCommon = useTranslations("common");
 
   useEffect(() => {
     fetch("/api/orders")
@@ -57,26 +60,32 @@ export default function OrdersPage() {
   if (loading) {
     return (
       <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
-        <p className="text-stone-500">読み込み中...</p>
+        <p className="text-stone-500">{tCommon("loading")}</p>
       </div>
     );
   }
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
-      <h1 className="font-heading text-3xl font-bold text-stone-800">注文履歴</h1>
+      <h1 className="font-heading text-3xl font-bold text-stone-800">{t("title")}</h1>
 
       {orders.length === 0 ? (
         <Card className="mt-8 p-8 text-center">
-          <p className="text-stone-500">注文履歴はありません</p>
+          <p className="text-stone-500">{t("noOrders")}</p>
           <Link href="/products">
-            <Button variant="outline" className="mt-3" size="sm">商品一覧を見る</Button>
+            <Button variant="outline" className="mt-3" size="sm">{t("viewProducts")}</Button>
           </Link>
         </Card>
       ) : (
         <div className="mt-8 space-y-4">
           {orders.map((order) => {
-            const status = statusMap[order.status] || statusMap.pending;
+            const color = statusColorMap[order.status] || statusColorMap.pending;
+            const statusLabel = order.status === "pending" ? t("pending")
+              : order.status === "paid" ? t("paid")
+              : order.status === "shipped" ? t("shipped")
+              : order.status === "delivered" ? t("delivered")
+              : order.status === "cancelled" ? t("cancelled")
+              : t("pending");
             const date = new Date(order.createdAt).toLocaleDateString("ja-JP");
             return (
               <Card key={order.id} className="p-6">
@@ -85,11 +94,11 @@ export default function OrdersPage() {
                     <p className="text-sm font-mono text-stone-500">{order.id}</p>
                     <p className="text-xs text-stone-400">{date}</p>
                     <p className="text-xs text-stone-400 mt-1">
-                      配送先: {order.shippingName} / {order.shippingAddress}
+                      {t("shippingTo")}: {order.shippingName} / {order.shippingAddress}
                     </p>
                   </div>
                   <div className="text-right">
-                    <Badge className={`${status.color} border-0`}>{status.label}</Badge>
+                    <Badge className={`${color} border-0`}>{statusLabel}</Badge>
                     <p className="mt-1 text-lg font-bold text-primary">{formatPrice(order.total)}</p>
                   </div>
                 </div>
@@ -106,7 +115,7 @@ export default function OrdersPage() {
                     </div>
                   ))}
                   <div className="mt-2 border-t pt-2 flex justify-between text-xs text-stone-400">
-                    <span>小計 {formatPrice(order.subtotal)} + 送料 {formatPrice(order.shippingFee)} + 税 {formatPrice(order.tax)}</span>
+                    <span>{t("breakdown", { subtotal: formatPrice(order.subtotal), shipping: formatPrice(order.shippingFee), tax: formatPrice(order.tax) })}</span>
                   </div>
                 </div>
               </Card>

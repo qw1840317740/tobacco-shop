@@ -3,10 +3,14 @@ import { createHmac, timingSafeEqual } from "crypto";
 // Stateless user session — mirrors admin-auth.ts pattern
 // Token format: base64(json{userId,email,role,iat}).hmacSignature
 
-const SESSION_SECRET = process.env.SESSION_SECRET || "tabacoya-session-secret-key-2026";
+const SESSION_SECRET = process.env.SESSION_SECRET;
+if (!SESSION_SECRET) {
+  console.warn("[WARN] SESSION_SECRET is not set. Using insecure default. Set SESSION_SECRET in .env for production.");
+}
+const SECRET = SESSION_SECRET || "tabacoya-session-secret-key-2026-dev-only";
 
 function sign(data: string): string {
-  return createHmac("sha256", SESSION_SECRET).update(data).digest("hex");
+  return createHmac("sha256", SECRET).update(data).digest("hex");
 }
 
 export function createUserSession(user: {
@@ -27,7 +31,7 @@ export function createUserSession(user: {
   const token = `${encoded}.${signature}`;
   return {
     token,
-    cookieString: `user_session=${token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=86400`,
+    cookieString: `user_session=${token}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=86400`,
   };
 }
 
@@ -68,7 +72,7 @@ export function verifyUserSession(
 }
 
 export function getUserLogoutCookie(): string {
-  return "user_session=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0";
+  return "user_session=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0";
 }
 
 function parseCookie(header: string, name: string): string | null {

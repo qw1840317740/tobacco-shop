@@ -1,12 +1,50 @@
 import { Link } from "@/i18n/navigation";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { routing } from "@/lib/routing";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "配送ポリシー",
-  description:
-    "TABACOYAの配送ポリシー。日本国内の送料、お届け日数、配送状況の確認についてご説明します。5,000円以上で送料無料。",
-};
+const SITE_URL = "https://tabacoya.jp";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const data: Record<string, { title: string; description: string }> = {
+    ja: {
+      title: "配送ポリシー",
+      description:
+        "TABACOYAの配送ポリシー。日本国内の送料、お届け日数、配送状況の確認についてご説明します。5,000円以上で送料無料。",
+    },
+    en: {
+      title: "Shipping Policy",
+      description:
+        "TABACOYA shipping policy. Learn about domestic shipping fees, delivery times, and order tracking. Free shipping on orders over ¥5,000.",
+    },
+    zh: {
+      title: "配送政策",
+      description:
+        "TABACOYA配送政策。了解日本国内运费、送达时间和配送状态确认。满5,000日元免运费。",
+    },
+  };
+  const d = data[locale] ?? data.ja;
+
+  const languages: Record<string, string> = {};
+  for (const loc of routing.locales) {
+    languages[loc] = `${SITE_URL}/${loc}/legal/shipping`;
+  }
+  languages["x-default"] = `${SITE_URL}/${routing.defaultLocale}/legal/shipping`;
+
+  return {
+    title: d.title,
+    description: d.description,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/legal/shipping`,
+      languages,
+    },
+  };
+}
 
 export default function ShippingPolicyPage() {
   return (

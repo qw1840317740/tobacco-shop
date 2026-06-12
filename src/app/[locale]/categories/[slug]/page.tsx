@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { getTranslations } from "next-intl/server";
 import { setRequestLocale } from "next-intl/server";
 import { formatPrice } from "@/lib/utils";
+import { routing } from "@/lib/routing";
 import type { Metadata } from "next";
 
 const SITE_URL = "https://tabacoya.jp";
@@ -31,9 +32,19 @@ export async function generateMetadata({
     category.description ||
     `${name}の全商品一覧。TABACOYAで${name}のたばこをオンライン購入。`;
 
+  const languages: Record<string, string> = {};
+  for (const loc of routing.locales) {
+    languages[loc] = `${SITE_URL}/${loc}/categories/${slug}`;
+  }
+  languages["x-default"] = `${SITE_URL}/${routing.defaultLocale}/categories/${slug}`;
+
   return {
     title: name,
     description: desc.slice(0, 160),
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/categories/${slug}`,
+      languages,
+    },
     openGraph: {
       title: `${name} | TABACOYA`,
       description: desc.slice(0, 160),

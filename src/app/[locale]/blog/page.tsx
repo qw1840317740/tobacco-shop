@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { BreadcrumbJsonLd } from "@/components/seo-json-ld";
 import { getAllPosts, getLocalizedPost } from "@/lib/blog-data";
+import { routing } from "@/lib/routing";
 import Image from "next/image";
 import type { Metadata } from "next";
 
@@ -32,7 +33,21 @@ export async function generateMetadata({
     },
   };
   const d = data[locale] ?? data.ja;
-  return { title: d.title, description: d.description };
+
+  const languages: Record<string, string> = {};
+  for (const loc of routing.locales) {
+    languages[loc] = `${SITE_URL}/${loc}/blog`;
+  }
+  languages["x-default"] = `${SITE_URL}/${routing.defaultLocale}/blog`;
+
+  return {
+    title: d.title,
+    description: d.description,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/blog`,
+      languages,
+    },
+  };
 }
 
 export default async function BlogPage({

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,15 +13,17 @@ import {
 import { useAuthStore, AuthUser } from "@/stores/auth-store";
 import { Link } from "@/i18n/navigation";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 export default function AuthButton({ isHome = false }: { isHome?: boolean }) {
   const user = useAuthStore((s) => s.user);
   const setUser = useAuthStore((s) => s.setUser);
   const hydrated = useAuthStore((s) => s._hydrated);
-  const params = useParams();
-  const locale = (params?.locale as string) || "ja";
+  const locale = useLocale();
   const router = useRouter();
   const [checked, setChecked] = useState(false);
+  const t = useTranslations("auth");
 
   // Hydrate from server session on mount
   useEffect(() => {
@@ -44,10 +46,10 @@ export default function AuthButton({ isHome = false }: { isHome?: boolean }) {
     try {
       await fetch("/api/user-auth", { method: "DELETE" });
       setUser(null);
-      toast.success("ログアウトしました");
+      toast.success(t("logoutSuccess"));
       router.push(`/${locale}`);
     } catch {
-      toast.error("ログアウトに失敗しました");
+      toast.error(t("logoutFailed"));
     }
   };
 
@@ -74,17 +76,17 @@ export default function AuthButton({ isHome = false }: { isHome?: boolean }) {
           </div>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => router.push(`/${locale}/profile`)} className="cursor-pointer">
-            プロフィール
+            {t("profile")}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => router.push(`/${locale}/orders`)} className="cursor-pointer">
-            注文履歴
+            {t("orders")}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => router.push(`/${locale}/profile/addresses`)} className="cursor-pointer">
-            住所管理
+            {t("addresses")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600">
-            ログアウト
+            {t("logout")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -95,12 +97,12 @@ export default function AuthButton({ isHome = false }: { isHome?: boolean }) {
     <div className="flex items-center gap-1">
       <Link href="/login">
         <Button variant="ghost" size="sm" className={`text-xs ${textColor}`}>
-          ログイン
+          {t("loginButton")}
         </Button>
       </Link>
       <Link href="/register" className="hidden sm:inline-flex">
         <Button size="sm" className="text-xs bg-primary text-white hover:bg-primary/90">
-          新規登録
+          {t("registerTitle")}
         </Button>
       </Link>
     </div>

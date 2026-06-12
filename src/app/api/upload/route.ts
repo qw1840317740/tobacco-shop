@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFileSync, mkdirSync } from "fs";
-import { join } from "path";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
+
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const MAX_SIZE = 5 * 1024 * 1024; // 5MB
 
 export async function POST(request: NextRequest) {
   if (!isAdminAuthenticated(request.headers.get("cookie"))) {
@@ -16,20 +17,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
-    const uploadDir = join(process.cwd(), "public", "uploads");
-    mkdirSync(uploadDir, { recursive: true });
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      return NextResponse.json({ error: "Invalid file type. Allowed: JPEG, PNG, WebP, GIF" }, { status: 400 });
+    }
 
-    const ext = file.name.split(".").pop() || "jpg";
-    const filename = `${Date.now()}-${Math.random().toString(36).substring(7)}.${ext}`;
-    const filepath = join(uploadDir, filename);
+    if (file.size > MAX_SIZE) {
+      return NextResponse.json({ error: "File too large. Max 5MB" }, { status: 400 });
+    }
 
+    // Convert to base64 data URL — works on Vercel (no filesystem needed)
     const buffer = Buffer.from(await file.arrayBuffer());
-    writeFileSync(filepath, buffer);
+    const base64 = `data:${file.type};base64,${buffer.toString("base64")}`;
 
     return NextResponse.json({
       success: true,
-      url: `/uploads/${filename}`,
-      filename,
+      url: base64,
     });
   } catch (error) {
     console.error("Upload error:", error);

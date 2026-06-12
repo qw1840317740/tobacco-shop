@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/admin/", "/api/", "/age-verify", "/checkout", "/profile", "/orders", "/wishlist"],
+        disallow: ["/admin/", "/api/", "/age-verify", "/checkout", "/profile", "/orders", "/wishlist", "/search"],
       },
     ],
     sitemap: "https://tabacoya.jp/sitemap.xml",

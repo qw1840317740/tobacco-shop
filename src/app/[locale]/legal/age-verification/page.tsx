@@ -1,12 +1,50 @@
 import { Link } from "@/i18n/navigation";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { routing } from "@/lib/routing";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "年齢確認ポリシー",
-  description:
-    "TABACOYAの年齢確認ポリシー。たばこ製品の販売における年齢確認の方法、身分証明書、20歳未満の購入禁止について説明しています。",
-};
+const SITE_URL = "https://tabacoya.jp";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const data: Record<string, { title: string; description: string }> = {
+    ja: {
+      title: "年齢確認ポリシー",
+      description:
+        "TABACOYAの年齢確認ポリシー。たばこ製品の販売における年齢確認の方法、身分証明書、20歳未満の購入禁止について説明しています。",
+    },
+    en: {
+      title: "Age Verification Policy",
+      description:
+        "TABACOYA age verification policy. Learn about our age verification methods, accepted ID documents, and underage purchase prohibition.",
+    },
+    zh: {
+      title: "年龄确认政策",
+      description:
+        "TABACOYA年龄确认政策。了解烟草制品销售中的年龄确认方法、身份证明文件以及禁止未满20岁购买的规定。",
+    },
+  };
+  const d = data[locale] ?? data.ja;
+
+  const languages: Record<string, string> = {};
+  for (const loc of routing.locales) {
+    languages[loc] = `${SITE_URL}/${loc}/legal/age-verification`;
+  }
+  languages["x-default"] = `${SITE_URL}/${routing.defaultLocale}/legal/age-verification`;
+
+  return {
+    title: d.title,
+    description: d.description,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/legal/age-verification`,
+      languages,
+    },
+  };
+}
 
 export default function AgeVerificationPage() {
   return (

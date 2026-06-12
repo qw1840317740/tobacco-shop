@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import { useAuthStore } from "@/stores/auth-store";
 import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -15,36 +17,36 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const params = useParams();
-  const locale = (params?.locale as string) || "ja";
+  const locale = useLocale();
   const router = useRouter();
   const setUser = useAuthStore((s) => s.setUser);
+  const t = useTranslations("auth");
 
   const handleRegister = async () => {
     if (!name.trim() || !email.trim() || !password.trim()) {
-      toast.error("すべての項目を入力してください");
+      toast.error(t("fillAllFields"));
       return;
     }
     // Email format check
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
-      toast.error("正しいメールアドレスを入力してください");
+      toast.error(t("invalidEmailFormat"));
       return;
     }
     if (name.trim().length < 2) {
-      toast.error("氏名は2文字以上入力してください");
+      toast.error(t("nameTooShort"));
       return;
     }
     if (password.length < 6) {
-      toast.error("パスワードは6文字以上必要です");
+      toast.error(t("passwordTooShort"));
       return;
     }
     if (!/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) {
-      toast.error("パスワードは英字と数字をそれぞれ含めてください");
+      toast.error(t("passwordNeedsAlphaNum"));
       return;
     }
     if (password !== confirmPassword) {
-      toast.error("パスワードが一致しません");
+      toast.error(t("passwordMismatch"));
       return;
     }
 
@@ -58,13 +60,13 @@ export default function RegisterPage() {
       const data = await res.json();
       if (res.ok && data.success) {
         setUser(data.user);
-        toast.success("登録が完了しました");
+        toast.success(t("registerSuccess"));
         router.push(`/${locale}`);
       } else {
-        toast.error(data.error || "登録に失敗しました");
+        toast.error(data.error || t("registerFailed"));
       }
     } catch {
-      toast.error("通信エラーが発生しました");
+      toast.error(t("registerFailed"));
     } finally {
       setLoading(false);
     }
@@ -78,23 +80,23 @@ export default function RegisterPage() {
           <div className="inline-block rounded-lg bg-white/10 p-2.5">
             <img src="/images/logo.png" alt="TABACOYA" className="h-10 w-auto object-contain" />
           </div>
-          <p className="mt-2 text-sm text-stone-400">新規登録</p>
+          <p className="mt-2 text-sm text-stone-400">{t("registerTitle")}</p>
           <div className="mx-auto mt-4 h-px w-16 bg-primary" />
         </div>
 
         {/* Form */}
         <div className="p-6 space-y-4">
           <div>
-            <label className="mb-1 block text-xs font-medium text-stone-500">氏名</label>
+            <label className="mb-1 block text-xs font-medium text-stone-500">{t("name")}</label>
             <Input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="山田 太郎"
+              placeholder={t("namePlaceholder")}
               autoFocus
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-stone-500">メールアドレス</label>
+            <label className="mb-1 block text-xs font-medium text-stone-500">{t("email")}</label>
             <Input
               type="email"
               value={email}
@@ -103,22 +105,22 @@ export default function RegisterPage() {
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-stone-500">パスワード</label>
+            <label className="mb-1 block text-xs font-medium text-stone-500">{t("password")}</label>
             <Input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="6文字以上"
+              placeholder={t("passwordPlaceholder")}
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-stone-500">パスワード確認</label>
+            <label className="mb-1 block text-xs font-medium text-stone-500">{t("confirmPassword")}</label>
             <Input
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleRegister()}
-              placeholder="パスワードを再入力"
+              placeholder={t("confirmPasswordPlaceholder")}
             />
           </div>
           <Button
@@ -126,11 +128,11 @@ export default function RegisterPage() {
             onClick={handleRegister}
             disabled={loading}
           >
-            {loading ? "登録中..." : "登録する"}
+            {loading ? t("registering") : t("registerButton")}
           </Button>
           <p className="text-center text-xs text-stone-400">
-            アカウントをお持ちの方は{" "}
-            <Link href="/login" className="text-primary hover:underline">ログイン</Link>
+            {t("hasAccount")}{" "}
+            <Link href="/login" className="text-primary hover:underline">{t("loginTitle")}</Link>
           </p>
         </div>
       </Card>

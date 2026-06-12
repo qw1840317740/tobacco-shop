@@ -3,10 +3,14 @@ import { createHmac, timingSafeEqual } from "crypto";
 // Stateless session — no file storage needed (works on Vercel)
 // Token format: base64(json{adminId,username,role,iat}).hmacSignature
 
-const SESSION_SECRET = process.env.SESSION_SECRET || "tabacoya-session-secret-key-2026";
+const SESSION_SECRET = process.env.SESSION_SECRET;
+if (!SESSION_SECRET) {
+  console.warn("[WARN] SESSION_SECRET is not set. Using insecure default. Set SESSION_SECRET in .env for production.");
+}
+const SECRET = SESSION_SECRET || "tabacoya-session-secret-key-2026-dev-only";
 
 function sign(data: string): string {
-  return createHmac("sha256", SESSION_SECRET).update(data).digest("hex");
+  return createHmac("sha256", SECRET).update(data).digest("hex");
 }
 
 export function createSession(admin: {
@@ -25,7 +29,7 @@ export function createSession(admin: {
   const token = `${encoded}.${signature}`;
   return {
     token,
-    cookieString: `admin_session=${token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=86400`,
+    cookieString: `admin_session=${token}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=86400`,
   };
 }
 
@@ -72,7 +76,7 @@ export function destroySession(_cookieHeader: string | null): string | null {
 }
 
 export function getLogoutCookie(): string {
-  return "admin_session=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0";
+  return "admin_session=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0";
 }
 
 function parseCookie(header: string, name: string): string | null {

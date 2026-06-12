@@ -1,4 +1,4 @@
-import { createHash } from "crypto";
+import { scryptSync, randomBytes, timingSafeEqual } from "crypto";
 import { db } from "./db";
 
 export interface User {
@@ -35,7 +35,20 @@ export interface UserProfile {
 }
 
 function hashPassword(password: string): string {
-  return createHash("sha256").update(password).digest("hex");
+  const salt = randomBytes(16).toString("hex");
+  const derived = scryptSync(password, salt, 64).toString("hex");
+  return `${salt}:${derived}`;
+}
+
+function verifyPassword(password: string, stored: string): boolean {
+  const [salt, derived] = stored.split(":");
+  if (!salt || !derived) return false;
+  const candidate = scryptSync(password, salt, 64).toString("hex");
+  try {
+    return timingSafeEqual(Buffer.from(derived), Buffer.from(candidate));
+  } catch {
+    return false;
+  }
 }
 
 function toUser(row: any): User {
@@ -78,7 +91,7 @@ function toProfile(user: User): UserProfile {
 export async function authenticateUser(email: string, password: string): Promise<User | null> {
   const row = await db.user.findUnique({ where: { email } });
   if (!row) return null;
-  if (row.passwordHash !== hashPassword(password)) return null;
+  if (!verifyPassword(password, row.passwordHash)) return null;
   return toUser(row);
 }
 
@@ -105,7 +118,7 @@ export async function createUser(
 ): Promise<User> {
   const existing = await db.user.findUnique({ where: { email } });
   if (existing) throw new Error("このメールアドレスは既に登録されています");
-  const id = `user_${Date.now()}`;
+  const id = `user_${randomBytes(8).toString("hex")}`;
   const row = await db.user.create({
     data: { id, email, passwordHash: hashPassword(password), name },
   });

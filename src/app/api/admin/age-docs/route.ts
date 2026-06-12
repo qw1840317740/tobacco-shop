@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifySession } from "@/lib/admin-auth";
-import { listAllAgeDocs, approveAgeDoc, rejectAgeDoc, getUserById } from "@/lib/user-store";
+import { listAllAgeDocs, approveAgeDoc, rejectAgeDoc } from "@/lib/user-store";
 
 export async function GET(request: NextRequest) {
   const adminSession = verifySession(request.headers.get("cookie"));
@@ -10,18 +10,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const docs = await listAllAgeDocs();
-    // Also include the doc URL for admin viewing
-    const enriched = await Promise.all(
-      docs.map(async (d) => {
-        const user = await getUserById(d.id);
-        return {
-          ...d,
-          ageDocUrl: user?.ageDocUrl || "",
-          ageDocRejectReason: user?.ageDocRejectReason || "",
-        };
-      })
-    );
-    return NextResponse.json({ success: true, docs: enriched });
+    return NextResponse.json({ success: true, docs });
   } catch {
     return NextResponse.json({ error: "取得に失敗しました" }, { status: 500 });
   }

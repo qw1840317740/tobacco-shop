@@ -30,6 +30,14 @@ export const metadata: Metadata = {
     locale: "ja_JP",
     alternateLocale: ["en_US", "zh_CN"],
     siteName: "TABACOYA",
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1601015191768-5a2c7c6c4c38?w=1200&h=630&fit=crop",
+        width: 1200,
+        height: 630,
+        alt: "TABACOYA - Premium Japanese Cigarettes",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

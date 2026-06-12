@@ -1,12 +1,50 @@
 import { Link } from "@/i18n/navigation";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { routing } from "@/lib/routing";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "返品ポリシー",
-  description:
-    "TABACOYAの返品ポリシー。商品不良・誤配送の場合の返品・交換手続き、返金方法についてご説明します。",
-};
+const SITE_URL = "https://tabacoya.jp";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const data: Record<string, { title: string; description: string }> = {
+    ja: {
+      title: "返品ポリシー",
+      description:
+        "TABACOYAの返品ポリシー。商品不良・誤配送の場合の返品・交換手続き、返金方法についてご説明します。",
+    },
+    en: {
+      title: "Return Policy",
+      description:
+        "TABACOYA return policy. Learn about return and exchange procedures for defective or incorrectly shipped items, and refund methods.",
+    },
+    zh: {
+      title: "退货政策",
+      description:
+        "TABACOYA退货政策。了解商品不良或发错货时的退货、交换手续和退款方法。",
+    },
+  };
+  const d = data[locale] ?? data.ja;
+
+  const languages: Record<string, string> = {};
+  for (const loc of routing.locales) {
+    languages[loc] = `${SITE_URL}/${loc}/legal/returns`;
+  }
+  languages["x-default"] = `${SITE_URL}/${routing.defaultLocale}/legal/returns`;
+
+  return {
+    title: d.title,
+    description: d.description,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/legal/returns`,
+      languages,
+    },
+  };
+}
 
 export default function ReturnPolicyPage() {
   return (

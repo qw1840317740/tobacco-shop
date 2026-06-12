@@ -46,15 +46,14 @@ export function ProductDetailClient({ product }: { product: Product }) {
   const typeLabel = tProduct(`types.${product.type}`) || product.type;
 
   const handleAdd = () => {
-    for (let i = 0; i < qty; i++) {
-      addItem({
-        productId: product.id,
-        slug: product.slug,
-        name: displayName,
-        price: product.price,
-        image: product.image,
-      });
-    }
+    addItem({
+      productId: product.id,
+      slug: product.slug,
+      name: displayName,
+      price: product.price,
+      image: product.image,
+      quantity: qty,
+    });
     toast.success(tCommon("addedToCartToast", { name: displayName, qty }));
   };
 

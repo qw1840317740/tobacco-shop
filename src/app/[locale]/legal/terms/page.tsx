@@ -1,12 +1,50 @@
 import { Link } from "@/i18n/navigation";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { routing } from "@/lib/routing";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "利用規約",
-  description:
-    "TABACOYAの利用規約。たばこ製品のオンライン販売に関するご利用条件、年齢確認、支払い、配送、返品について定めています。",
-};
+const SITE_URL = "https://tabacoya.jp";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const data: Record<string, { title: string; description: string }> = {
+    ja: {
+      title: "利用規約",
+      description:
+        "TABACOYAの利用規約。たばこ製品のオンライン販売に関するご利用条件、年齢確認、支払い、配送、返品について定めています。",
+    },
+    en: {
+      title: "Terms of Service",
+      description:
+        "TABACOYA terms of service. Usage conditions for online tobacco sales, including age verification, payment, shipping, and returns.",
+    },
+    zh: {
+      title: "使用条款",
+      description:
+        "TABACOYA使用条款。关于烟草制品在线销售的使用条件、年龄确认、付款、配送和退货的规定。",
+    },
+  };
+  const d = data[locale] ?? data.ja;
+
+  const languages: Record<string, string> = {};
+  for (const loc of routing.locales) {
+    languages[loc] = `${SITE_URL}/${loc}/legal/terms`;
+  }
+  languages["x-default"] = `${SITE_URL}/${routing.defaultLocale}/legal/terms`;
+
+  return {
+    title: d.title,
+    description: d.description,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/legal/terms`,
+      languages,
+    },
+  };
+}
 
 export default function TermsPage() {
   return (

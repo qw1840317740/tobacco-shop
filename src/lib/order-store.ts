@@ -1,4 +1,5 @@
 import { db } from "./db";
+import { randomUUID } from "crypto";
 
 export interface OrderItem {
   productId: string;
@@ -65,7 +66,7 @@ export async function createOrder(data: {
 }): Promise<Order> {
   const date = new Date();
   const dateStr = date.toISOString().slice(0, 10).replace(/-/g, "");
-  const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
+  const rand = randomUUID().substring(0, 6).toUpperCase();
   const id = `ORD-${dateStr}-${rand}`;
 
   const row = await db.order.create({

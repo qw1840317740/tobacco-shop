@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/lib/data-store";
 import { ProductDetailClient } from "./ProductDetailClient";
 import { ProductJsonLd } from "@/components/seo-json-ld";
+import { routing } from "@/lib/routing";
 import type { Metadata } from "next";
 
 const SITE_URL = "https://tabacoya.jp";
@@ -26,9 +27,19 @@ export async function generateMetadata({
     product.desc ||
     `${name} — Premium Japanese tobacco with rich flavor and smooth draw.`;
 
+  const languages: Record<string, string> = {};
+  for (const loc of routing.locales) {
+    languages[loc] = `${SITE_URL}/${loc}/products/${slug}`;
+  }
+  languages["x-default"] = `${SITE_URL}/${routing.defaultLocale}/products/${slug}`;
+
   return {
     title: name,
     description: desc.slice(0, 160),
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/products/${slug}`,
+      languages,
+    },
     openGraph: {
       title: name,
       description: desc.slice(0, 160),

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { db } from "@/lib/db";
 
 export async function POST(request: NextRequest) {
@@ -22,7 +23,16 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET() {
-  const subscribers = await db.subscriber.findMany({ orderBy: { createdAt: "desc" } });
-  return NextResponse.json(subscribers);
+// Admin only — list all subscribers
+export async function GET(request: NextRequest) {
+  if (!isAdminAuthenticated(request.headers.get("cookie"))) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  try {
+    const subscribers = await db.subscriber.findMany({ orderBy: { createdAt: "desc" } });
+    return NextResponse.json(subscribers);
+  } catch (error) {
+    console.error("Fetch subscribers error:", error);
+    return NextResponse.json({ error: "Failed to fetch subscribers" }, { status: 500 });
+  }
 }

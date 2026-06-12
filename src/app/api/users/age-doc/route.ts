@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFileSync, mkdirSync } from "fs";
-import { join } from "path";
 import { verifyUserSession } from "@/lib/user-auth";
 import { submitAgeDoc, getUserById } from "@/lib/user-store";
 
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 export async function POST(request: NextRequest) {
@@ -23,29 +22,23 @@ export async function POST(request: NextRequest) {
     if (!docType) {
       return NextResponse.json({ error: "書類の種類を選択してください" }, { status: 400 });
     }
-
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      return NextResponse.json({ error: "対応形式: JPEG, PNG, WebP" }, { status: 400 });
+    }
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json({ error: "ファイルサイズは10MB以下にしてください" }, { status: 400 });
     }
 
-    // Save file
-    const uploadDir = join(process.cwd(), "public", "uploads");
-    mkdirSync(uploadDir, { recursive: true });
-
-    const ext = file.name.split(".").pop() || "jpg";
-    const filename = `agedoc_${session.userId}_${Date.now()}.${ext}`;
-    const filepath = join(uploadDir, filename);
-
+    // Store as base64 in DB — works on Vercel, and keeps files private
     const buffer = Buffer.from(await file.arrayBuffer());
-    writeFileSync(filepath, buffer);
+    const docUrl = `data:${file.type};base64,${buffer.toString("base64")}`;
 
-    const docUrl = `/uploads/${filename}`;
     const ok = await submitAgeDoc(session.userId, docUrl, docType);
     if (!ok) {
       return NextResponse.json({ error: "提出に失敗しました" }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true, docUrl });
+    return NextResponse.json({ success: true, docUrl: "submitted" });
   } catch (error) {
     console.error("Age doc upload error:", error);
     return NextResponse.json({ error: "アップロードに失敗しました" }, { status: 500 });

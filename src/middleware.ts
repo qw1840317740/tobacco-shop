@@ -37,7 +37,7 @@ function isCrawler(ua: string | null): boolean {
   return CRAWLER_PATTERNS.some((pattern) => ua.includes(pattern));
 }
 
-export function proxy(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const localeMatch = pathname.match(/^\/(en|ja|zh)/);
   const locale = localeMatch ? localeMatch[1] : routing.defaultLocale;
