@@ -73,21 +73,21 @@ export default function AdminUsersPage() {
   };
 
   if (loading) {
-    return <div className="flex h-96 items-center justify-center text-stone-400">読み込み中...</div>;
+    return <div className="flex h-96 items-center justify-center text-[#888888]">読み込み中...</div>;
   }
 
   if (admins.length === 0) {
-    return <div className="flex h-96 items-center justify-center text-stone-400">権限がありません</div>;
+    return <div className="flex h-96 items-center justify-center text-[#888888]">権限がありません</div>;
   }
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-heading text-2xl font-bold text-stone-800">管理者管理</h1>
-          <p className="text-sm text-stone-500">{admins.length} 人の管理者</p>
+          <h1 className="text-2xl font-bold text-[#1A1A1A]">管理者管理</h1>
+          <p className="text-sm text-[#888888]">{admins.length} 人の管理者</p>
         </div>
-        <button onClick={() => setShowAdd(true)} className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90">
+        <button onClick={() => setShowAdd(true)} className="inline-flex items-center gap-2 rounded-lg bg-[#1A1A1A] px-4 py-2 text-sm font-medium text-white hover:bg-[#333]">
           + 新規管理者
         </button>
       </div>
@@ -95,28 +95,28 @@ export default function AdminUsersPage() {
       {/* Admin Table */}
       <div className="mt-6 overflow-hidden rounded-xl border">
         <table className="w-full text-left text-sm">
-          <thead className="bg-stone-50">
+          <thead className="bg-[#F5F5F5]">
             <tr>
-              <th className="px-4 py-3 font-medium text-stone-600">ユーザー名</th>
-              <th className="px-4 py-3 font-medium text-stone-600">権限</th>
-              <th className="px-4 py-3 font-medium text-stone-600">作成日</th>
-              <th className="px-4 py-3 font-medium text-stone-600 text-right">操作</th>
+              <th className="px-4 py-3 font-medium text-[#333]">ユーザー名</th>
+              <th className="px-4 py-3 font-medium text-[#333]">権限</th>
+              <th className="px-4 py-3 font-medium text-[#333]">作成日</th>
+              <th className="px-4 py-3 font-medium text-[#333] text-right">操作</th>
             </tr>
           </thead>
           <tbody className="divide-y">
             {admins.map((admin) => (
-              <tr key={admin.id} className="hover:bg-stone-50">
+              <tr key={admin.id} className="hover:bg-[#F5F5F5]">
                 <td className="px-4 py-3 font-medium">{admin.username}</td>
                 <td className="px-4 py-3">
                   <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${
-                    admin.role === "superadmin" ? "bg-primary/10 text-primary" : "bg-stone-100 text-stone-600"
+                    admin.role === "superadmin" ? "bg-[#C8A97E]/20 text-[#C8A97E]" : "bg-[#F5F5F5] text-[#333]"
                   }`}>
                     {admin.role === "superadmin" ? "スーパー管理者" : "管理者"}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-stone-500">{new Date(admin.createdAt).toLocaleDateString("ja-JP")}</td>
+                <td className="px-4 py-3 text-[#888888]">{new Date(admin.createdAt).toLocaleDateString("ja-JP")}</td>
                 <td className="px-4 py-3 text-right space-x-2">
-                  <button onClick={() => { setResetTarget(admin); setResetPw(""); }} className="text-xs text-stone-500 hover:text-primary">パスワード変更</button>
+                  <button onClick={() => { setResetTarget(admin); setResetPw(""); }} className="text-xs text-[#888888] hover:text-[#C8A97E]">パスワード変更</button>
                   {admin.role !== "superadmin" && (
                     <button onClick={() => setDeleteTarget(admin)} className="text-xs text-red-500 hover:text-red-700">削除</button>
                   )}
@@ -130,27 +130,27 @@ export default function AdminUsersPage() {
       {/* Add Modal */}
       {showAdd && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="mx-4 w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl">
-            <h2 className="font-heading text-lg font-semibold text-stone-800">新規管理者追加</h2>
+          <div className="mx-4 w-full max-w-sm rounded-lg bg-white p-6 shadow-sm">
+            <h2 className="text-lg font-semibold text-[#1A1A1A]">新規管理者追加</h2>
             <div className="mt-4 space-y-3">
               <div>
-                <label className="text-xs font-medium text-stone-500">ユーザー名</label>
+                <label className="text-xs font-medium text-[#888888]">ユーザー名</label>
                 <input value={newUsername} onChange={(e) => setNewUsername(e.target.value)} className="mt-1 w-full rounded-lg border px-3 py-2 text-sm" />
               </div>
               <div>
-                <label className="text-xs font-medium text-stone-500">パスワード（6文字以上）</label>
+                <label className="text-xs font-medium text-[#888888]">パスワード（6文字以上）</label>
                 <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="mt-1 w-full rounded-lg border px-3 py-2 text-sm" />
               </div>
               <div>
-                <label className="text-xs font-medium text-stone-500">権限</label>
+                <label className="text-xs font-medium text-[#888888]">権限</label>
                 <select value={newRole} onChange={(e) => setNewRole(e.target.value)} className="mt-1 w-full rounded-lg border px-3 py-2 text-sm">
                   <option value="admin">管理者</option>
                   <option value="superadmin">スーパー管理者</option>
                 </select>
               </div>
               <div className="flex gap-3 pt-2">
-                <button onClick={handleAdd} className="flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-white hover:bg-primary/90">追加</button>
-                <button onClick={() => setShowAdd(false)} className="flex-1 rounded-lg border py-2.5 text-sm font-medium text-stone-600 hover:bg-stone-50">キャンセル</button>
+                <button onClick={handleAdd} className="flex-1 rounded-lg bg-[#1A1A1A] py-2.5 text-sm font-medium text-white hover:bg-[#333]">追加</button>
+                <button onClick={() => setShowAdd(false)} className="flex-1 rounded-lg border py-2.5 text-sm font-medium text-[#333] hover:bg-[#F5F5F5]">キャンセル</button>
               </div>
             </div>
           </div>
@@ -160,14 +160,14 @@ export default function AdminUsersPage() {
       {/* Reset Password Modal */}
       {resetTarget && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="mx-4 w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl">
-            <h2 className="font-heading text-lg font-semibold text-stone-800">パスワード変更</h2>
-            <p className="mt-1 text-sm text-stone-500">「{resetTarget.username}」の新しいパスワード</p>
+          <div className="mx-4 w-full max-w-sm rounded-lg bg-white p-6 shadow-sm">
+            <h2 className="text-lg font-semibold text-[#1A1A1A]">パスワード変更</h2>
+            <p className="mt-1 text-sm text-[#888888]">「{resetTarget.username}」の新しいパスワード</p>
             <div className="mt-4 space-y-3">
               <input type="password" value={resetPw} onChange={(e) => setResetPw(e.target.value)} placeholder="新しいパスワード（6文字以上）" className="w-full rounded-lg border px-3 py-2 text-sm" />
               <div className="flex gap-3">
-                <button onClick={handleReset} className="flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-white hover:bg-primary/90">変更</button>
-                <button onClick={() => setResetTarget(null)} className="flex-1 rounded-lg border py-2.5 text-sm font-medium text-stone-600">キャンセル</button>
+                <button onClick={handleReset} className="flex-1 rounded-lg bg-[#1A1A1A] py-2.5 text-sm font-medium text-white hover:bg-[#333]">変更</button>
+                <button onClick={() => setResetTarget(null)} className="flex-1 rounded-lg border py-2.5 text-sm font-medium text-[#333]">キャンセル</button>
               </div>
             </div>
           </div>

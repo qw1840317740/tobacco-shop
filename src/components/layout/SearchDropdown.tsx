@@ -19,7 +19,7 @@ interface SearchResult {
   region: string;
 }
 
-export function SearchDropdown({ isHome }: { isHome: boolean }) {
+export function SearchDropdown() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -88,9 +88,7 @@ export function SearchDropdown({ isHome }: { isHome: boolean }) {
       {/* Trigger icon */}
       <button
         onClick={() => setOpen(!open)}
-        className={`hidden sm:inline-flex size-9 items-center justify-center rounded-lg transition-colors ${
-          isHome ? "text-stone-400 hover:bg-white/10 hover:text-white" : "hover:bg-muted hover:text-foreground"
-        }`}
+        className="hidden sm:inline-flex size-9 items-center justify-center rounded-lg transition-colors hover:bg-[#F5F5F5] hover:text-[#1A1A1A]"
       >
         <Search className="h-[18px] w-[18px]" />
       </button>

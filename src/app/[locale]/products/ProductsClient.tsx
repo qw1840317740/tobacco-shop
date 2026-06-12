@@ -78,7 +78,6 @@ export function ProductsClient({ products, categories }: ProductsClientProps) {
         break;
       case "newest":
       default:
-        // Products already come sorted by createdAt desc from the server
         break;
     }
 
@@ -139,12 +138,12 @@ export function ProductsClient({ products, categories }: ProductsClientProps) {
   return (
     <div>
       {/* Filter bar */}
-      <div className="mb-6 rounded-2xl border border-stone-200/60 bg-white/80 backdrop-blur-sm">
+      <div className="mb-6 rounded-lg border border-[#E5E5E5] bg-white">
         {/* Mobile filter toggle */}
         <div className="flex items-center justify-between p-4 lg:hidden">
           <button
             onClick={() => setFiltersOpen(!filtersOpen)}
-            className="flex items-center gap-2 rounded-xl bg-stone-100 px-4 py-2.5 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-200"
+            className="flex items-center gap-2 rounded-lg bg-[#F5F5F5] px-4 py-2.5 text-sm font-medium text-[#1A1A1A] transition-colors hover:bg-[#E5E5E5]"
           >
             <SlidersHorizontal className="h-4 w-4" />
             {t("filter")}
@@ -152,13 +151,13 @@ export function ProductsClient({ products, categories }: ProductsClientProps) {
           <div className="flex items-center gap-1">
             <button
               onClick={() => setView("grid")}
-              className={`rounded-lg p-2 transition-colors ${view === "grid" ? "bg-primary text-white" : "text-stone-400 hover:bg-stone-100"}`}
+              className={`rounded-lg p-2 transition-colors ${view === "grid" ? "bg-[#1A1A1A] text-white" : "text-[#888] hover:bg-[#F5F5F5]"}`}
             >
               <Grid3X3 className="h-4 w-4" />
             </button>
             <button
               onClick={() => setView("list")}
-              className={`rounded-lg p-2 transition-colors ${view === "list" ? "bg-primary text-white" : "text-stone-400 hover:bg-stone-100"}`}
+              className={`rounded-lg p-2 transition-colors ${view === "list" ? "bg-[#1A1A1A] text-white" : "text-[#888] hover:bg-[#F5F5F5]"}`}
             >
               <List className="h-4 w-4" />
             </button>
@@ -170,18 +169,18 @@ export function ProductsClient({ products, categories }: ProductsClientProps) {
           <div className="flex flex-wrap items-center gap-3 p-4">
             {/* Search */}
             <div className="relative min-w-[200px] flex-1">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400" />
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#888]" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => handleSearchChange(e.target.value)}
                 placeholder={t("searchProducts")}
-                className="w-full rounded-xl border border-stone-200 bg-white py-2.5 pl-10 pr-4 text-sm text-stone-700 placeholder:text-stone-400 transition-colors focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                className="w-full rounded-lg border border-[#E5E5E5] bg-white py-2.5 pl-10 pr-4 text-sm text-[#1A1A1A] placeholder:text-[#888] transition-colors focus:border-[#C8A97E] focus:outline-none focus:ring-0"
               />
               {search && (
                 <button
                   onClick={() => handleSearchChange("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-0.5 text-stone-400 hover:bg-stone-100 hover:text-stone-600"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-0.5 text-[#888] hover:bg-[#F5F5F5] hover:text-[#1A1A1A]"
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
@@ -192,7 +191,7 @@ export function ProductsClient({ products, categories }: ProductsClientProps) {
             <select
               value={categoryId}
               onChange={(e) => handleCategoryChange(e.target.value)}
-              className="rounded-xl border border-stone-200 bg-white px-4 py-2.5 text-sm text-stone-700 transition-colors focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="rounded-lg border border-[#E5E5E5] bg-white px-4 py-2.5 text-sm text-[#1A1A1A] transition-colors focus:border-[#C8A97E] focus:outline-none focus:ring-0"
             >
               <option value="all">{t("allCategories")}</option>
               {categories.map((cat) => {
@@ -214,7 +213,7 @@ export function ProductsClient({ products, categories }: ProductsClientProps) {
             <select
               value={productType}
               onChange={(e) => handleTypeChange(e.target.value)}
-              className="rounded-xl border border-stone-200 bg-white px-4 py-2.5 text-sm text-stone-700 transition-colors focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="rounded-lg border border-[#E5E5E5] bg-white px-4 py-2.5 text-sm text-[#1A1A1A] transition-colors focus:border-[#C8A97E] focus:outline-none focus:ring-0"
             >
               <option value="all">{t("allTypes")}</option>
               {uniqueTypes.map((type) => (
@@ -233,7 +232,7 @@ export function ProductsClient({ products, categories }: ProductsClientProps) {
               <select
                 value={sort}
                 onChange={(e) => handleSortChange(e.target.value as SortOption)}
-                className="rounded-xl border border-stone-200 bg-white px-4 py-2.5 text-sm text-stone-700 transition-colors focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                className="rounded-lg border border-[#E5E5E5] bg-white px-4 py-2.5 text-sm text-[#1A1A1A] transition-colors focus:border-[#C8A97E] focus:outline-none focus:ring-0"
               >
                 <option value="newest">{t("newest")}</option>
                 <option value="priceLow">{t("priceLow")}</option>
@@ -245,14 +244,14 @@ export function ProductsClient({ products, categories }: ProductsClientProps) {
             <div className="hidden items-center gap-1 lg:flex">
               <button
                 onClick={() => setView("grid")}
-                className={`rounded-lg p-2 transition-colors ${view === "grid" ? "bg-primary text-white" : "text-stone-400 hover:bg-stone-100"}`}
+                className={`rounded-lg p-2 transition-colors ${view === "grid" ? "bg-[#1A1A1A] text-white" : "text-[#888] hover:bg-[#F5F5F5]"}`}
                 title={t("gridView")}
               >
                 <Grid3X3 className="h-4 w-4" />
               </button>
               <button
                 onClick={() => setView("list")}
-                className={`rounded-lg p-2 transition-colors ${view === "list" ? "bg-primary text-white" : "text-stone-400 hover:bg-stone-100"}`}
+                className={`rounded-lg p-2 transition-colors ${view === "list" ? "bg-[#1A1A1A] text-white" : "text-[#888] hover:bg-[#F5F5F5]"}`}
                 title={t("listView")}
               >
                 <List className="h-4 w-4" />
@@ -263,7 +262,7 @@ export function ProductsClient({ products, categories }: ProductsClientProps) {
             {hasActiveFilters && (
               <button
                 onClick={clearFilters}
-                className="flex items-center gap-1.5 rounded-xl border border-stone-200 bg-white px-3 py-2.5 text-xs font-medium text-stone-500 transition-colors hover:border-primary/30 hover:text-primary"
+                className="flex items-center gap-1.5 rounded-lg border border-[#E5E5E5] bg-white px-3 py-2.5 text-xs font-medium text-[#888] transition-colors hover:border-[#C8A97E] hover:text-[#C8A97E]"
               >
                 <X className="h-3.5 w-3.5" />
                 {t("filter")}
@@ -275,26 +274,26 @@ export function ProductsClient({ products, categories }: ProductsClientProps) {
 
       {/* Results count */}
       <div className="mb-6 flex items-center justify-between">
-        <p className="text-sm text-stone-500">
+        <p className="text-sm text-[#888]">
           {t("showing", {
             count: paginatedProducts.length,
             total: filteredProducts.length,
           })}
         </p>
-        <p className="hidden text-xs text-stone-400 sm:block">
+        <p className="hidden text-xs text-[#888] sm:block">
           {t("page", { current: safeCurrentPage, total: totalPages })}
         </p>
       </div>
 
       {/* Product grid / list */}
       {paginatedProducts.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-stone-300 bg-stone-50/50 px-4 py-20">
-          <Search className="mb-4 h-10 w-10 text-stone-300" />
-          <p className="text-sm font-medium text-stone-500">{t("noResults")}</p>
+        <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-[#E5E5E5] bg-[#F5F5F5] px-4 py-20">
+          <Search className="mb-4 h-10 w-10 text-[#888]" />
+          <p className="text-sm font-medium text-[#1A1A1A]">{t("noResults")}</p>
           {hasActiveFilters && (
             <button
               onClick={clearFilters}
-              className="mt-3 text-xs font-medium text-primary hover:underline"
+              className="mt-3 text-xs font-medium text-[#C8A97E] hover:underline"
             >
               {t("filter")}
             </button>
@@ -322,7 +321,7 @@ export function ProductsClient({ products, categories }: ProductsClientProps) {
             <button
               onClick={() => setCurrentPage(Math.max(1, safeCurrentPage - 1))}
               disabled={safeCurrentPage === 1}
-              className="flex items-center gap-1.5 rounded-xl border border-stone-200 bg-white px-4 py-2.5 text-sm font-medium text-stone-600 transition-colors hover:border-primary/30 hover:text-primary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-stone-200 disabled:hover:text-stone-600"
+              className="flex items-center gap-1.5 rounded-lg border border-[#E5E5E5] bg-white px-4 py-2.5 text-sm font-medium text-[#1A1A1A] transition-colors hover:border-[#C8A97E] hover:text-[#C8A97E] disabled:cursor-not-allowed disabled:opacity-40"
             >
               <ChevronLeft className="h-4 w-4" />
               <span className="hidden sm:inline">{t("previous")}</span>
@@ -334,10 +333,10 @@ export function ProductsClient({ products, categories }: ProductsClientProps) {
                 <button
                   key={page}
                   onClick={() => setCurrentPage(page)}
-                  className={`h-10 min-w-[2.5rem] rounded-xl text-sm font-medium transition-colors ${
+                  className={`h-10 min-w-[2.5rem] rounded-lg text-sm font-medium transition-colors ${
                     page === safeCurrentPage
-                      ? "bg-primary text-white shadow-md"
-                      : "text-stone-500 hover:bg-stone-100 hover:text-stone-700"
+                      ? "bg-[#1A1A1A] text-white"
+                      : "text-[#888] hover:bg-[#F5F5F5] hover:text-[#1A1A1A]"
                   }`}
                 >
                   {page}
@@ -349,7 +348,7 @@ export function ProductsClient({ products, categories }: ProductsClientProps) {
             <button
               onClick={() => setCurrentPage(Math.min(totalPages, safeCurrentPage + 1))}
               disabled={safeCurrentPage === totalPages}
-              className="flex items-center gap-1.5 rounded-xl border border-stone-200 bg-white px-4 py-2.5 text-sm font-medium text-stone-600 transition-colors hover:border-primary/30 hover:text-primary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-stone-200 disabled:hover:text-stone-600"
+              className="flex items-center gap-1.5 rounded-lg border border-[#E5E5E5] bg-white px-4 py-2.5 text-sm font-medium text-[#1A1A1A] transition-colors hover:border-[#C8A97E] hover:text-[#C8A97E] disabled:cursor-not-allowed disabled:opacity-40"
             >
               <span className="hidden sm:inline">{t("next")}</span>
               <ChevronRight className="h-4 w-4" />
@@ -357,7 +356,7 @@ export function ProductsClient({ products, categories }: ProductsClientProps) {
           </div>
 
           {/* Mobile page info */}
-          <p className="text-xs text-stone-400 sm:hidden">
+          <p className="text-xs text-[#888] sm:hidden">
             {t("page", { current: safeCurrentPage, total: totalPages })}
           </p>
         </div>
@@ -373,31 +372,31 @@ function ListProductCard({ product, locale }: { product: Product; locale: string
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group flex items-center gap-4 rounded-2xl border border-stone-200/60 bg-white/70 p-3 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:shadow-lg sm:gap-5 sm:p-4"
+      className="group flex items-center gap-4 rounded-lg border border-[#E5E5E5] bg-white p-3 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 sm:gap-5 sm:p-4"
     >
-      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-stone-100 sm:h-24 sm:w-24">
+      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-[#F5F5F5] sm:h-24 sm:w-24">
         <Image
           src={product.image}
           alt={displayName}
           fill
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
           sizes="96px"
         />
       </div>
       <div className="min-w-0 flex-1">
-        <h3 className="truncate text-sm font-semibold text-stone-800 transition-colors group-hover:text-primary sm:text-base">
+        <h3 className="truncate text-sm font-medium text-[#1A1A1A] transition-colors group-hover:text-[#C8A97E] sm:text-base">
           {displayName}
         </h3>
         {product.code && (
-          <p className="mt-0.5 text-xs font-mono text-stone-400">#{product.code}</p>
+          <p className="mt-0.5 text-xs font-mono text-[#888]">#{product.code}</p>
         )}
-        <p className="mt-1 text-xs text-stone-500 line-clamp-1">{product.region}</p>
+        <p className="mt-1 text-xs text-[#888] line-clamp-1">{product.region}</p>
       </div>
       <div className="shrink-0 text-right">
-        <p className="text-base font-bold text-primary sm:text-lg">{formatPrice(product.price)}</p>
+        <p className="text-base font-bold text-[#C8A97E] sm:text-lg">{formatPrice(product.price)}</p>
         {product.inStock === false && (
-          <p className="mt-0.5 text-[10px] font-medium text-stone-400">Out of stock</p>
+          <p className="mt-0.5 text-[10px] font-medium text-[#888]">Out of stock</p>
         )}
       </div>
     </Link>

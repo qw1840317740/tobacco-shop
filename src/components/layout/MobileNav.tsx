@@ -48,7 +48,7 @@ export default function MobileNav() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-stone-200/80 bg-white/95 backdrop-blur-md sm:hidden"
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#0F0F0F] border-t border-[#2A2A2A] sm:hidden"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <div className="flex items-center justify-around px-2 pt-2 pb-1">
@@ -62,11 +62,11 @@ export default function MobileNav() {
                 <Icon
                   className={cn(
                     "h-5 w-5 transition-colors duration-200",
-                    isActive ? "text-primary" : "text-stone-400"
+                    isActive ? "text-[#C8A97E]" : "text-[#888]"
                   )}
                 />
                 {tab.badge != null && tab.badge > 0 && (
-                  <span className="absolute -top-1.5 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-white">
+                  <span className="absolute -top-1.5 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#C8A97E] px-1 text-[10px] font-bold text-white">
                     {tab.badge}
                   </span>
                 )}
@@ -74,7 +74,7 @@ export default function MobileNav() {
               <span
                 className={cn(
                   "text-[10px] font-medium transition-colors duration-200",
-                  isActive ? "text-primary" : "text-stone-400"
+                  isActive ? "text-[#C8A97E]" : "text-[#888]"
                 )}
               >
                 {tab.label}

@@ -70,7 +70,7 @@ export function RecentlyViewed() {
 
   return (
     <section className="py-8">
-      <h2 className="mb-4 text-xl font-bold text-stone-800">
+      <h2 className="mb-4 text-lg font-bold uppercase tracking-wider text-[#1A1A1A]">
         {t("recentlyViewed")}
       </h2>
       <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-thin">

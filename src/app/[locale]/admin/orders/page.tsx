@@ -39,7 +39,7 @@ const statusOptions = [
   { value: "pending", label: "未入金", color: "bg-amber-100 text-amber-700" },
   { value: "paid", label: "入金確認済", color: "bg-blue-100 text-blue-700" },
   { value: "shipped", label: "発送済", color: "bg-green-100 text-green-700" },
-  { value: "delivered", label: "配達完了", color: "bg-stone-100 text-stone-600" },
+  { value: "delivered", label: "配達完了", color: "bg-[#F5F5F5] text-[#333]" },
   { value: "cancelled", label: "キャンセル", color: "bg-red-100 text-red-600" },
 ];
 
@@ -95,22 +95,22 @@ export default function AdminOrdersPage() {
   const getStatusInfo = (status: string) => statusOptions.find((s) => s.value === status) || statusOptions[0];
 
   if (loading) {
-    return <div className="p-6 text-stone-500">読み込み中...</div>;
+    return <div className="p-6 text-[#888888]">読み込み中...</div>;
   }
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="font-heading text-2xl font-bold text-stone-800">注文管理</h1>
-          <p className="text-sm text-stone-500 mt-1">全注文の確認と管理</p>
+          <h1 className="text-2xl font-bold text-[#1A1A1A]">注文管理</h1>
+          <p className="text-sm text-[#888888] mt-1">全注文の確認と管理</p>
         </div>
         <Badge variant="secondary">{orders.length} 件</Badge>
       </div>
 
       {orders.length === 0 ? (
         <Card className="p-8 text-center">
-          <p className="text-stone-500">注文はまだありません</p>
+          <p className="text-[#888888]">注文はまだありません</p>
         </Card>
       ) : (
         <div className="space-y-4">
@@ -122,24 +122,24 @@ export default function AdminOrdersPage() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className="text-sm font-mono font-medium text-stone-700">{order.id}</p>
+                      <p className="text-sm font-mono font-medium text-[#333]">{order.id}</p>
                       <Badge className={`${statusInfo.color} border-0`}>{statusInfo.label}</Badge>
                     </div>
-                    <p className="text-xs text-stone-400 mt-1">{date}</p>
-                    <p className="text-sm text-stone-600 mt-1">
+                    <p className="text-xs text-[#888888] mt-1">{date}</p>
+                    <p className="text-sm text-[#333] mt-1">
                       {order.shippingName} — {order.shippingAddress}
                     </p>
-                    <p className="text-xs text-stone-400 mt-1">
+                    <p className="text-xs text-[#888888] mt-1">
                       {order.items.length} 点の商品
                     </p>
                   </div>
                   <div className="text-right shrink-0">
-                    <p className="text-lg font-bold text-primary">{formatPrice(order.total)}</p>
+                    <p className="text-lg font-bold text-[#C8A97E]">{formatPrice(order.total)}</p>
                     <div className="mt-2">
                       <select
                         value={order.status}
                         onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                        className="text-xs rounded-md border border-stone-200 px-2 py-1"
+                        className="text-xs rounded-md border border-[#E5E5E5] px-2 py-1"
                       >
                         {statusOptions.map((opt) => (
                           <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -163,13 +163,13 @@ export default function AdminOrdersPage() {
           {selectedOrder && (
             <div className="space-y-3">
               <div className="grid grid-cols-2 gap-2 text-sm">
-                <p><span className="text-stone-500">ステータス:</span> {getStatusInfo(selectedOrder.status).label}</p>
-                <p><span className="text-stone-500">日付:</span> {new Date(selectedOrder.createdAt).toLocaleDateString("ja-JP")}</p>
-                <p><span className="text-stone-500">宛名:</span> {selectedOrder.shippingName}</p>
-                <p><span className="text-stone-500">電話:</span> {selectedOrder.shippingPhone}</p>
-                <p className="col-span-2"><span className="text-stone-500">住所:</span> 〒{selectedOrder.shippingPostalCode} {selectedOrder.shippingAddress}</p>
+                <p><span className="text-[#888888]">ステータス:</span> {getStatusInfo(selectedOrder.status).label}</p>
+                <p><span className="text-[#888888]">日付:</span> {new Date(selectedOrder.createdAt).toLocaleDateString("ja-JP")}</p>
+                <p><span className="text-[#888888]">宛名:</span> {selectedOrder.shippingName}</p>
+                <p><span className="text-[#888888]">電話:</span> {selectedOrder.shippingPhone}</p>
+                <p className="col-span-2"><span className="text-[#888888]">住所:</span> 〒{selectedOrder.shippingPostalCode} {selectedOrder.shippingAddress}</p>
                 {selectedOrder.notes && (
-                  <p className="col-span-2"><span className="text-stone-500">備考:</span> {selectedOrder.notes}</p>
+                  <p className="col-span-2"><span className="text-[#888888]">備考:</span> {selectedOrder.notes}</p>
                 )}
               </div>
               <div className="border-t pt-3">
@@ -177,15 +177,15 @@ export default function AdminOrdersPage() {
                 {selectedOrder.items.map((item, i) => (
                   <div key={i} className="flex items-center gap-2 py-1 text-sm">
                     <span>{item.name} × {item.quantity}</span>
-                    <span className="ml-auto text-stone-500">{formatPrice(item.price * item.quantity)}</span>
+                    <span className="ml-auto text-[#888888]">{formatPrice(item.price * item.quantity)}</span>
                   </div>
                 ))}
               </div>
               <div className="border-t pt-3 text-sm space-y-1">
-                <div className="flex justify-between"><span className="text-stone-500">小計</span><span>{formatPrice(selectedOrder.subtotal)}</span></div>
-                <div className="flex justify-between"><span className="text-stone-500">送料</span><span>{formatPrice(selectedOrder.shippingFee)}</span></div>
-                <div className="flex justify-between"><span className="text-stone-500">税</span><span>{formatPrice(selectedOrder.tax)}</span></div>
-                <div className="flex justify-between font-bold"><span>合計</span><span className="text-primary">{formatPrice(selectedOrder.total)}</span></div>
+                <div className="flex justify-between"><span className="text-[#888888]">小計</span><span>{formatPrice(selectedOrder.subtotal)}</span></div>
+                <div className="flex justify-between"><span className="text-[#888888]">送料</span><span>{formatPrice(selectedOrder.shippingFee)}</span></div>
+                <div className="flex justify-between"><span className="text-[#888888]">税</span><span>{formatPrice(selectedOrder.tax)}</span></div>
+                <div className="flex justify-between font-bold"><span>合計</span><span className="text-[#C8A97E]">{formatPrice(selectedOrder.total)}</span></div>
               </div>
               <div className="flex gap-2 pt-2">
                 {statusOptions.map((opt) => (

@@ -15,18 +15,18 @@ function CartItemRow({ item }: { item: CartItem }) {
 
   return (
     <div className="flex gap-3 py-3">
-      <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md bg-stone-100">
+      <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md bg-[#F5F5F5]">
         {item.image && (
           <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
         )}
       </div>
       <div className="flex flex-1 flex-col">
-        <span className="text-sm font-medium line-clamp-1">{item.name}</span>
+        <span className="text-sm font-medium text-[#1A1A1A] line-clamp-1">{item.name}</span>
         <div className="mt-1 flex items-center gap-2">
           <select
             value={item.quantity}
             onChange={(e) => updateQuantity(item.productId, Number(e.target.value))}
-            className="rounded border border-stone-200 px-1 py-0.5 text-xs"
+            className="rounded-lg border border-[#E5E5E5] px-1 py-0.5 text-xs text-[#1A1A1A]"
           >
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
               <option key={n} value={n}>{n}</option>
@@ -34,13 +34,13 @@ function CartItemRow({ item }: { item: CartItem }) {
           </select>
           <button
             onClick={() => removeItem(item.productId)}
-            className="text-xs text-stone-400 hover:text-red-500"
+            className="text-xs text-[#888] hover:text-[#1A1A1A] transition-colors"
           >
             {t("remove")}
           </button>
         </div>
       </div>
-      <span className="text-sm font-semibold text-primary">
+      <span className="text-sm font-semibold text-[#C8A97E]">
         {formatPrice(item.price * item.quantity)}
       </span>
     </div>
@@ -59,7 +59,7 @@ export default function CartDrawer() {
           <SheetTitle className="flex items-center gap-2">
             {t("cart")}
             {totalItems() > 0 && (
-              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary">
+              <span className="rounded-lg bg-[#F5F5F5] px-2 py-0.5 text-xs text-[#888]">
                 {totalItems()}
               </span>
             )}
@@ -68,7 +68,7 @@ export default function CartDrawer() {
 
         {items.length === 0 ? (
           <div className="flex flex-1 items-center justify-center">
-            <p className="text-sm text-stone-400">{t("emptyCart")}</p>
+            <p className="text-sm text-[#888]">{t("emptyCart")}</p>
           </div>
         ) : (
           <>
@@ -82,20 +82,20 @@ export default function CartDrawer() {
 
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span>{t("subtotal")}</span>
-                <span className="font-semibold">{formatPrice(totalPrice())}</span>
+                <span className="text-[#888]">{t("subtotal")}</span>
+                <span className="font-semibold text-[#1A1A1A]">{formatPrice(totalPrice())}</span>
               </div>
               <Link
                 href="/checkout"
                 onClick={() => setCartOpen(false)}
-                className="inline-flex h-8 w-full items-center justify-center rounded-lg bg-primary px-2.5 text-sm font-medium text-white hover:bg-primary/90"
+                className="inline-flex h-10 w-full items-center justify-center bg-[#1A1A1A] px-2.5 text-sm font-medium text-white uppercase tracking-wider hover:bg-[#333] transition-colors"
               >
                 {t("checkout")}
               </Link>
               <Link
                 href="/products"
                 onClick={() => setCartOpen(false)}
-                className="inline-flex h-8 w-full items-center justify-center rounded-lg border border-border bg-background px-2.5 text-sm font-medium hover:bg-muted hover:text-foreground"
+                className="inline-flex h-10 w-full items-center justify-center rounded-lg border border-[#E5E5E5] bg-white px-2.5 text-sm font-medium text-[#1A1A1A] hover:bg-[#F5F5F5] transition-colors"
               >
                 {t("continueShopping")}
               </Link>

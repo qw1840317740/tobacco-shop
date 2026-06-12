@@ -16,7 +16,7 @@ import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 
-export default function AuthButton({ isHome = false }: { isHome?: boolean }) {
+export default function AuthButton() {
   const user = useAuthStore((s) => s.user);
   const setUser = useAuthStore((s) => s.setUser);
   const hydrated = useAuthStore((s) => s._hydrated);
@@ -53,9 +53,7 @@ export default function AuthButton({ isHome = false }: { isHome?: boolean }) {
     }
   };
 
-  const textColor = isHome
-    ? "text-stone-400 hover:bg-white/10 hover:text-white"
-    : "hover:bg-muted hover:text-foreground";
+  const textColor = "hover:bg-[#F5F5F5] hover:text-[#1A1A1A]";
 
   if (!hydrated || !checked) {
     return <div className="w-9 h-9" />;

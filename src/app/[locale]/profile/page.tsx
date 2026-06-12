@@ -122,11 +122,11 @@ export default function ProfilePage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
-      <h1 className="font-heading text-3xl font-bold text-stone-800">プロフィール</h1>
+      <h1 className="text-3xl font-bold text-[#1A1A1A]">プロフィール</h1>
 
       {/* Account Info */}
       <Card className="mt-8 p-6">
-        <h2 className="font-heading text-lg font-semibold">アカウント情報</h2>
+        <h2 className="text-lg font-semibold">アカウント情報</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <div>
             <Label>氏名</Label>
@@ -134,7 +134,7 @@ export default function ProfilePage() {
           </div>
           <div>
             <Label>メール</Label>
-            <Input type="email" value={email} disabled className="mt-1 bg-stone-50" />
+            <Input type="email" value={email} disabled className="mt-1 bg-[#F5F5F5]" />
           </div>
           <div>
             <Label>電話番号</Label>
@@ -145,7 +145,7 @@ export default function ProfilePage() {
             <Input type="date" value={birthdate} onChange={(e) => setBirthdate(e.target.value)} className="mt-1" />
           </div>
         </div>
-        <Button className="mt-6 bg-primary text-white hover:bg-primary/90" onClick={handleSave} disabled={loading}>
+        <Button className="mt-6 bg-[#1A1A1A] text-white hover:bg-[#333]" onClick={handleSave} disabled={loading}>
           {loading ? "保存中..." : "保存"}
         </Button>
       </Card>
@@ -153,13 +153,13 @@ export default function ProfilePage() {
       {/* Age Verification Status */}
       <Card className="mt-6 p-6">
         <div className="flex items-center justify-between">
-          <h2 className="font-heading text-lg font-semibold">年齢確認</h2>
+          <h2 className="text-lg font-semibold">年齢確認</h2>
           <Badge variant={ageDocInfo.variant}>{ageDocInfo.label}</Badge>
         </div>
         {user.ageDocStatus === "rejected" && (
           <p className="mt-2 text-sm text-red-600">却下理由: 書類を再提出してください</p>
         )}
-        <p className="mt-2 text-sm text-stone-500">
+        <p className="mt-2 text-sm text-[#888888]">
           {user.ageVerified
             ? "年齢確認が完了しています。"
             : "お買い物には年齢確認が必要です。"}
@@ -173,7 +173,7 @@ export default function ProfilePage() {
 
       {/* Password Change */}
       <Card className="mt-6 p-6">
-        <h2 className="font-heading text-lg font-semibold">パスワード変更</h2>
+        <h2 className="text-lg font-semibold">パスワード変更</h2>
         <div className="mt-4 grid gap-4 max-w-md">
           <div>
             <Label>現在のパスワード</Label>
@@ -196,21 +196,21 @@ export default function ProfilePage() {
       {/* Quick Links */}
       <div className="mt-6 grid gap-3 sm:grid-cols-3">
         <Link href="/profile/addresses">
-          <Card className="p-4 hover:bg-stone-50 transition-colors cursor-pointer">
-            <p className="font-medium text-stone-700">📍 住所管理</p>
-            <p className="text-sm text-stone-500 mt-1">配送先住所の管理</p>
+          <Card className="p-4 hover:bg-[#F5F5F5] transition-colors cursor-pointer">
+            <p className="font-medium text-[#333]">📍 住所管理</p>
+            <p className="text-sm text-[#888888] mt-1">配送先住所の管理</p>
           </Card>
         </Link>
         <Link href="/orders">
-          <Card className="p-4 hover:bg-stone-50 transition-colors cursor-pointer">
-            <p className="font-medium text-stone-700">📦 注文履歴</p>
-            <p className="text-sm text-stone-500 mt-1">過去の注文を確認</p>
+          <Card className="p-4 hover:bg-[#F5F5F5] transition-colors cursor-pointer">
+            <p className="font-medium text-[#333]">📦 注文履歴</p>
+            <p className="text-sm text-[#888888] mt-1">過去の注文を確認</p>
           </Card>
         </Link>
         <Link href="/wishlist">
-          <Card className="p-4 hover:bg-stone-50 transition-colors cursor-pointer">
-            <p className="font-medium text-stone-700">❤️ お気に入り</p>
-            <p className="text-sm text-stone-500 mt-1">保存した商品</p>
+          <Card className="p-4 hover:bg-[#F5F5F5] transition-colors cursor-pointer">
+            <p className="font-medium text-[#333]">❤️ お気に入り</p>
+            <p className="text-sm text-[#888888] mt-1">保存した商品</p>
           </Card>
         </Link>
       </div>

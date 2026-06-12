@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "@/i18n/navigation";
@@ -43,8 +41,8 @@ function deterministicRating(productId: string): { rating: number; count: number
     hash |= 0;
   }
   hash = Math.abs(hash);
-  const rating = 3.5 + (hash % 15) / 10; // 3.5 to 4.9
-  const count = 8 + (hash % 93); // 8 to 100
+  const rating = 3.5 + (hash % 15) / 10;
+  const count = 8 + (hash % 93);
   return { rating: Math.round(rating * 10) / 10, count };
 }
 
@@ -106,144 +104,167 @@ export function ProductDetailClient({
         ⚠️ {product.type === "HEATED" ? tCompliance("healthWarningHeated") : tCompliance("healthWarning")}
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-2">
-        <div className="relative aspect-square overflow-hidden rounded-xl bg-stone-100">
-          <Image src={product.image} alt={displayName} fill className="object-cover" priority sizes="(max-width: 1024px) 100vw, 50vw" />
+      {/* Hero image */}
+      <div className="relative w-full aspect-[16/9] lg:aspect-[2/1] overflow-hidden rounded-lg bg-[#F5F5F5]">
+        <Image
+          src={product.image}
+          alt={displayName}
+          fill
+          className="object-cover"
+          priority
+          sizes="(max-width: 1024px) 100vw, 50vw"
+        />
+      </div>
+
+      {/* Product info below */}
+      <div className="max-w-2xl mx-auto px-4 py-8">
+        <div className="flex flex-wrap items-center gap-1.5">
+          {product.code && (
+            <span className="bg-[#F5F5F5] px-2 py-0.5 text-[10px] uppercase tracking-wider text-[#888] font-mono">
+              #{product.code}
+            </span>
+          )}
+          <span className="bg-[#F5F5F5] px-2 py-0.5 text-[10px] uppercase tracking-wider text-[#888]">
+            {regionLabel}
+          </span>
+          <span className="bg-[#F5F5F5] px-2 py-0.5 text-[10px] uppercase tracking-wider text-[#888]">
+            {typeLabel}
+          </span>
         </div>
-        <div>
-          <div className="flex items-center gap-2">
-            {product.code && (
-              <Badge className="bg-primary/10 text-primary font-mono">#{product.code}</Badge>
-            )}
-            <Badge variant="secondary">{regionLabel}</Badge>
-            <Badge variant="secondary">{typeLabel}</Badge>
-          </div>
-          <h1 className="mt-3 font-heading text-3xl font-bold text-stone-800">{displayName}</h1>
 
-          {/* Star rating */}
-          <div className="mt-3 flex items-center gap-2">
-            <div className="flex items-center">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <Star
-                  key={star}
-                  className={`h-5 w-5 ${
-                    star <= Math.round(rating)
-                      ? "fill-amber-400 text-amber-400"
-                      : star - 0.5 <= rating
-                        ? "fill-amber-400/50 text-amber-400"
-                        : "fill-stone-200 text-stone-200"
-                  }`}
-                />
-              ))}
-            </div>
-            <span className="text-sm font-semibold text-stone-700">{rating.toFixed(1)}</span>
-            <span className="text-sm text-stone-400">({count} {tProduct("reviews")})</span>
-          </div>
+        <h1 className="mt-3 text-3xl font-bold text-[#1A1A1A]">
+          {displayName}
+        </h1>
 
-          <div className="mt-3 flex items-baseline gap-3">
-            <span className="text-3xl font-bold text-primary">{formatPrice(product.price)}</span>
+        {/* Star rating */}
+        <div className="mt-3 flex items-center gap-2">
+          <div className="flex items-center">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Star
+                key={star}
+                className={`h-5 w-5 ${
+                  star <= Math.round(rating)
+                    ? "fill-amber-400 text-amber-400"
+                    : star - 0.5 <= rating
+                      ? "fill-amber-400/50 text-amber-400"
+                      : "fill-stone-200 text-stone-200"
+                }`}
+              />
+            ))}
           </div>
-          <Separator className="my-6" />
+          <span className="text-sm font-semibold text-[#1A1A1A]">{rating.toFixed(1)}</span>
+          <span className="text-sm text-[#888]">({count} {tProduct("reviews")})</span>
+        </div>
 
-          {/* Product specs */}
-          <div className="space-y-3">
+        <div className="mt-3">
+          <span className="text-3xl font-bold text-[#C8A97E]">
+            {formatPrice(product.price)}
+          </span>
+        </div>
+        <Separator className="my-6" />
+
+        {/* Product specs */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-[#888]">{tProduct("stockStatus")}</span>
+            <span className={`text-sm font-semibold ${product.inStock !== false ? "text-green-700" : "text-red-600"}`}>
+              {product.inStock !== false ? tCommon("inStock") : tCommon("outOfStock")}
+            </span>
+          </div>
+          {product.sticks > 0 && (
             <div className="flex items-center justify-between">
-              <span className="text-sm text-stone-500">{tProduct("stockStatus")}</span>
-              <span className={`text-sm font-semibold ${product.inStock !== false ? "text-green-700" : "text-red-600"}`}>
-                {product.inStock !== false ? tCommon("inStock") : tCommon("outOfStock")}
-              </span>
+              <span className="text-sm text-[#888]">{tProduct("sticks")}</span>
+              <span className="text-sm font-semibold text-[#1A1A1A]">{product.sticks}{tProduct("sticksUnit")}</span>
             </div>
-            {product.sticks > 0 && (
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-stone-500">{tProduct("sticks")}</span>
-                <span className="text-sm font-semibold text-stone-700">{product.sticks}{tProduct("sticksUnit")}</span>
-              </div>
-            )}
-            {product.tar > 0 && (
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-stone-500">{tProduct("tar")}</span>
-                <span className="text-sm font-semibold text-stone-700">{product.tar} mg</span>
-              </div>
-            )}
-            {product.nicotine > 0 && (
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-stone-500">{tProduct("nicotine")}</span>
-                <span className="text-sm font-semibold text-stone-700">{product.nicotine} mg</span>
-              </div>
-            )}
-          </div>
-
-          <Separator className="my-6" />
-
-          {/* Quantity stepper + add to cart + wishlist */}
-          <div className="flex items-center gap-3">
-            <div className="flex items-center rounded-lg border border-stone-200">
-              <button
-                onClick={decrementQty}
-                disabled={qty <= 1}
-                className="flex h-10 w-10 items-center justify-center rounded-l-lg text-stone-500 transition-colors hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-40"
-                aria-label="Decrease quantity"
-              >
-                <Minus className="h-4 w-4" />
-              </button>
-              <span className="flex h-10 w-10 items-center justify-center border-x border-stone-200 text-sm font-semibold text-stone-700">
-                {qty}
-              </span>
-              <button
-                onClick={incrementQty}
-                disabled={qty >= 10}
-                className="flex h-10 w-10 items-center justify-center rounded-r-lg text-stone-500 transition-colors hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-40"
-                aria-label="Increase quantity"
-              >
-                <Plus className="h-4 w-4" />
-              </button>
+          )}
+          {product.tar > 0 && (
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-[#888]">{tProduct("tar")}</span>
+              <span className="text-sm font-semibold text-[#1A1A1A]">{product.tar} mg</span>
             </div>
-            <Button
-              className="flex-1 bg-primary text-white hover:bg-primary/90"
-              disabled={product.inStock === false}
-              onClick={handleAdd}
-            >
-              {tCommon("addToCart")}
-            </Button>
+          )}
+          {product.nicotine > 0 && (
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-[#888]">{tProduct("nicotine")}</span>
+              <span className="text-sm font-semibold text-[#1A1A1A]">{product.nicotine} mg</span>
+            </div>
+          )}
+        </div>
+
+        <Separator className="my-6" />
+
+        {/* Quantity stepper + add to cart + wishlist */}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center rounded-lg border border-[#E5E5E5]">
             <button
-              onClick={handleWishlistToggle}
-              className={`flex h-10 w-10 items-center justify-center rounded-lg border transition-colors ${
-                isWishlisted
-                  ? "border-red-200 bg-red-50 text-red-500"
-                  : "border-stone-200 text-stone-400 hover:border-stone-300 hover:text-stone-500"
-              }`}
-              aria-label={tProduct("addToWishlist")}
+              onClick={decrementQty}
+              disabled={qty <= 1}
+              className="flex h-10 w-10 items-center justify-center rounded-l-lg text-[#888] transition-colors hover:bg-[#F5F5F5] disabled:cursor-not-allowed disabled:opacity-40"
+              aria-label="Decrease quantity"
             >
-              <Heart className={`h-5 w-5 ${isWishlisted ? "fill-red-500" : ""}`} />
+              <Minus className="h-4 w-4" />
+            </button>
+            <span className="flex h-10 w-10 items-center justify-center border-x border-[#E5E5E5] text-sm font-semibold text-[#1A1A1A]">
+              {qty}
+            </span>
+            <button
+              onClick={incrementQty}
+              disabled={qty >= 10}
+              className="flex h-10 w-10 items-center justify-center rounded-r-lg text-[#888] transition-colors hover:bg-[#F5F5F5] disabled:cursor-not-allowed disabled:opacity-40"
+              aria-label="Increase quantity"
+            >
+              <Plus className="h-4 w-4" />
             </button>
           </div>
+          <Button
+            className="flex-1 bg-[#1A1A1A] text-white rounded-lg uppercase tracking-wider hover:bg-[#333]"
+            disabled={product.inStock === false}
+            onClick={handleAdd}
+          >
+            {tCommon("addToCart")}
+          </Button>
+          <button
+            onClick={handleWishlistToggle}
+            className={`flex h-10 w-10 items-center justify-center rounded-lg border transition-colors ${
+              isWishlisted
+                ? "border-[#C8A97E] bg-[#C8A97E]/10 text-[#C8A97E]"
+                : "border-[#E5E5E5] text-[#888] hover:border-[#C8A97E] hover:text-[#C8A97E]"
+            }`}
+            aria-label={tProduct("addToWishlist")}
+          >
+            <Heart className={`h-5 w-5 ${isWishlisted ? "fill-[#C8A97E]" : ""}`} />
+          </button>
         </div>
       </div>
 
-      <Tabs defaultValue="description" className="mt-12">
-        <TabsList>
-          <TabsTrigger value="description">{tProduct("description")}</TabsTrigger>
-          <TabsTrigger value="reviews">{tProduct("reviews")}</TabsTrigger>
-        </TabsList>
-        <TabsContent value="description" className="mt-4">
-          <Card className="p-6">
-            <p className="leading-relaxed text-stone-600">
-              {product.desc || `${displayName}${tProduct("defaultDescription")}`}
-            </p>
-          </Card>
-        </TabsContent>
-        <TabsContent value="reviews" className="mt-4">
-          <Card className="p-6 text-center">
-            <p className="text-stone-400">{tProduct("noReviews")}</p>
-            <Button variant="outline" className="mt-4">{tProduct("writeReview")}</Button>
-          </Card>
-        </TabsContent>
-      </Tabs>
+      <div className="max-w-2xl mx-auto px-4">
+        <Tabs defaultValue="description" className="mt-4">
+          <TabsList>
+            <TabsTrigger value="description">{tProduct("description")}</TabsTrigger>
+            <TabsTrigger value="reviews">{tProduct("reviews")}</TabsTrigger>
+          </TabsList>
+          <TabsContent value="description" className="mt-4">
+            <div className="rounded-lg border border-[#E5E5E5] bg-white p-6">
+              <p className="leading-relaxed text-[#1A1A1A]">
+                {product.desc || `${displayName}${tProduct("defaultDescription")}`}
+              </p>
+            </div>
+          </TabsContent>
+          <TabsContent value="reviews" className="mt-4">
+            <div className="rounded-lg border border-[#E5E5E5] bg-white p-6 text-center">
+              <p className="text-[#888]">{tProduct("noReviews")}</p>
+              <Button variant="outline" className="mt-4">{tProduct("writeReview")}</Button>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
 
       {/* Related Products */}
       {relatedProducts.length > 0 && (
         <section className="mt-16">
-          <h2 className="font-heading text-2xl font-bold text-stone-800">{tProduct("relatedProducts")}</h2>
+          <h2 className="text-xl font-bold uppercase tracking-wider text-[#1A1A1A]">
+            {tProduct("relatedProducts")}
+          </h2>
           <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-4">
             {relatedProducts.map((rp) => (
               <ProductCard key={rp.id} product={rp} />

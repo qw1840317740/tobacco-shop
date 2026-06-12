@@ -11,20 +11,20 @@ export function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
   const t = useTranslations("nav");
 
   return (
-    <nav className="mb-6 flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-stone-50 to-stone-100/50 px-4 py-2.5 text-sm border border-stone-200/50 backdrop-blur-sm">
-      <Link href="/" className="flex items-center gap-1 text-stone-400 transition-colors hover:text-primary">
+    <nav className="mb-6 flex items-center gap-1.5 bg-[#F5F5F5] border border-[#E5E5E5] rounded-lg px-4 py-2.5 text-sm">
+      <Link href="/" className="flex items-center gap-1 text-[#888] transition-colors hover:text-[#C8A97E]">
         <Home className="h-3.5 w-3.5" />
         <span className="hidden sm:inline">{t("home")}</span>
       </Link>
       {items.map((item, i) => (
         <span key={i} className="flex items-center gap-1.5">
-          <ChevronRight className="h-3.5 w-3.5 text-stone-300" />
+          <ChevronRight className="h-3.5 w-3.5 text-[#CCCCCC]" />
           {item.href ? (
-            <Link href={item.href} className="text-stone-500 transition-colors hover:text-primary">
+            <Link href={item.href} className="text-[#888] transition-colors hover:text-[#C8A97E]">
               {item.label}
             </Link>
           ) : (
-            <span className="font-medium text-stone-700">{item.label}</span>
+            <span className="font-medium text-[#1A1A1A]">{item.label}</span>
           )}
         </span>
       ))}

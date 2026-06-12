@@ -73,11 +73,11 @@ export default function SearchClient() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
-      <h1 className="font-heading text-3xl font-bold text-stone-800">{t("title")}</h1>
+      <h1 className="text-3xl font-bold text-[#1A1A1A]">{t("title")}</h1>
 
       <form onSubmit={handleSubmit} className="mt-6 flex gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#888888]" />
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -86,39 +86,39 @@ export default function SearchClient() {
             autoFocus
           />
         </div>
-        <Button type="submit" className="bg-primary text-white hover:bg-primary/90">{t("button")}</Button>
+        <Button type="submit" className="bg-[#1A1A1A] text-white hover:bg-[#333]">{t("button")}</Button>
       </form>
 
       {/* Loading */}
       {loading && (
-        <div className="mt-12 flex flex-col items-center gap-2 text-stone-400">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-stone-300 border-t-primary" />
+        <div className="mt-12 flex flex-col items-center gap-2 text-[#888888]">
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-[#E5E5E5] border-t-[#C8A97E]" />
           <p className="text-sm">{t("loading")}</p>
         </div>
       )}
 
       {/* Result count */}
       {!loading && searched && results.length > 0 && (
-        <p className="mt-6 text-sm text-stone-500">{t("resultCount", { count: results.length })}</p>
+        <p className="mt-6 text-sm text-[#888888]">{t("resultCount", { count: results.length })}</p>
       )}
 
       {/* No results */}
       {!loading && searched && results.length === 0 && query.length > 1 && (
         <div className="mt-16 flex flex-col items-center gap-3 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-stone-100">
-            <Search className="h-6 w-6 text-stone-300" />
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#F5F5F5]">
+            <Search className="h-6 w-6 text-[#888888]" />
           </div>
-          <p className="text-sm text-stone-400">{t("noResults", { query })}</p>
+          <p className="text-sm text-[#888888]">{t("noResults", { query })}</p>
         </div>
       )}
 
       {/* Initial empty state */}
       {!searched && !loading && (
         <div className="mt-16 flex flex-col items-center gap-3 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-stone-100">
-            <Search className="h-6 w-6 text-stone-300" />
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#F5F5F5]">
+            <Search className="h-6 w-6 text-[#888888]" />
           </div>
-          <p className="text-sm text-stone-400">{t("emptyHint")}</p>
+          <p className="text-sm text-[#888888]">{t("emptyHint")}</p>
         </div>
       )}
 

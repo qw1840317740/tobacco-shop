@@ -39,7 +39,7 @@ export function NewsletterForm() {
 
   if (done) {
     return (
-      <p className="mt-5 text-sm text-green-200">{t("successMessage")}</p>
+      <p className="mt-5 text-sm text-[#C8A97E]">{t("successMessage")}</p>
     );
   }
 
@@ -51,16 +51,16 @@ export function NewsletterForm() {
         onChange={(e) => { setEmail(e.target.value); setError(""); }}
         placeholder={t("placeholder")}
         required
-        className="flex-1 rounded-xl bg-white/10 px-5 py-2.5 text-sm text-white placeholder-red-200/50 backdrop-blur-sm border border-white/20 transition-all focus:border-white/40 focus:bg-white/15 focus:outline-none focus:ring-0"
+        className="flex-1 rounded-none border border-[#2A2A2A] bg-transparent px-5 py-2.5 text-sm text-white placeholder:text-[#666] transition-all focus:border-[#C8A97E] focus:outline-none focus:ring-0"
       />
       <Button
         type="submit"
         disabled={loading}
-        className="rounded-xl bg-stone-900 px-6 py-2.5 text-sm font-semibold text-white shadow-xl shadow-stone-900/50 hover:bg-stone-800 disabled:opacity-50"
+        className="rounded-none bg-[#C8A97E] px-6 py-2.5 text-sm font-semibold text-white uppercase tracking-wider hover:bg-[#B8956A] disabled:opacity-50"
       >
         {loading ? t("submitting") : t("submit")}
       </Button>
-      {error && <p className="text-xs text-red-200 sm:col-span-2">{error}</p>}
+      {error && <p className="text-xs text-red-400 sm:col-span-2">{error}</p>}
     </form>
   );
 }

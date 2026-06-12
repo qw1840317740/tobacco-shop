@@ -75,18 +75,18 @@ export default async function GuidePage({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-      <h1 className="font-heading text-3xl font-bold text-stone-800">{t("title")}</h1>
-      <p className="mt-2 text-stone-500">{t("subtitle")}</p>
+      <h1 className="text-3xl font-bold text-[#1A1A1A]">{t("title")}</h1>
+      <p className="mt-2 text-[#888888]">{t("subtitle")}</p>
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
         {guides.map((guide) => (
-          <Card key={guide.title} className="group overflow-hidden transition-all hover:shadow-lg">
+          <Card key={guide.title} className="group overflow-hidden transition-all hover:shadow-sm">
             <div className="relative aspect-[3/2] overflow-hidden">
               <Image src={guide.img} alt={guide.title} fill className="object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" sizes="(max-width: 640px) 100vw, 50vw" />
             </div>
             <div className="p-6">
               <div className="text-2xl mb-2">{guide.icon}</div>
-              <h2 className="font-heading text-lg font-semibold text-stone-800 group-hover:text-primary">{guide.title}</h2>
-              <p className="mt-2 text-sm text-stone-500">{guide.desc}</p>
+              <h2 className="text-lg font-semibold text-[#1A1A1A] group-hover:text-[#C8A97E]">{guide.title}</h2>
+              <p className="mt-2 text-sm text-[#888888]">{guide.desc}</p>
             </div>
           </Card>
         ))}

@@ -89,7 +89,7 @@ export default function AgeVerificationPage() {
   ];
 
   const statusMap: Record<string, { label: string; variant: "default" | "secondary" | "destructive" | "outline"; color: string }> = {
-    none: { label: "未提出", variant: "outline", color: "text-stone-500" },
+    none: { label: "未提出", variant: "outline", color: "text-[#888888]" },
     pending: { label: "審査中", variant: "secondary", color: "text-amber-600" },
     approved: { label: "承認済み", variant: "default", color: "text-green-600" },
     rejected: { label: "却下", variant: "destructive", color: "text-red-600" },
@@ -98,9 +98,9 @@ export default function AgeVerificationPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6">
-      <Link href="/profile" className="text-sm text-stone-500 hover:text-primary">← プロフィールに戻る</Link>
-      <h1 className="font-heading text-3xl font-bold text-stone-800 mt-2">年齢確認書類のアップロード</h1>
-      <p className="mt-2 text-sm text-stone-500">
+      <Link href="/profile" className="text-sm text-[#888888] hover:text-[#C8A97E]">← プロフィールに戻る</Link>
+      <h1 className="text-3xl font-bold text-[#1A1A1A] mt-2">年齢確認書類のアップロード</h1>
+      <p className="mt-2 text-sm text-[#888888]">
         煙草の販売には年齢確認が必要です。運転免許証、パスポート、またはマイナンバーカードの写真をアップロードしてください。
       </p>
 
@@ -136,7 +136,7 @@ export default function AgeVerificationPage() {
           <img
             src={docUrl}
             alt="提出した書類"
-            className="max-w-xs rounded-lg border border-stone-200"
+            className="max-w-xs rounded-lg border border-[#E5E5E5]"
           />
         </Card>
       )}
@@ -148,11 +148,11 @@ export default function AgeVerificationPage() {
 
           {/* Document type */}
           <div className="mb-4">
-            <label className="mb-1 block text-sm font-medium text-stone-600">書類の種類</label>
+            <label className="mb-1 block text-sm font-medium text-[#888888]">書類の種類</label>
             <select
               value={docType}
               onChange={(e) => setDocType(e.target.value)}
-              className="w-full rounded-md border border-stone-200 px-3 py-2 text-sm"
+              className="w-full rounded-md border border-[#E5E5E5] px-3 py-2 text-sm"
             >
               {docTypeOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -164,8 +164,8 @@ export default function AgeVerificationPage() {
           <div
             className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
               dragOver
-                ? "border-primary bg-primary/5"
-                : "border-stone-300 hover:border-stone-400"
+                ? "border-[#C8A97E] bg-[#F5F5F5]"
+                : "border-[#E5E5E5] hover:border-[#888888]"
             }`}
             onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
             onDragLeave={() => setDragOver(false)}
@@ -174,10 +174,10 @@ export default function AgeVerificationPage() {
             style={{ cursor: "pointer" }}
           >
             <div className="text-4xl mb-2">📄</div>
-            <p className="text-sm text-stone-600">
+            <p className="text-sm text-[#888888]">
               クリックしてファイルを選択、またはドラッグ＆ドロップ
             </p>
-            <p className="text-xs text-stone-400 mt-1">JPG, PNG, PDF / 最大10MB</p>
+            <p className="text-xs text-[#888888] mt-1">JPG, PNG, PDF / 最大10MB</p>
             <input
               ref={fileRef}
               type="file"
@@ -191,7 +191,7 @@ export default function AgeVerificationPage() {
           </div>
 
           {uploading && (
-            <p className="mt-3 text-sm text-stone-500">アップロード中...</p>
+            <p className="mt-3 text-sm text-[#888888]">アップロード中...</p>
           )}
         </Card>
       )}

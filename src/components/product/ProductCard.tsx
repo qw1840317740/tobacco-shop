@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useCartStore } from "@/stores/cart-store";
-import { Badge } from "@/components/ui/badge";
 import { Link } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { formatPrice, getLocalizedName } from "@/lib/utils";
@@ -34,12 +33,12 @@ function deterministicRating(productId: string): { rating: number; count: number
     hash |= 0;
   }
   hash = Math.abs(hash);
-  const rating = 3.5 + (hash % 15) / 10; // 3.5 to 4.9
-  const count = 8 + (hash % 93); // 8 to 100
+  const rating = 3.5 + (hash % 15) / 10;
+  const count = 8 + (hash % 93);
   return { rating: Math.round(rating * 10) / 10, count };
 }
 
-export function ProductCard({ product, dark }: { product: Product; dark?: boolean }) {
+export function ProductCard({ product }: { product: Product }) {
   const addItem = useCartStore((s) => s.addItem);
   const tCommon = useTranslations("common");
   const tProduct = useTranslations("product");
@@ -65,64 +64,55 @@ export function ProductCard({ product, dark }: { product: Product; dark?: boolea
   const regionLabel = tProduct(`regions.${product.region}`) || product.region;
 
   return (
-    <div className={`group relative overflow-hidden rounded-2xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-1.5 ${
-      dark
-        ? "bg-gradient-to-br from-stone-800/80 to-stone-900/80 border border-stone-700/30 backdrop-blur-sm"
-        : "bg-white/70 border border-stone-200/50 backdrop-blur-sm shadow-sm"
-    }`}>
+    <div className="group relative overflow-hidden rounded-lg bg-white border border-[#E5E5E5] transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
       <Link href={`/products/${product.slug}`}>
-        <div className={`relative aspect-square overflow-hidden ${dark ? "bg-stone-800" : "bg-stone-50"}`}>
+        <div className="relative aspect-[2/3] overflow-hidden bg-[#F5F5F5]">
           <Image
             src={product.image}
             alt={displayName}
             fill
-            className="object-cover transition-transform duration-700 group-hover:scale-110"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
             loading="lazy"
             sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
 
           {product.inStock === false && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-[2px]">
-              <span className="rounded-lg bg-white px-3 py-1 text-xs font-medium text-stone-700">{tCommon("outOfStock")}</span>
+            <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+              <span className="rounded-lg bg-white px-3 py-1 text-xs font-medium text-[#1A1A1A]">
+                {tCommon("outOfStock")}
+              </span>
             </div>
           )}
+
+          {/* QuickView eye icon — top-right on hover */}
           {product.inStock !== false && (
-            <div className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-black/40 to-transparent p-3 pt-8 transition-transform duration-300 group-hover:translate-y-0">
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={handleAdd}
-                  className="flex-1 rounded-xl bg-primary py-2 text-xs font-semibold text-white shadow-lg transition-colors hover:bg-primary/90"
-                >
-                  {tCommon("addToCart")}
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setQuickViewOpen(true);
-                  }}
-                  className="rounded-xl bg-white/90 p-2 text-stone-700 shadow-lg transition-colors hover:bg-white hover:text-primary"
-                  title={tCommon("quickView")}
-                >
-                  <Eye className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setQuickViewOpen(true);
+              }}
+              className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-lg bg-white/90 text-[#1A1A1A] opacity-0 transition-all duration-300 group-hover:opacity-100 hover:bg-white hover:text-[#C8A97E]"
+              title={tCommon("quickView")}
+            >
+              <Eye className="h-4 w-4" />
+            </button>
           )}
         </div>
       </Link>
       <div className="p-4">
         <div className="flex items-center gap-1.5">
           {product.code && (
-            <Badge variant="secondary" className={`rounded-md text-[10px] font-mono font-medium ${dark ? "bg-stone-700/60 text-stone-300 border-stone-600/30" : "bg-primary/10 text-primary border-stone-200/50"}`}>#{product.code}</Badge>
+            <span className="text-[10px] uppercase tracking-wider text-[#888] font-mono">
+              #{product.code}
+            </span>
           )}
-          <Badge variant="secondary" className={`rounded-md text-[10px] font-medium ${dark ? "bg-stone-700/60 text-stone-300 border-stone-600/30" : "bg-stone-100 border-stone-200/50"}`}>{regionLabel}</Badge>
+          <span className="text-[10px] uppercase tracking-wider text-[#888]">
+            {regionLabel}
+          </span>
         </div>
         <Link href={`/products/${product.slug}`}>
-          <h3 className={`mt-2 text-sm font-semibold leading-snug transition-colors line-clamp-1 ${
-            dark ? "text-white group-hover:text-red-400" : "text-stone-800 group-hover:text-primary"
-          }`}>
+          <h3 className="mt-1.5 text-sm font-medium text-[#1A1A1A] line-clamp-1 transition-colors hover:text-[#C8A97E]">
             {displayName}
           </h3>
         </Link>
@@ -132,7 +122,7 @@ export function ProductCard({ product, dark }: { product: Product; dark?: boolea
             {[1, 2, 3, 4, 5].map((star) => (
               <Star
                 key={star}
-                className={`h-3.5 w-3.5 ${
+                className={`h-3 w-3 ${
                   star <= Math.round(rating)
                     ? "fill-amber-400 text-amber-400"
                     : star - 0.5 <= rating
@@ -142,17 +132,21 @@ export function ProductCard({ product, dark }: { product: Product; dark?: boolea
               />
             ))}
           </div>
-          <span className={`text-xs font-medium ${dark ? "text-stone-400" : "text-stone-500"}`}>{rating.toFixed(1)}</span>
-          <span className={`text-xs ${dark ? "text-stone-500" : "text-stone-400"}`}>({count})</span>
+          <span className="text-[10px] font-medium text-[#888]">
+            {rating.toFixed(1)}
+          </span>
+          <span className="text-[10px] text-[#888]">({count})</span>
         </div>
-        <div className="mt-2 flex items-baseline gap-2">
-          <span className="text-lg font-bold text-primary">{formatPrice(product.price)}</span>
+        <div className="mt-2">
+          <span className="text-base font-bold text-[#C8A97E]">
+            {formatPrice(product.price)}
+          </span>
         </div>
         {/* Mobile add */}
         {product.inStock !== false && (
           <button
             onClick={handleAdd}
-            className="mt-3 w-full rounded-xl bg-primary py-2 text-xs font-semibold text-white transition-colors hover:bg-primary/90 sm:hidden"
+            className="mt-3 w-full rounded-none bg-[#1A1A1A] py-2 text-xs font-medium text-white uppercase tracking-wider transition-colors hover:bg-[#333] sm:hidden"
           >
             {tCommon("addToCart")}
           </button>

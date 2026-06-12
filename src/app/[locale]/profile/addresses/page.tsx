@@ -154,7 +154,7 @@ export default function AddressesPage() {
   if (loading) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
-        <p className="text-stone-500">読み込み中...</p>
+        <p className="text-[#888888]">読み込み中...</p>
       </div>
     );
   }
@@ -163,17 +163,17 @@ export default function AddressesPage() {
     <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
       <div className="flex items-center justify-between">
         <div>
-          <Link href="/profile" className="text-sm text-stone-500 hover:text-primary">← プロフィールに戻る</Link>
-          <h1 className="font-heading text-3xl font-bold text-stone-800 mt-2">住所管理</h1>
+          <Link href="/profile" className="text-sm text-[#888888] hover:text-[#C8A97E]">← プロフィールに戻る</Link>
+          <h1 className="text-3xl font-bold text-[#1A1A1A] mt-2">住所管理</h1>
         </div>
-        <Button onClick={openAdd} className="bg-primary text-white hover:bg-primary/90" size="sm">
+        <Button onClick={openAdd} className="bg-[#1A1A1A] text-white hover:bg-[#333]" size="sm">
           + 追加
         </Button>
       </div>
 
       {addresses.length === 0 ? (
         <Card className="mt-6 p-8 text-center">
-          <p className="text-stone-500">住所が登録されていません</p>
+          <p className="text-[#888888]">住所が登録されていません</p>
           <Button onClick={openAdd} variant="outline" className="mt-3" size="sm">住所を追加</Button>
         </Card>
       ) : (
@@ -187,12 +187,12 @@ export default function AddressesPage() {
                     {addr.isDefault && <Badge>デフォルト</Badge>}
                   </div>
                   <p className="mt-2 font-medium">{addr.name}</p>
-                  {addr.phone && <p className="text-sm text-stone-500">{addr.phone}</p>}
-                  <p className="text-sm text-stone-600 mt-1">〒{addr.postalCode}</p>
-                  <p className="text-sm text-stone-600">
+                  {addr.phone && <p className="text-sm text-[#888888]">{addr.phone}</p>}
+                  <p className="text-sm text-[#888888] mt-1">〒{addr.postalCode}</p>
+                  <p className="text-sm text-[#888888]">
                     {addr.prefecture}{addr.city}{addr.address1}
                   </p>
-                  {addr.address2 && <p className="text-sm text-stone-600">{addr.address2}</p>}
+                  {addr.address2 && <p className="text-sm text-[#888888]">{addr.address2}</p>}
                 </div>
                 <div className="flex gap-2">
                   {!addr.isDefault && (
@@ -221,7 +221,7 @@ export default function AddressesPage() {
               <select
                 value={form.label}
                 onChange={(e) => setForm({ ...form, label: e.target.value })}
-                className="mt-1 w-full rounded-md border border-stone-200 px-3 py-2 text-sm"
+                className="mt-1 w-full rounded-md border border-[#E5E5E5] px-3 py-2 text-sm"
               >
                 <option value="home">自宅</option>
                 <option value="work">勤務先</option>
@@ -261,14 +261,14 @@ export default function AddressesPage() {
                 type="checkbox"
                 checked={form.isDefault}
                 onChange={(e) => setForm({ ...form, isDefault: e.target.checked })}
-                className="rounded border-stone-300"
+                className="rounded border-[#E5E5E5]"
               />
               <Label>デフォルトの配送先に設定</Label>
             </div>
           </div>
           <div className="mt-4 flex justify-end gap-2">
             <Button variant="outline" onClick={() => setDialogOpen(false)}>キャンセル</Button>
-            <Button className="bg-primary text-white hover:bg-primary/90" onClick={handleSubmit} disabled={submitting}>
+            <Button className="bg-[#1A1A1A] text-white hover:bg-[#333]" onClick={handleSubmit} disabled={submitting}>
               {submitting ? "保存中..." : "保存"}
             </Button>
           </div>

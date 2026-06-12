@@ -51,12 +51,12 @@ export default function PrivacyPolicyPage() {
     <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
       <Breadcrumb items={[{ label: "プライバシーポリシー" }]} />
 
-      <h1 className="font-heading text-3xl font-bold text-stone-800">プライバシーポリシー</h1>
-      <p className="mt-2 text-sm text-stone-400">最終更新日：2026年6月1日</p>
+      <h1 className="text-3xl font-bold text-[#1A1A1A]">プライバシーポリシー</h1>
+      <p className="mt-2 text-sm text-[#888888]">最終更新日：2026年6月1日</p>
 
-      <div className="mt-8 space-y-8 text-sm leading-relaxed text-stone-600">
+      <div className="mt-8 space-y-8 text-sm leading-relaxed text-[#888888]">
         <section>
-          <h2 className="font-heading text-lg font-semibold text-stone-800">1. お客様の個人情報の取り扱いについて</h2>
+          <h2 className="text-lg font-semibold text-[#1A1A1A]">1. お客様の個人情報の取り扱いについて</h2>
           <p className="mt-3">
             タバコ屋（以下「当店」）は、お客様の個人情報（氏名、住所、電話番号、メールアドレス、生年月日、購入履歴など）を適切に管理し、以下の目的で利用いたします。
           </p>
@@ -71,7 +71,7 @@ export default function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="font-heading text-lg font-semibold text-stone-800">2. 個人情報の提供先</h2>
+          <h2 className="text-lg font-semibold text-[#1A1A1A]">2. 個人情報の提供先</h2>
           <p className="mt-3">
             当店は、お客様の個人情報を以下の場合を除き、第三者に開示・提供することはありません。
           </p>
@@ -84,21 +84,21 @@ export default function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="font-heading text-lg font-semibold text-stone-800">3. 個人情報の管理</h2>
+          <h2 className="text-lg font-semibold text-[#1A1A1A]">3. 個人情報の管理</h2>
           <p className="mt-3">
             当店は、お客様の個人情報を正確かつ最新の状態に保ち、不正アクセス・紛失・破損・改ざん・漏洩などを防止するため、適切な安全管理措置を講じます。SSL暗号化通信を用いて、お客様の情報を安全に送受信いたします。
           </p>
         </section>
 
         <section>
-          <h2 className="font-heading text-lg font-semibold text-stone-800">4. Cookie（クッキー）の使用</h2>
+          <h2 className="text-lg font-semibold text-[#1A1A1A]">4. Cookie（クッキー）の使用</h2>
           <p className="mt-3">
             当店のウェブサイトでは、サービス向上のためにCookieを使用することがあります。Cookieはお客様のブラウザに保存される小さなテキストファイルで、訪問回数や利用ページなどの情報を記録します。お客様はブラウザの設定によりCookieの使用を拒否することができますが、その場合一部のサービスがご利用いただけない場合があります。
           </p>
         </section>
 
         <section>
-          <h2 className="font-heading text-lg font-semibold text-stone-800">5. お客様の権利</h2>
+          <h2 className="text-lg font-semibold text-[#1A1A1A]">5. お客様の権利</h2>
           <p className="mt-3">
             お客様はご自身の個人情報について、以下の権利を有します。
           </p>
@@ -114,18 +114,18 @@ export default function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="font-heading text-lg font-semibold text-stone-800">6. プライバシーポリシーの変更</h2>
+          <h2 className="text-lg font-semibold text-[#1A1A1A]">6. プライバシーポリシーの変更</h2>
           <p className="mt-3">
             当店は、法令の変更やサービスの改善に伴い、本プライバシーポリシーを変更することがあります。変更後のポリシーは本ページに掲載し、重要な変更がある場合は適切な方法でお客様にお知らせします。
           </p>
         </section>
 
         <section>
-          <h2 className="font-heading text-lg font-semibold text-stone-800">7. お問い合わせ</h2>
+          <h2 className="text-lg font-semibold text-[#1A1A1A]">7. お問い合わせ</h2>
           <p className="mt-3">
             プライバシーポリシーに関するご質問・ご要望は、以下までお問い合わせください。
           </p>
-          <div className="mt-3 rounded-lg bg-stone-50 p-4 text-stone-700">
+          <div className="mt-3 rounded-lg bg-[#F5F5F5] p-4 text-[#333]">
             <p>タバコ屋 カスタマーサポート</p>
             <p>メール：privacy@tabacoya.jp</p>
             <p>電話：0120-XXX-XXX（平日 9:00〜18:00）</p>
@@ -134,7 +134,7 @@ export default function PrivacyPolicyPage() {
       </div>
 
       <div className="mt-12 border-t pt-6">
-        <Link href="/" className="text-sm text-primary hover:underline">← ホームに戻る</Link>
+        <Link href="/" className="text-sm text-[#C8A97E] hover:underline">← ホームに戻る</Link>
       </div>
     </div>
   );

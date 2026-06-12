@@ -83,7 +83,7 @@ export default async function BlogArticlePage({
         />
 
         {/* Hero image */}
-        <div className="relative mt-6 aspect-[16/7] overflow-hidden rounded-2xl shadow-lg">
+        <div className="relative mt-6 aspect-[16/7] overflow-hidden rounded-lg shadow-sm">
           <Image
             src={post.coverImage}
             alt={localized.title}
@@ -92,26 +92,26 @@ export default async function BlogArticlePage({
             priority
             sizes="(max-width: 768px) 100vw, 896px"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+          <div className="absolute inset-0" />
         </div>
 
         {/* Article header */}
         <div className="mt-8">
           <div className="flex items-center gap-3 mb-3">
-            <span className="rounded-full bg-primary/10 px-3 py-1 text-[10px] font-bold tracking-wider text-primary uppercase">
+            <span className="rounded-full bg-[#F5F5F5] px-3 py-1 text-[10px] font-bold tracking-wider text-[#C8A97E] uppercase">
               {t("brandHistory")}
             </span>
-            <span className="text-xs text-stone-400">{post.publishedAt}</span>
+            <span className="text-xs text-[#888888]">{post.publishedAt}</span>
           </div>
-          <h1 className="font-heading text-3xl font-bold leading-tight text-stone-800 sm:text-4xl">
+          <h1 className="text-3xl font-bold leading-tight text-[#1A1A1A] sm:text-4xl">
             {localized.title}
           </h1>
-          <p className="mt-3 text-sm text-stone-500">by {post.author}</p>
+          <p className="mt-3 text-sm text-[#888888]">by {post.author}</p>
         </div>
 
         {/* Article body */}
         <article
-          className="prose-custom mt-10 text-stone-600"
+          className="prose-custom mt-10 text-[#888888]"
           dangerouslySetInnerHTML={{ __html: localized.content }}
         />
 
@@ -124,7 +124,7 @@ export default async function BlogArticlePage({
         <div className="mt-8 border-t pt-6">
           <Link
             href="/blog"
-            className="text-sm text-primary hover:underline"
+            className="text-sm text-[#C8A97E] hover:underline"
           >
             {t("backToBlog")}
           </Link>

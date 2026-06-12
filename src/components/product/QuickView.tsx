@@ -4,7 +4,6 @@ import { useTranslations, useLocale } from "next-intl";
 import { useCartStore } from "@/stores/cart-store";
 import { formatPrice, getLocalizedName } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
@@ -86,7 +85,7 @@ export function QuickView({ product, open, onOpenChange }: QuickViewProps) {
         </DialogHeader>
         <div className="grid gap-4 sm:grid-cols-2">
           {/* Image */}
-          <div className="relative aspect-square overflow-hidden rounded-lg bg-stone-100">
+          <div className="relative aspect-[2/3] overflow-hidden rounded-lg bg-[#F5F5F5]">
             <Image
               src={product.image}
               alt={displayName}
@@ -100,19 +99,19 @@ export function QuickView({ product, open, onOpenChange }: QuickViewProps) {
           <div className="flex flex-col">
             <div className="flex flex-wrap items-center gap-1.5">
               {product.code && (
-                <Badge className="bg-primary/10 text-primary font-mono text-[10px]">
+                <span className="bg-[#F5F5F5] px-2 py-0.5 text-[10px] uppercase tracking-wider text-[#888] font-mono">
                   #{product.code}
-                </Badge>
+                </span>
               )}
-              <Badge variant="secondary" className="text-[10px]">
+              <span className="bg-[#F5F5F5] px-2 py-0.5 text-[10px] uppercase tracking-wider text-[#888]">
                 {regionLabel}
-              </Badge>
-              <Badge variant="secondary" className="text-[10px]">
+              </span>
+              <span className="bg-[#F5F5F5] px-2 py-0.5 text-[10px] uppercase tracking-wider text-[#888]">
                 {typeLabel}
-              </Badge>
+              </span>
             </div>
 
-            <h3 className="mt-2 text-base font-bold text-stone-800 leading-snug">
+            <h3 className="mt-2 text-base font-bold text-[#1A1A1A] leading-snug">
               {displayName}
             </h3>
 
@@ -132,15 +131,15 @@ export function QuickView({ product, open, onOpenChange }: QuickViewProps) {
                   />
                 ))}
               </div>
-              <span className="text-xs font-medium text-stone-500">
+              <span className="text-xs font-medium text-[#888]">
                 {rating.toFixed(1)}
               </span>
-              <span className="text-xs text-stone-400">({count})</span>
+              <span className="text-xs text-[#888]">({count})</span>
             </div>
 
             {/* Price */}
             <div className="mt-2">
-              <span className="text-xl font-bold text-primary">
+              <span className="text-xl font-bold text-[#C8A97E]">
                 {formatPrice(product.price)}
               </span>
             </div>
@@ -148,7 +147,7 @@ export function QuickView({ product, open, onOpenChange }: QuickViewProps) {
             {/* Brief specs */}
             <div className="mt-3 space-y-1.5 text-sm">
               <div className="flex justify-between">
-                <span className="text-stone-500">{tProduct("stockStatus")}</span>
+                <span className="text-[#888]">{tProduct("stockStatus")}</span>
                 <span
                   className={`font-semibold ${
                     product.inStock !== false
@@ -163,24 +162,24 @@ export function QuickView({ product, open, onOpenChange }: QuickViewProps) {
               </div>
               {product.sticks != null && product.sticks > 0 && (
                 <div className="flex justify-between">
-                  <span className="text-stone-500">{tProduct("sticks")}</span>
-                  <span className="font-semibold text-stone-700">
+                  <span className="text-[#888]">{tProduct("sticks")}</span>
+                  <span className="font-semibold text-[#1A1A1A]">
                     {product.sticks}{tProduct("sticksUnit")}
                   </span>
                 </div>
               )}
               {product.tar != null && product.tar > 0 && (
                 <div className="flex justify-between">
-                  <span className="text-stone-500">{tProduct("tar")}</span>
-                  <span className="font-semibold text-stone-700">
+                  <span className="text-[#888]">{tProduct("tar")}</span>
+                  <span className="font-semibold text-[#1A1A1A]">
                     {product.tar} mg
                   </span>
                 </div>
               )}
               {product.nicotine != null && product.nicotine > 0 && (
                 <div className="flex justify-between">
-                  <span className="text-stone-500">{tProduct("nicotine")}</span>
-                  <span className="font-semibold text-stone-700">
+                  <span className="text-[#888]">{tProduct("nicotine")}</span>
+                  <span className="font-semibold text-[#1A1A1A]">
                     {product.nicotine} mg
                   </span>
                 </div>
@@ -190,7 +189,7 @@ export function QuickView({ product, open, onOpenChange }: QuickViewProps) {
             {/* Add to cart */}
             <div className="mt-auto pt-4">
               <Button
-                className="w-full bg-primary text-white hover:bg-primary/90"
+                className="w-full bg-[#1A1A1A] text-white rounded-none uppercase tracking-wider hover:bg-[#333]"
                 disabled={product.inStock === false}
                 onClick={handleAdd}
               >

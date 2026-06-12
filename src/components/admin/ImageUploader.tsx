@@ -87,7 +87,7 @@ export function ImageUploader({ currentImage, onUpload, compact }: ImageUploader
         {currentImage ? (
           <img src={currentImage} alt="" className="h-full w-full object-cover" />
         ) : (
-          <div className="flex h-full items-center justify-center bg-stone-100 text-stone-400">
+          <div className="flex h-full items-center justify-center bg-[#F5F5F5] text-[#888888]">
             <span>📷</span>
           </div>
         )}
@@ -97,8 +97,8 @@ export function ImageUploader({ currentImage, onUpload, compact }: ImageUploader
           </span>
         </div>
         {dragOver && (
-          <div className="absolute inset-0 flex items-center justify-center border-2 border-dashed border-primary bg-primary/10">
-            <span className="text-xs font-medium text-primary">ドロップ</span>
+          <div className="absolute inset-0 flex items-center justify-center border-2 border-dashed border-[#C8A97E] bg-[#C8A97E]/10">
+            <span className="text-xs font-medium text-[#C8A97E]">ドロップ</span>
           </div>
         )}
         <input ref={inputRef} type="file" accept="image/*" onChange={handleChange} className="hidden" />
@@ -108,8 +108,8 @@ export function ImageUploader({ currentImage, onUpload, compact }: ImageUploader
 
   return (
     <div
-      className={`rounded-xl border-2 border-dashed p-8 text-center transition-colors cursor-pointer ${
-        dragOver ? "border-primary bg-primary/5" : "border-stone-200 hover:border-stone-300"
+      className={`rounded-lg border-2 border-dashed p-8 text-center transition-colors cursor-pointer ${
+        dragOver ? "border-[#C8A97E] bg-[#F5F5F5]" : "border-[#E5E5E5] hover:border-[#E5E5E5]"
       }`}
       onClick={() => inputRef.current?.click()}
       onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
@@ -121,7 +121,7 @@ export function ImageUploader({ currentImage, onUpload, compact }: ImageUploader
       ) : (
         <div className="text-4xl mb-2">📷</div>
       )}
-      <p className="mt-2 text-sm text-stone-500">
+      <p className="mt-2 text-sm text-[#888888]">
         {uploading ? "処理中..." : "クリックまたはドラッグして画像をアップロード"}
       </p>
       <input ref={inputRef} type="file" accept="image/*" onChange={handleChange} className="hidden" />

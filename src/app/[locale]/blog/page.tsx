@@ -70,15 +70,15 @@ export default async function BlogPage({
       {/* Page header */}
       <div className="mb-10">
         <div className="flex items-center gap-3 mb-3">
-          <div className="h-px w-8 bg-gradient-to-r from-primary to-transparent" />
-          <span className="text-[10px] font-bold tracking-[0.25em] text-primary uppercase">
+          <div className="h-px w-8 bg-[#C8A97E]" />
+          <span className="text-[10px] font-bold tracking-[0.25em] text-[#C8A97E] uppercase">
             Blog
           </span>
         </div>
-        <h1 className="font-heading text-3xl font-bold text-stone-800 sm:text-4xl">
+        <h1 className="text-3xl font-bold text-[#1A1A1A] sm:text-4xl">
           {t("title")}
         </h1>
-        <p className="mt-2 text-stone-500">{t("subtitle")}</p>
+        <p className="mt-2 text-[#888888]">{t("subtitle")}</p>
       </div>
 
       {/* Article grid */}
@@ -90,7 +90,7 @@ export default async function BlogPage({
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="group overflow-hidden rounded-2xl border border-stone-200/50 bg-white shadow-sm transition-all duration-300 hover:border-primary/20 hover:shadow-xl hover:-translate-y-1"
+                className="group overflow-hidden rounded-lg border border-[#E5E5E5]/50 bg-white shadow-sm transition-all duration-300 hover:border-[#C8A97E]/20 hover:shadow-sm hover:-translate-y-1"
               >
                 {/* Cover image */}
                 <div className="relative aspect-[16/9] overflow-hidden">
@@ -101,25 +101,25 @@ export default async function BlogPage({
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 640px) 100vw, 50vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                  <div className="absolute inset-0" />
                   {/* Category badge */}
-                  <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-[10px] font-bold tracking-wider text-primary uppercase backdrop-blur-sm">
+                  <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-[10px] font-bold tracking-wider text-[#C8A97E] uppercase">
                     {t("brandHistory")}
                   </span>
                 </div>
                 {/* Content */}
                 <div className="p-6">
-                  <h2 className="font-heading text-lg font-bold text-stone-800 transition-colors group-hover:text-primary line-clamp-2">
+                  <h2 className="text-lg font-bold text-[#1A1A1A] transition-colors group-hover:text-[#C8A97E] line-clamp-2">
                     {localized.title}
                   </h2>
-                  <p className="mt-2 text-sm text-stone-500 line-clamp-3">
+                  <p className="mt-2 text-sm text-[#888888] line-clamp-3">
                     {localized.excerpt}
                   </p>
                   <div className="mt-4 flex items-center justify-between">
-                    <span className="text-xs text-stone-400">
+                    <span className="text-xs text-[#888888]">
                       {post.publishedAt}
                     </span>
-                    <span className="text-xs font-medium text-primary opacity-0 translate-x-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1">
+                    <span className="text-xs font-medium text-[#C8A97E] opacity-0 translate-x-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1">
                       {t("readMore")} →
                     </span>
                   </div>
@@ -130,10 +130,10 @@ export default async function BlogPage({
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center py-16 text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-stone-100">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#F5F5F5]">
             <span className="text-2xl">📝</span>
           </div>
-          <p className="mt-4 text-stone-400">{t("noArticles")}</p>
+          <p className="mt-4 text-[#888888]">{t("noArticles")}</p>
         </div>
       )}
     </div>

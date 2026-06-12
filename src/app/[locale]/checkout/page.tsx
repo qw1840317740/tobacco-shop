@@ -98,10 +98,10 @@ export default function CheckoutPage() {
   if (!user && step !== "done") {
     return (
       <div className="mx-auto max-w-3xl px-4 py-16 text-center">
-        <h1 className="font-heading text-2xl font-bold text-stone-800">{tCheckout("loginRequired")}</h1>
-        <p className="mt-2 text-stone-500">{tCheckout("loginRequiredDesc")}</p>
+        <h1 className="text-2xl font-bold text-[#1A1A1A]">{tCheckout("loginRequired")}</h1>
+        <p className="mt-2 text-[#888888]">{tCheckout("loginRequiredDesc")}</p>
         <Link href="/login">
-          <Button className="mt-4 bg-primary text-white hover:bg-primary/90">{tCheckout("goToLogin")}</Button>
+          <Button className="mt-4 bg-[#1A1A1A] text-white hover:bg-[#333]">{tCheckout("goToLogin")}</Button>
         </Link>
       </div>
     );
@@ -110,10 +110,10 @@ export default function CheckoutPage() {
   if (user && !user.ageVerified && step !== "done") {
     return (
       <div className="mx-auto max-w-3xl px-4 py-16 text-center">
-        <h1 className="font-heading text-2xl font-bold text-stone-800">{tCheckout("ageVerificationRequired")}</h1>
-        <p className="mt-2 text-stone-500">{tCheckout("ageVerificationRequiredDesc")}</p>
+        <h1 className="text-2xl font-bold text-[#1A1A1A]">{tCheckout("ageVerificationRequired")}</h1>
+        <p className="mt-2 text-[#888888]">{tCheckout("ageVerificationRequiredDesc")}</p>
         <Link href="/profile/age-verification">
-          <Button className="mt-4 bg-primary text-white hover:bg-primary/90">{tCheckout("submitAgeDoc")}</Button>
+          <Button className="mt-4 bg-[#1A1A1A] text-white hover:bg-[#333]">{tCheckout("submitAgeDoc")}</Button>
         </Link>
       </div>
     );
@@ -122,7 +122,7 @@ export default function CheckoutPage() {
   if (items.length === 0 && step !== "done") {
     return (
       <div className="mx-auto max-w-3xl px-4 py-16 text-center">
-        <h1 className="font-heading text-2xl font-bold text-stone-800">{tCheckout("cartEmpty")}</h1>
+        <h1 className="text-2xl font-bold text-[#1A1A1A]">{tCheckout("cartEmpty")}</h1>
       </div>
     );
   }
@@ -230,47 +230,47 @@ export default function CheckoutPage() {
   };
 
   const BankInfoCard = () => (
-    <div className="rounded-xl bg-gradient-to-br from-stone-50 to-stone-100/80 border border-stone-200/60 p-5 space-y-3">
+    <div className="rounded-lg bg-[#F5F5F5] border border-[#E5E5E5]/60 p-5 space-y-3">
       <div className="flex items-center gap-2 mb-3">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
-          <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F5F5F5]">
+          <svg className="h-4 w-4 text-[#C8A97E]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21" />
           </svg>
         </div>
-        <h3 className="text-sm font-bold text-stone-700">{tCheckout("bankAccountInfo")}</h3>
+        <h3 className="text-sm font-bold text-[#333]">{tCheckout("bankAccountInfo")}</h3>
       </div>
       <div className="grid grid-cols-2 gap-y-2 text-sm">
-        <span className="text-stone-500">{tCheckout("bankName")}</span>
-        <span className="font-medium text-stone-800">{BANK_INFO.bank}</span>
-        <span className="text-stone-500">{tCheckout("branchName")}</span>
-        <span className="font-medium text-stone-800">{BANK_INFO.branch}</span>
-        <span className="text-stone-500">{tCheckout("accountType")}</span>
-        <span className="font-medium text-stone-800">{BANK_INFO.type}</span>
-        <span className="text-stone-500">{tCheckout("accountNumber")}</span>
-        <span className="font-medium text-stone-800">{BANK_INFO.number}</span>
-        <span className="text-stone-500">{tCheckout("accountHolder")}</span>
-        <span className="font-medium text-stone-800">{BANK_INFO.name}</span>
+        <span className="text-[#888888]">{tCheckout("bankName")}</span>
+        <span className="font-medium text-[#1A1A1A]">{BANK_INFO.bank}</span>
+        <span className="text-[#888888]">{tCheckout("branchName")}</span>
+        <span className="font-medium text-[#1A1A1A]">{BANK_INFO.branch}</span>
+        <span className="text-[#888888]">{tCheckout("accountType")}</span>
+        <span className="font-medium text-[#1A1A1A]">{BANK_INFO.type}</span>
+        <span className="text-[#888888]">{tCheckout("accountNumber")}</span>
+        <span className="font-medium text-[#1A1A1A]">{BANK_INFO.number}</span>
+        <span className="text-[#888888]">{tCheckout("accountHolder")}</span>
+        <span className="font-medium text-[#1A1A1A]">{BANK_INFO.name}</span>
       </div>
     </div>
   );
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
-      <h1 className="font-heading text-3xl font-bold text-stone-800">{tCheckout("proceedToCheckout")}</h1>
+      <h1 className="text-3xl font-bold text-[#1A1A1A]">{tCheckout("proceedToCheckout")}</h1>
 
       {/* Step indicator */}
       <div className="mt-6 flex items-center gap-2">
         {(["shipping", "payment", "confirm"] as const).map((s, i) => (
           <div key={s} className="flex items-center gap-2">
             <div className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold transition-colors ${
-              step === s || (step === "done" && i === 2) ? "bg-primary text-white" : "bg-stone-200 text-stone-500"
+              step === s || (step === "done" && i === 2) ? "bg-[#1A1A1A] text-white" : "bg-[#E5E5E5] text-[#888888]"
             }`}>{i + 1}</div>
             <span className={`hidden text-sm sm:inline ${
-              step === s || (step === "done" && i === 2) ? "font-medium text-primary" : "text-stone-400"
+              step === s || (step === "done" && i === 2) ? "font-medium text-[#C8A97E]" : "text-[#888888]"
             }`}>
               {s === "shipping" ? tCheckout("stepShipping") : s === "payment" ? tCheckout("stepPayment") : tCheckout("stepConfirm")}
             </span>
-            {i < 2 && <div className="mx-2 h-px w-4 bg-stone-200 sm:w-8" />}
+            {i < 2 && <div className="mx-2 h-px w-4 bg-[#E5E5E5] sm:w-8" />}
           </div>
         ))}
       </div>
@@ -281,7 +281,7 @@ export default function CheckoutPage() {
           {/* Step 1: Shipping */}
           {step === "shipping" && (
             <Card className="p-6">
-              <h2 className="font-heading text-lg font-semibold">{tCheckout("shippingInfo")}</h2>
+              <h2 className="text-lg font-semibold">{tCheckout("shippingInfo")}</h2>
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
                 <div>
                   <Label>{tCheckout("name")}</Label>
@@ -297,14 +297,14 @@ export default function CheckoutPage() {
                 </div>
                 <div>
                   <Label>{tCheckout("email")}</Label>
-                  <Input value={user?.email || ""} disabled className="mt-1 bg-stone-50" />
+                  <Input value={user?.email || ""} disabled className="mt-1 bg-[#F5F5F5]" />
                 </div>
                 <div className="sm:col-span-2">
                   <Label>{tCheckout("address")}</Label>
                   <Input value={shippingAddress} onChange={(e) => setShippingAddress(e.target.value)} placeholder={tCheckout("addressPlaceholder")} className="mt-1" />
                 </div>
               </div>
-              <Button className="mt-6 w-full bg-primary text-white hover:bg-primary/90" onClick={() => {
+              <Button className="mt-6 w-full bg-[#1A1A1A] text-white hover:bg-[#333]" onClick={() => {
                 if (!shippingName.trim() || !shippingAddress.trim()) {
                   toast.error(tCheckout("fillNameAndAddress"));
                   return;
@@ -319,17 +319,17 @@ export default function CheckoutPage() {
           {/* Step 2: Payment → Bank transfer info */}
           {step === "payment" && (
             <Card className="p-6">
-              <h2 className="font-heading text-lg font-semibold">{tCheckout("paymentMethod")}</h2>
+              <h2 className="text-lg font-semibold">{tCheckout("paymentMethod")}</h2>
               <div className="mt-4">
-                <div className="flex items-center gap-2 rounded-lg bg-primary/5 border border-primary/10 px-4 py-3 text-sm">
-                  <svg className="h-5 w-5 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <div className="flex items-center gap-2 rounded-lg bg-[#F5F5F5] border border-[#C8A97E]/10 px-4 py-3 text-sm">
+                  <svg className="h-5 w-5 text-[#C8A97E] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span className="text-stone-700">{tCheckout("bankTransferNotice")}</span>
+                  <span className="text-[#333]">{tCheckout("bankTransferNotice")}</span>
                 </div>
               </div>
               <div className="mt-4 space-y-4">
-                <p className="text-sm text-stone-500 leading-relaxed">
+                <p className="text-sm text-[#888888] leading-relaxed">
                   {tCheckout("bankTransferInstruction")}
                 </p>
                 <BankInfoCard />
@@ -339,7 +339,7 @@ export default function CheckoutPage() {
               </div>
               <div className="mt-6 flex gap-3">
                 <Button variant="outline" onClick={() => setStep("shipping")} className="flex-1">{tCheckout("back")}</Button>
-                <Button className="flex-1 bg-primary text-white hover:bg-primary/90" onClick={() => setStep("confirm")}>{tCheckout("proceedToConfirm")}</Button>
+                <Button className="flex-1 bg-[#1A1A1A] text-white hover:bg-[#333]" onClick={() => setStep("confirm")}>{tCheckout("proceedToConfirm")}</Button>
               </div>
             </Card>
           )}
@@ -347,7 +347,7 @@ export default function CheckoutPage() {
           {/* Step 3: Confirm */}
           {step === "confirm" && (
             <Card className="p-6">
-              <h2 className="font-heading text-lg font-semibold">{tCheckout("orderSummary")}</h2>
+              <h2 className="text-lg font-semibold">{tCheckout("orderSummary")}</h2>
 
               {/* Health warning */}
               <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-800 leading-relaxed">
@@ -362,8 +362,8 @@ export default function CheckoutPage() {
                   </div>
                 ))}
               </div>
-              <div className="mt-3 p-3 rounded-lg bg-stone-50 text-sm">
-                <p className="text-stone-600">{tCheckout("shippingInfo")}: {shippingName} / {shippingAddress}</p>
+              <div className="mt-3 p-3 rounded-lg bg-[#F5F5F5] text-sm">
+                <p className="text-[#888888]">{tCheckout("shippingInfo")}: {shippingName} / {shippingAddress}</p>
               </div>
 
               {/* Address match warning */}
@@ -377,7 +377,7 @@ export default function CheckoutPage() {
                 <div className="flex justify-between">
                   <span>{tCheckout("shippingFee")}</span>
                   {appliedCoupon?.type === "free_shipping" ? (
-                    <span className="line-through text-stone-400">{formatPrice(baseShipping)}</span>
+                    <span className="line-through text-[#888888]">{formatPrice(baseShipping)}</span>
                   ) : (
                     <span>{formatPrice(effectiveShipping)}</span>
                   )}
@@ -396,32 +396,32 @@ export default function CheckoutPage() {
                 )}
                 <div className="flex justify-between"><span>{tCheckout("tax")}</span><span>{formatPrice(tax)}</span></div>
                 <Separator />
-                <div className="flex justify-between text-base font-bold"><span>{tCheckout("total")}</span><span className="text-primary">{formatPrice(total)}</span></div>
+                <div className="flex justify-between text-base font-bold"><span>{tCheckout("total")}</span><span className="text-[#C8A97E]">{formatPrice(total)}</span></div>
               </div>
 
               {/* Shipping note */}
-              <div className="mt-3 rounded-lg border border-stone-200 bg-stone-50 p-2.5 text-xs text-stone-500 leading-relaxed">
+              <div className="mt-3 rounded-lg border border-[#E5E5E5] bg-[#F5F5F5] p-2.5 text-xs text-[#888888] leading-relaxed">
                 📦 {tCompliance("shippingNote")}
               </div>
 
-              <div className="mt-4 rounded-lg border border-stone-200 bg-stone-50 p-3 text-xs text-stone-500">
-                {tCheckout("payment")}：<strong className="text-stone-700">{tCheckout("bankTransfer")}</strong>
+              <div className="mt-4 rounded-lg border border-[#E5E5E5] bg-[#F5F5F5] p-3 text-xs text-[#888888]">
+                {tCheckout("payment")}：<strong className="text-[#333]">{tCheckout("bankTransfer")}</strong>
               </div>
 
               {/* Identity confirmation checkbox */}
-              <label className="mt-4 flex items-start gap-3 rounded-lg border border-primary/20 bg-primary/5 p-3 cursor-pointer">
+              <label className="mt-4 flex items-start gap-3 rounded-lg border border-[#C8A97E]/20 bg-[#F5F5F5] p-3 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={identityConfirmed}
                   onChange={(e) => setIdentityConfirmed(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 shrink-0 rounded border-stone-300"
+                  className="mt-0.5 h-4 w-4 shrink-0 rounded border-[#E5E5E5]"
                 />
-                <span className="text-xs leading-relaxed text-stone-700">{tCompliance("identityConfirm")}</span>
+                <span className="text-xs leading-relaxed text-[#333]">{tCompliance("identityConfirm")}</span>
               </label>
 
               <div className="mt-6 flex gap-3">
                 <Button variant="outline" onClick={() => setStep("payment")} className="flex-1">←</Button>
-                <Button className="flex-1 bg-primary text-white hover:bg-primary/90" onClick={handleConfirm} disabled={submitting || !identityConfirmed}>
+                <Button className="flex-1 bg-[#1A1A1A] text-white hover:bg-[#333]" onClick={handleConfirm} disabled={submitting || !identityConfirmed}>
                   {submitting ? "..." : tCheckout("placeOrder")}
                 </Button>
               </div>
@@ -437,13 +437,13 @@ export default function CheckoutPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                   </svg>
                 </div>
-                <h2 className="mt-4 font-heading text-2xl font-bold text-stone-800">{tCheckout("orderAccepted")}</h2>
-                <p className="mt-2 text-sm text-stone-500">{tCheckout("orderId")}<span className="font-mono font-bold text-stone-700">{orderId}</span></p>
+                <h2 className="mt-4 text-2xl font-bold text-[#1A1A1A]">{tCheckout("orderAccepted")}</h2>
+                <p className="mt-2 text-sm text-[#888888]">{tCheckout("orderId")}<span className="font-mono font-bold text-[#333]">{orderId}</span></p>
               </div>
 
               <Card className="p-6">
-                <h3 className="font-heading text-base font-semibold flex items-center gap-2">
-                  <svg className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <h3 className="text-base font-semibold flex items-center gap-2">
+                  <svg className="h-5 w-5 text-[#C8A97E]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   {tCheckout("bankAccountInfo")}
@@ -452,19 +452,19 @@ export default function CheckoutPage() {
                   <BankInfoCard />
                 </div>
                 <div className="mt-4 space-y-2 text-sm">
-                  <div className="flex justify-between rounded-lg bg-primary/5 px-4 py-2">
-                    <span className="text-stone-600">{tCheckout("transferAmount")}</span>
-                    <span className="text-lg font-bold text-primary">{formatPrice(total)}</span>
+                  <div className="flex justify-between rounded-lg bg-[#F5F5F5] px-4 py-2">
+                    <span className="text-[#888888]">{tCheckout("transferAmount")}</span>
+                    <span className="text-lg font-bold text-[#C8A97E]">{formatPrice(total)}</span>
                   </div>
-                  <div className="flex justify-between text-stone-500">
+                  <div className="flex justify-between text-[#888888]">
                     <span>{tCheckout("transferDeadlineLabel")}</span>
-                    <span className="font-medium text-stone-700">{tCheckout("within3BizDays")}</span>
+                    <span className="font-medium text-[#333]">{tCheckout("within3BizDays")}</span>
                   </div>
                 </div>
               </Card>
 
-              <div className="rounded-lg border border-stone-200 bg-stone-50 p-4 text-xs text-stone-500 leading-relaxed">
-                <p className="font-medium text-stone-600 mb-1">💡 {tCheckout("transferNotesTitle")}</p>
+              <div className="rounded-lg border border-[#E5E5E5] bg-[#F5F5F5] p-4 text-xs text-[#888888] leading-relaxed">
+                <p className="font-medium text-[#888888] mb-1">💡 {tCheckout("transferNotesTitle")}</p>
                 <ul className="list-disc pl-4 space-by-1">
                   <li>{tCheckout("transferNote1")}</li>
                   <li>{tCheckout("transferNote2")}</li>
@@ -475,13 +475,13 @@ export default function CheckoutPage() {
               <div className="flex gap-3">
                 <Link
                   href="/orders"
-                  className="inline-flex h-12 flex-1 items-center justify-center rounded-xl border border-stone-200 text-sm font-medium text-stone-600 transition-all hover:bg-stone-50"
+                  className="inline-flex h-12 flex-1 items-center justify-center rounded-lg border border-[#E5E5E5] text-sm font-medium text-[#888888] transition-all hover:bg-[#F5F5F5]"
                 >
                   {tCheckout("viewOrders")}
                 </Link>
                 <Link
                   href="/"
-                  className="inline-flex h-12 flex-1 items-center justify-center rounded-xl bg-primary text-sm font-semibold text-white transition-all hover:bg-primary/90"
+                  className="inline-flex h-12 flex-1 items-center justify-center rounded-lg bg-[#1A1A1A] text-sm font-semibold text-white transition-all hover:bg-[#333]"
                 >
                   {tCheckout("backToHome")}
                 </Link>
@@ -494,12 +494,12 @@ export default function CheckoutPage() {
         {step !== "done" && (
           <div className="lg:col-span-2">
             <Card className="sticky top-20 p-6">
-              <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-primary">{tCheckout("orderContents")}</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-[#C8A97E]">{tCheckout("orderContents")}</h3>
               <div className="mt-4 space-y-3">
                 {items.map((item) => (
                   <div key={item.productId} className="flex gap-3">
                     <img src={item.image} alt={item.name} className="h-12 w-12 rounded object-cover" />
-                    <div className="flex-1"><p className="text-sm font-medium line-clamp-1">{item.name}</p><p className="text-xs text-stone-400">x{item.quantity}</p></div>
+                    <div className="flex-1"><p className="text-sm font-medium line-clamp-1">{item.name}</p><p className="text-xs text-[#888888]">x{item.quantity}</p></div>
                     <span className="text-sm font-medium">{formatPrice(item.price * item.quantity)}</span>
                   </div>
                 ))}
@@ -512,7 +512,7 @@ export default function CheckoutPage() {
                 <button
                   type="button"
                   onClick={() => setCouponOpen(!couponOpen)}
-                  className="flex w-full items-center justify-between text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                  className="flex w-full items-center justify-between text-sm font-medium text-[#C8A97E] hover:text-[#C8A97E]/80 transition-colors"
                 >
                   <span>{tCheckout("havePromoCode")}</span>
                   <svg
@@ -543,7 +543,7 @@ export default function CheckoutPage() {
                           size="sm"
                           onClick={handleApplyCoupon}
                           disabled={couponLoading || !couponInput.trim()}
-                          className="bg-primary text-white hover:bg-primary/90 shrink-0"
+                          className="bg-[#1A1A1A] text-white hover:bg-[#333] shrink-0"
                         >
                           {couponLoading ? "..." : tCheckout("applyCode")}
                         </Button>
@@ -559,7 +559,7 @@ export default function CheckoutPage() {
                         <button
                           type="button"
                           onClick={handleRemoveCoupon}
-                          className="text-xs text-stone-500 hover:text-red-500 transition-colors"
+                          className="text-xs text-[#888888] hover:text-red-500 transition-colors"
                         >
                           {tCheckout("removeCode")}
                         </button>
@@ -579,11 +579,11 @@ export default function CheckoutPage() {
               {/* Sidebar price summary */}
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-stone-500">{tCheckout("subtotal")}</span>
+                  <span className="text-[#888888]">{tCheckout("subtotal")}</span>
                   <span>{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-stone-500">{tCheckout("shippingFee")}</span>
+                  <span className="text-[#888888]">{tCheckout("shippingFee")}</span>
                   {appliedCoupon?.type === "free_shipping" ? (
                     <span className="text-green-600">{tCheckout("freeShipping")}</span>
                   ) : (
@@ -599,7 +599,7 @@ export default function CheckoutPage() {
                 <Separator />
                 <div className="flex justify-between font-bold">
                   <span>{tCheckout("total")}</span>
-                  <span className="text-primary">{formatPrice(total)}</span>
+                  <span className="text-[#C8A97E]">{formatPrice(total)}</span>
                 </div>
               </div>
             </Card>

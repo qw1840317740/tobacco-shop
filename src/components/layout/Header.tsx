@@ -15,7 +15,7 @@ function CartBadge() {
   const hydrated = useCartStore((s) => s._hydrated);
   if (!hydrated || totalItems() === 0) return null;
   return (
-    <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-white animate-in zoom-in-50 duration-200">
+    <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#C8A97E] text-xs font-bold text-white animate-in zoom-in-50 duration-200">
       {totalItems()}
     </span>
   );
@@ -28,7 +28,6 @@ export default function Header() {
   const locale = useLocale();
   const router = useRouter();
   const setCartOpen = useUIStore((s) => s.setCartOpen);
-  const isHome = pathname === "/";
 
   const navItems = [
     { href: "/products", label: tNav("products") },
@@ -38,14 +37,8 @@ export default function Header() {
   ];
 
   return (
-    <header className={`sticky top-0 z-40 backdrop-blur-sm transition-colors duration-300 ${
-      isHome
-        ? "bg-stone-950/95 border-b border-white/5"
-        : "bg-background/95 border-b border-border"
-    }`}>
-      {/* Subtle top accent line */}
-      <div className="h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent" />
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+    <header className="sticky top-0 z-40 bg-white border-b border-[#E5E5E5]">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center group">
           <Image
@@ -53,65 +46,62 @@ export default function Header() {
             alt="TABACOYA"
             width={40}
             height={40}
-            className="h-9 sm:h-10 w-auto object-contain rounded-lg"
+            className="h-8 sm:h-9 w-auto object-contain"
             priority
           />
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-6 lg:flex">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`rounded-lg px-3.5 py-2 text-sm font-medium transition-all ${
+              className={`relative pb-0.5 text-xs font-medium uppercase tracking-[0.1em] transition-colors ${
                 pathname === item.href
-                  ? isHome
-                    ? "bg-white/10 text-white"
-                    : "bg-primary/10 text-primary"
-                  : isHome
-                    ? "text-stone-400 hover:bg-white/5 hover:text-white"
-                    : "text-stone-600 hover:bg-muted hover:text-primary"
+                  ? "text-[#1A1A1A]"
+                  : "text-[#888] hover:text-[#1A1A1A]"
               }`}
             >
               {item.label}
+              {pathname === item.href && (
+                <span className="absolute -bottom-[17px] left-0 right-0 h-px bg-[#1A1A1A]" />
+              )}
             </Link>
           ))}
         </nav>
 
         {/* Right side actions */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1">
           {/* Auth */}
-          <AuthButton isHome={isHome} />
+          <AuthButton />
 
           {/* Search */}
-          <SearchDropdown isHome={isHome} />
+          <SearchDropdown />
 
           {/* Cart */}
           <Button
             variant="ghost"
             size="icon"
-            className={`relative ${isHome ? "text-stone-400 hover:bg-white/10 hover:text-white" : ""}`}
+            className="relative"
             onClick={() => setCartOpen(true)}
           >
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
             </svg>
             <CartBadge />
           </Button>
 
           {/* Language switcher */}
-          <div className="hidden sm:flex items-center gap-1">
-            {(["en", "ja", "zh"] as const).map((loc) => (
+          <div className="hidden sm:flex items-center">
+            {(["en", "ja", "zh"] as const).map((loc, i) => (
               <button
                 key={loc}
                 onClick={() => router.replace(pathname || "/", { locale: loc })}
-                className={`rounded-md px-2 py-1 text-xs font-medium transition-colors ${
+                className={`px-1.5 py-1 text-[10px] font-medium uppercase tracking-wider transition-colors ${
                   locale === loc
-                    ? "bg-primary/10 text-primary"
-                    : isHome
-                      ? "text-stone-500 hover:bg-white/10 hover:text-white"
-                      : "text-stone-400 hover:bg-muted hover:text-foreground"
+                    ? "text-[#1A1A1A]"
+                    : "text-[#888] hover:text-[#1A1A1A]"
                 }`}
               >
                 {loc.toUpperCase()}
@@ -121,32 +111,30 @@ export default function Header() {
 
           {/* Mobile menu */}
           <Sheet>
-            <SheetTrigger className={`lg:hidden inline-flex size-9 items-center justify-center rounded-lg outline-none transition-colors ${
-              isHome ? "text-stone-400 hover:bg-white/10 hover:text-white" : "hover:bg-muted hover:text-foreground"
-            }`}>
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <SheetTrigger className="lg:hidden inline-flex size-9 items-center justify-center rounded-lg outline-none transition-colors hover:bg-[#F5F5F5]">
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
               </svg>
             </SheetTrigger>
-            <SheetContent side="right" className="w-72">
+            <SheetContent side="right" className="w-72 bg-white">
               <nav className="mt-8 flex flex-col gap-1">
                 {navItems.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-primary ${
-                      pathname === item.href ? "text-primary bg-muted" : "text-stone-600"
+                    className={`px-3 py-2.5 text-xs font-medium uppercase tracking-[0.1em] transition-colors hover:text-[#1A1A1A] ${
+                      pathname === item.href ? "text-[#1A1A1A]" : "text-[#888]"
                     }`}
                   >
                     {item.label}
                   </Link>
                 ))}
-                <div className="my-4 border-t" />
-                <Link href="/search" className="px-3 py-2 text-sm text-stone-600 hover:text-primary">{t("search")}</Link>
-                <div className="flex gap-2 px-3 py-2">
-                  <Link href={pathname || "/"} locale="en" className="text-sm text-stone-500 hover:text-primary">EN</Link>
-                  <Link href={pathname || "/"} locale="ja" className="text-sm text-stone-500 hover:text-primary">JA</Link>
-                  <Link href={pathname || "/"} locale="zh" className="text-sm text-stone-500 hover:text-primary">ZH</Link>
+                <div className="my-3 border-t border-[#E5E5E5]" />
+                <Link href="/search" className="px-3 py-2.5 text-xs font-medium uppercase tracking-[0.1em] text-[#888] hover:text-[#1A1A1A]">{t("search")}</Link>
+                <div className="flex gap-3 px-3 py-2.5">
+                  <Link href={pathname || "/"} locale="en" className="text-[10px] font-medium uppercase tracking-wider text-[#888] hover:text-[#1A1A1A]">EN</Link>
+                  <Link href={pathname || "/"} locale="ja" className="text-[10px] font-medium uppercase tracking-wider text-[#888] hover:text-[#1A1A1A]">JA</Link>
+                  <Link href={pathname || "/"} locale="zh" className="text-[10px] font-medium uppercase tracking-wider text-[#888] hover:text-[#1A1A1A]">ZH</Link>
                 </div>
               </nav>
             </SheetContent>

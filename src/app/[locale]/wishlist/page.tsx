@@ -87,13 +87,13 @@ export default function WishlistPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
-      <h1 className="font-heading text-3xl font-bold text-stone-800">{tCommon("wishlist")}</h1>
+      <h1 className="text-3xl font-bold text-[#1A1A1A]">{tCommon("wishlist")}</h1>
       {loading ? (
-        <p className="mt-8 text-center text-stone-400">{tCommon("loading")}</p>
+        <p className="mt-8 text-center text-[#888888]">{tCommon("loading")}</p>
       ) : items.length === 0 ? (
         <div className="mt-16 text-center">
-          <p className="text-stone-400">{tCommon("wishlistEmpty")}</p>
-          <Link href="/products" className="mt-4 inline-block text-primary hover:underline">
+          <p className="text-[#888888]">{tCommon("wishlistEmpty")}</p>
+          <Link href="/products" className="mt-4 inline-block text-[#C8A97E] hover:underline">
             {tCommon("viewProducts")} →
           </Link>
         </div>
@@ -106,15 +106,15 @@ export default function WishlistPage() {
               <Card key={item.id} className="flex items-center gap-4 p-4">
                 <img src={item.image} alt={displayName} className="h-20 w-20 rounded-lg object-cover" />
                 <div className="flex-1">
-                  <Link href={`/products/${item.slug}`} className="font-medium text-sm hover:text-primary">{displayName}</Link>
-                  <p className="text-xs text-stone-400">{regionLabel}</p>
+                  <Link href={`/products/${item.slug}`} className="font-medium text-sm hover:text-[#C8A97E]">{displayName}</Link>
+                  <p className="text-xs text-[#888888]">{regionLabel}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-lg font-bold text-primary">{formatPrice(item.price)}</p>
+                  <p className="text-lg font-bold text-[#C8A97E]">{formatPrice(item.price)}</p>
                   <div className="mt-1 flex gap-2">
                     <Button
                       size="sm"
-                      className="bg-primary text-white hover:bg-primary/90"
+                      className="bg-[#1A1A1A] text-white hover:bg-[#333]"
                       onClick={() => handleAddToCart(item)}
                     >
                       {tCommon("addToCart")}

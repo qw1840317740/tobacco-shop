@@ -35,7 +35,7 @@ const statusColorMap: Record<string, string> = {
   pending: "bg-amber-100 text-amber-700",
   paid: "bg-blue-100 text-blue-700",
   shipped: "bg-green-100 text-green-700",
-  delivered: "bg-stone-100 text-stone-600",
+  delivered: "bg-[#F5F5F5] text-[#888888]",
   cancelled: "bg-red-100 text-red-600",
 };
 
@@ -60,18 +60,18 @@ export default function OrdersPage() {
   if (loading) {
     return (
       <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
-        <p className="text-stone-500">{tCommon("loading")}</p>
+        <p className="text-[#888888]">{tCommon("loading")}</p>
       </div>
     );
   }
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
-      <h1 className="font-heading text-3xl font-bold text-stone-800">{t("title")}</h1>
+      <h1 className="text-3xl font-bold text-[#1A1A1A]">{t("title")}</h1>
 
       {orders.length === 0 ? (
         <Card className="mt-8 p-8 text-center">
-          <p className="text-stone-500">{t("noOrders")}</p>
+          <p className="text-[#888888]">{t("noOrders")}</p>
           <Link href="/products">
             <Button variant="outline" className="mt-3" size="sm">{t("viewProducts")}</Button>
           </Link>
@@ -91,15 +91,15 @@ export default function OrdersPage() {
               <Card key={order.id} className="p-6">
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-sm font-mono text-stone-500">{order.id}</p>
-                    <p className="text-xs text-stone-400">{date}</p>
-                    <p className="text-xs text-stone-400 mt-1">
+                    <p className="text-sm font-mono text-[#888888]">{order.id}</p>
+                    <p className="text-xs text-[#888888]">{date}</p>
+                    <p className="text-xs text-[#888888] mt-1">
                       {t("shippingTo")}: {order.shippingName} / {order.shippingAddress}
                     </p>
                   </div>
                   <div className="text-right">
                     <Badge className={`${color} border-0`}>{statusLabel}</Badge>
-                    <p className="mt-1 text-lg font-bold text-primary">{formatPrice(order.total)}</p>
+                    <p className="mt-1 text-lg font-bold text-[#C8A97E]">{formatPrice(order.total)}</p>
                   </div>
                 </div>
                 <div className="mt-3 border-t pt-3">
@@ -108,13 +108,13 @@ export default function OrdersPage() {
                       {item.image && (
                         <img src={item.image} alt={item.name} className="h-8 w-8 rounded object-cover" />
                       )}
-                      <p className="text-sm text-stone-600">
+                      <p className="text-sm text-[#888888]">
                         {item.name} × {item.quantity}
                       </p>
-                      <p className="ml-auto text-sm text-stone-500">{formatPrice(item.price * item.quantity)}</p>
+                      <p className="ml-auto text-sm text-[#888888]">{formatPrice(item.price * item.quantity)}</p>
                     </div>
                   ))}
-                  <div className="mt-2 border-t pt-2 flex justify-between text-xs text-stone-400">
+                  <div className="mt-2 border-t pt-2 flex justify-between text-xs text-[#888888]">
                     <span>{t("breakdown", { subtotal: formatPrice(order.subtotal), shipping: formatPrice(order.shippingFee), tax: formatPrice(order.tax) })}</span>
                   </div>
                 </div>

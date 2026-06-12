@@ -70,7 +70,7 @@ export default async function LocaleLayout({
       <div className="flex min-h-screen flex-col">
         <OrganizationJsonLd />
         <Header />
-        <main className="flex-1 bg-gradient-to-b from-stone-50/50 to-white">
+        <main className="flex-1 bg-white">
           <div className="relative">
             {children}
           </div>

@@ -42,21 +42,21 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-stone-100 px-4">
+    <div className="flex min-h-screen items-center justify-center bg-[#F5F5F5] px-4">
       <Card className="w-full max-w-sm overflow-hidden">
         {/* Header */}
-        <div className="bg-stone-900 px-6 py-8 text-center">
+        <div className="bg-[#0F0F0F] px-6 py-8 text-center">
           <div className="inline-block rounded-lg bg-white/10 p-2.5">
             <img src="/images/logo.png" alt="TABACOYA" className="h-10 w-auto object-contain" />
           </div>
-          <p className="mt-1 text-sm text-stone-400">管理パネル</p>
-          <div className="mx-auto mt-4 h-px w-16 bg-primary" />
+          <p className="mt-1 text-sm text-[#888888]">管理パネル</p>
+          <div className="mx-auto mt-4 h-px w-16 bg-[#C8A97E]" />
         </div>
 
         {/* Form */}
         <div className="p-6 space-y-4">
           <div>
-            <label className="mb-1 block text-xs font-medium text-stone-500">ユーザー名</label>
+            <label className="mb-1 block text-xs font-medium text-[#888888]">ユーザー名</label>
             <Input
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -66,7 +66,7 @@ export default function AdminLoginPage() {
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-stone-500">パスワード</label>
+            <label className="mb-1 block text-xs font-medium text-[#888888]">パスワード</label>
             <Input
               type="password"
               value={password}
@@ -76,14 +76,14 @@ export default function AdminLoginPage() {
             />
           </div>
           <Button
-            className="w-full bg-primary text-white hover:bg-primary/90"
+            className="w-full bg-[#1A1A1A] text-white hover:bg-[#333]"
             onClick={handleLogin}
             disabled={loading}
           >
             {loading ? "ログイン中..." : "ログイン"}
           </Button>
-          <p className="text-center text-xs text-stone-400">
-            <a href="/" className="hover:text-stone-600 hover:underline">← サイトに戻る</a>
+          <p className="text-center text-xs text-[#888888]">
+            <a href="/" className="hover:text-[#333] hover:underline">← サイトに戻る</a>
           </p>
         </div>
       </Card>

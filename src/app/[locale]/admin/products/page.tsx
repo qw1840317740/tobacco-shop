@@ -143,7 +143,7 @@ export default function AdminProductsPage() {
   };
 
   if (loading) {
-    return <div className="flex h-96 items-center justify-center text-stone-400">読み込み中...</div>;
+    return <div className="flex h-96 items-center justify-center text-[#888888]">読み込み中...</div>;
   }
 
   return (
@@ -151,12 +151,12 @@ export default function AdminProductsPage() {
       {/* Toolbar */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="font-heading text-2xl font-bold text-stone-800">商品管理</h1>
-          <p className="text-sm text-stone-500">{products.length} 件の商品</p>
+          <h1 className="text-2xl font-bold text-[#1A1A1A]">商品管理</h1>
+          <p className="text-sm text-[#888888]">{products.length} 件の商品</p>
         </div>
         <button
           onClick={openAdd}
-          className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90"
+          className="inline-flex items-center gap-2 rounded-lg bg-[#1A1A1A] px-4 py-2 text-sm font-medium text-white hover:bg-[#333]"
         >
           + 新規商品
         </button>
@@ -169,12 +169,12 @@ export default function AdminProductsPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="商品名で検索..."
-          className="rounded-lg border border-stone-200 px-3 py-2 text-sm focus:border-primary focus:outline-none"
+          className="rounded-lg border border-[#E5E5E5] px-3 py-2 text-sm focus:border-[#C8A97E] focus:outline-none"
         />
         <select
           value={filterStock}
           onChange={(e) => setFilterStock(e.target.value as typeof filterStock)}
-          className="rounded-lg border border-stone-200 px-3 py-2 text-sm"
+          className="rounded-lg border border-[#E5E5E5] px-3 py-2 text-sm"
         >
           <option value="all">すべて</option>
           <option value="instock">在庫あり</option>
@@ -206,7 +206,7 @@ export default function AdminProductsPage() {
               <button
                 onClick={() => inlineSave(product.id, "featured", !product.featured)}
                 className={`absolute left-2 top-2 rounded-full px-2 py-0.5 text-[10px] font-bold transition-colors ${
-                  product.featured ? "bg-primary text-white" : "bg-stone-200 text-stone-500 hover:bg-stone-300"
+                  product.featured ? "bg-[#1A1A1A] text-white" : "bg-[#E5E5E5] text-[#888888] hover:bg-[#E5E5E5]"
                 }`}
               >
                 {product.featured ? "★ おすすめ" : "おすすめ"}
@@ -231,24 +231,24 @@ export default function AdminProductsPage() {
               <InlineField
                 value={product.name}
                 onSave={(v) => inlineSave(product.id, "name", v)}
-                className="font-medium text-sm text-stone-800"
+                className="font-medium text-sm text-[#1A1A1A]"
               />
               <div className="mt-1 flex items-baseline gap-2">
                 <InlineField
                   value={String(product.price)}
                   onSave={(v) => inlineSave(product.id, "price", Number(v))}
-                  className="text-lg font-bold text-primary"
+                  className="text-lg font-bold text-[#C8A97E]"
                   prefix="$"
                   type="number"
                 />
               </div>
-              <p className="mt-1 text-xs text-stone-400">{product.region} · {product.type}</p>
+              <p className="mt-1 text-xs text-[#888888]">{product.region} · {product.type}</p>
 
               {/* Actions */}
               <div className="mt-3 flex gap-2 border-t pt-3">
                 <button
                   onClick={() => openDrawer(product)}
-                  className="flex-1 rounded-lg bg-stone-100 px-3 py-1.5 text-xs font-medium text-stone-600 hover:bg-stone-200"
+                  className="flex-1 rounded-lg bg-[#F5F5F5] px-3 py-1.5 text-xs font-medium text-[#333] hover:bg-[#E5E5E5]"
                 >
                   編集
                 </button>
@@ -266,7 +266,7 @@ export default function AdminProductsPage() {
         {/* Add card */}
         <button
           onClick={openAdd}
-          className="flex aspect-[3/4] items-center justify-center rounded-xl border-2 border-dashed border-stone-200 text-stone-400 transition-colors hover:border-primary hover:text-primary"
+          className="flex aspect-[3/4] items-center justify-center rounded-xl border-2 border-dashed border-[#E5E5E5] text-[#888888] transition-colors hover:border-[#C8A97E] hover:text-[#C8A97E]"
         >
           <div className="text-center">
             <span className="text-3xl">+</span>
@@ -279,10 +279,10 @@ export default function AdminProductsPage() {
       {drawerOpen && (
         <div className="fixed inset-0 z-50 flex justify-end">
           <div className="absolute inset-0 bg-black/30" onClick={() => setDrawerOpen(false)} />
-          <div className="relative w-full max-w-md overflow-y-auto bg-white shadow-xl">
+          <div className="relative w-full max-w-md overflow-y-auto bg-white shadow-sm">
             <div className="sticky top-0 z-10 flex items-center justify-between border-b bg-white px-6 py-4">
-              <h2 className="font-heading text-lg font-semibold text-stone-800">商品詳細編集</h2>
-              <button onClick={() => setDrawerOpen(false)} className="text-stone-400 hover:text-stone-600">✕</button>
+              <h2 className="text-lg font-semibold text-[#1A1A1A]">商品詳細編集</h2>
+              <button onClick={() => setDrawerOpen(false)} className="text-[#888888] hover:text-[#333]">✕</button>
             </div>
             <ProductForm
               form={editForm}
@@ -299,8 +299,8 @@ export default function AdminProductsPage() {
       {/* Add Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="mx-4 w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-white p-6 shadow-xl">
-            <h2 className="font-heading text-lg font-semibold text-stone-800">新規商品追加</h2>
+          <div className="mx-4 w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-lg bg-white p-6 shadow-sm">
+            <h2 className="text-lg font-semibold text-[#1A1A1A]">新規商品追加</h2>
             <ProductForm
               form={editForm}
               setForm={setEditForm}
@@ -346,7 +346,7 @@ function InlineField({
         onChange={(e) => setTemp(e.target.value)}
         onBlur={() => { setEditing(false); if (temp !== value) onSave(temp); }}
         onKeyDown={(e) => { if (e.key === "Enter") { setEditing(false); if (temp !== value) onSave(temp); } if (e.key === "Escape") { setEditing(false); setTemp(value); } }}
-        className={`${className || ""} w-full rounded border border-primary px-1 outline-none`}
+        className={`${className || ""} w-full rounded border border-[#C8A97E] px-1 outline-none`}
         autoFocus
       />
     );
@@ -354,7 +354,7 @@ function InlineField({
 
   return (
     <span
-      className={`${className || ""} cursor-pointer hover:bg-stone-100 rounded px-1 -mx-1 transition-colors`}
+      className={`${className || ""} cursor-pointer hover:bg-[#F5F5F5] rounded px-1 -mx-1 transition-colors`}
       onDoubleClick={() => { setTemp(value); setEditing(true); }}
     >
       {prefix}{value}
@@ -377,36 +377,36 @@ function ProductForm({
     <div className="mt-4 space-y-4">
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="text-xs font-medium text-stone-500">Slug *</label>
+          <label className="text-xs font-medium text-[#888888]">Slug *</label>
           <input value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} className="mt-1 w-full rounded-lg border px-3 py-2 text-sm" />
         </div>
         <div>
-          <label className="text-xs font-medium text-stone-500">商品名 *</label>
+          <label className="text-xs font-medium text-[#888888]">商品名 *</label>
           <input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} className="mt-1 w-full rounded-lg border px-3 py-2 text-sm" />
         </div>
       </div>
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="text-xs font-medium text-stone-500">価格 (¥) *</label>
+          <label className="text-xs font-medium text-[#888888]">価格 (¥) *</label>
           <input type="number" step="1" value={form.price} onChange={(e) => setForm((f) => ({ ...f, price: Number(e.target.value) }))} className="mt-1 w-full rounded-lg border px-3 py-2 text-sm" />
         </div>
       </div>
       <div>
-        <label className="text-xs font-medium text-stone-500">画像</label>
+        <label className="text-xs font-medium text-[#888888]">画像</label>
         <div className="mt-1">
           <ImageUploader currentImage={form.image} onUpload={onImageChange} />
         </div>
       </div>
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="text-xs font-medium text-stone-500">カテゴリー *</label>
+          <label className="text-xs font-medium text-[#888888]">カテゴリー *</label>
           <select value={form.categoryId} onChange={(e) => setForm((f) => ({ ...f, categoryId: e.target.value }))} className="mt-1 w-full rounded-lg border px-3 py-2 text-sm">
             <option value="">-- 選択 --</option>
             {categories.map((c) => <option key={c.id} value={c.id}>{c.nameJa}</option>)}
           </select>
         </div>
         <div>
-          <label className="text-xs font-medium text-stone-500">種類</label>
+          <label className="text-xs font-medium text-[#888888]">種類</label>
           <select value={form.type} onChange={(e) => setForm((f) => ({ ...f, type: e.target.value }))} className="mt-1 w-full rounded-lg border px-3 py-2 text-sm">
             <option value="CIGARETTE">CIGARETTE</option>
             <option value="OTHER">OTHER</option>
@@ -415,16 +415,16 @@ function ProductForm({
       </div>
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="text-xs font-medium text-stone-500">産地</label>
+          <label className="text-xs font-medium text-[#888888]">産地</label>
           <input value={form.region} onChange={(e) => setForm((f) => ({ ...f, region: e.target.value }))} className="mt-1 w-full rounded-lg border px-3 py-2 text-sm" />
         </div>
         <div>
-          <label className="text-xs font-medium text-stone-500">濃さ (1-5)</label>
+          <label className="text-xs font-medium text-[#888888]">濃さ (1-5)</label>
           <input type="number" min="1" max="5" value={form.strength} onChange={(e) => setForm((f) => ({ ...f, strength: Number(e.target.value) }))} className="mt-1 w-full rounded-lg border px-3 py-2 text-sm" />
         </div>
       </div>
       <div>
-        <label className="text-xs font-medium text-stone-500">説明</label>
+        <label className="text-xs font-medium text-[#888888]">説明</label>
         <textarea value={form.desc} onChange={(e) => setForm((f) => ({ ...f, desc: e.target.value }))} rows={3} className="mt-1 w-full rounded-lg border px-3 py-2 text-sm" />
       </div>
       <div className="flex items-center gap-4">
@@ -438,8 +438,8 @@ function ProductForm({
         </label>
       </div>
       <div className="flex gap-3 pt-2">
-        <button onClick={onSave} className="flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-white hover:bg-primary/90">保存</button>
-        <button onClick={onCancel} className="flex-1 rounded-lg border border-stone-200 py-2.5 text-sm font-medium text-stone-600 hover:bg-stone-50">キャンセル</button>
+        <button onClick={onSave} className="flex-1 rounded-lg bg-[#1A1A1A] py-2.5 text-sm font-medium text-white hover:bg-[#333]">保存</button>
+        <button onClick={onCancel} className="flex-1 rounded-lg border border-[#E5E5E5] py-2.5 text-sm font-medium text-[#333] hover:bg-[#F5F5F5]">キャンセル</button>
       </div>
     </div>
   );

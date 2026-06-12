@@ -55,17 +55,17 @@ import { formatPrice } from "@/lib/utils";
 
 const groupStyles: Record<string, { gradient: string; badge: string; accent: string }> = {
   jt_japan: {
-    gradient: "from-amber-500/10 via-orange-500/5 to-transparent",
+    gradient: "",
     badge: "bg-amber-100 text-amber-700",
     accent: "border-amber-300/50",
   },
   jt_international: {
-    gradient: "from-blue-500/10 via-sky-500/5 to-transparent",
+    gradient: "",
     badge: "bg-blue-100 text-blue-700",
     accent: "border-blue-300/50",
   },
   ploom: {
-    gradient: "from-purple-500/10 via-violet-500/5 to-transparent",
+    gradient: "",
     badge: "bg-purple-100 text-purple-700",
     accent: "border-purple-300/50",
   },
@@ -111,8 +111,8 @@ export default async function BrandsPage({
       <Breadcrumb items={[{ label: tBrands("title") }]} />
 
       <div className="mb-10">
-        <h1 className="font-heading text-3xl font-bold text-stone-800">{tBrands("title")}</h1>
-        <p className="mt-2 text-stone-500">{tBrands("subtitle")}</p>
+        <h1 className="text-3xl font-bold text-[#1A1A1A]">{tBrands("title")}</h1>
+        <p className="mt-2 text-[#888888]">{tBrands("subtitle")}</p>
       </div>
 
       {groupOrder
@@ -127,9 +127,9 @@ export default async function BrandsPage({
             {/* Group header */}
             <div className="mb-5 flex items-center gap-4">
               <div className={`h-1.5 w-1.5 rounded-full ${groupKey === "jt_japan" ? "bg-amber-500" : groupKey === "jt_international" ? "bg-blue-500" : "bg-purple-500"}`} />
-              <h2 className="text-xl font-bold text-stone-700">{tBrands(groupKey as any)}</h2>
-              <div className="h-px flex-1 bg-stone-200" />
-              <span className="text-xs text-stone-400">{items.length} brands</span>
+              <h2 className="text-xl font-bold text-[#333]">{tBrands(groupKey as any)}</h2>
+              <div className="h-px flex-1 bg-[#E5E5E5]" />
+              <span className="text-xs text-[#888888]">{items.length} brands</span>
             </div>
 
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
@@ -144,34 +144,34 @@ export default async function BrandsPage({
                   <Link
                     key={cat.id}
                     href={`/categories/${cat.slug}`}
-                    className={`group relative overflow-hidden rounded-2xl border transition-all duration-300 ${
+                    className={`group relative overflow-hidden rounded-lg border transition-all duration-300 ${
                       hasProducts
-                        ? `border-stone-200/60 bg-white hover:border-primary/30 hover:shadow-xl hover:-translate-y-1`
-                        : `border-stone-100 bg-stone-50/50 opacity-60 hover:opacity-80`
+                        ? `border-[#E5E5E5]/60 bg-white hover:border-[#C8A97E]/30 hover:shadow-sm hover:-translate-y-1`
+                        : `border-[#E5E5E5] bg-[#F5F5F5]/50 opacity-60 hover:opacity-80`
                     }`}
                   >
                     {/* Top accent line */}
-                    <div className={`h-1 bg-gradient-to-r ${style.gradient}`} />
+                    <div className={`h-1 ${style.gradient}`} />
 
                     <div className="p-5">
                       {/* Brand initial + name */}
                       <div className="flex items-start gap-3">
-                        <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-sm font-bold transition-colors ${
+                        <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-sm font-bold transition-colors ${
                           hasProducts
                             ? `${style.badge}`
-                            : "bg-stone-100 text-stone-400"
+                            : "bg-[#F5F5F5] text-[#888888]"
                         }`}>
                           {localizedName.charAt(0)}
                         </div>
                         <div className="min-w-0">
                           <h3 className={`text-sm font-bold leading-tight transition-colors line-clamp-2 ${
-                            hasProducts ? "text-stone-800 group-hover:text-primary" : "text-stone-400"
+                            hasProducts ? "text-[#1A1A1A] group-hover:text-[#C8A97E]" : "text-[#888888]"
                           }`}>
                             {localizedName}
                           </h3>
                           {/* Show Japanese name when not in ja locale */}
                           {locale !== "ja" && cat.nameJa !== localizedName && (
-                            <p className="mt-0.5 text-[11px] text-stone-400 line-clamp-1">{cat.nameJa}</p>
+                            <p className="mt-0.5 text-[11px] text-[#888888] line-clamp-1">{cat.nameJa}</p>
                           )}
                         </div>
                       </div>
@@ -180,7 +180,7 @@ export default async function BrandsPage({
                       <div className="mt-4 flex items-center justify-between">
                         {hasProducts ? (
                           <>
-                            <span className="text-xs font-semibold text-primary">
+                            <span className="text-xs font-semibold text-[#C8A97E]">
                               {range ? tBrands("priceRange", { min: range.min }) : ""}
                             </span>
                             <Badge variant="secondary" className="rounded-md text-[10px] font-medium">
@@ -188,7 +188,7 @@ export default async function BrandsPage({
                             </Badge>
                           </>
                         ) : (
-                          <span className="text-xs text-stone-400">{tBrands("comingSoon")}</span>
+                          <span className="text-xs text-[#888888]">{tBrands("comingSoon")}</span>
                         )}
                       </div>
                     </div>

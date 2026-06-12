@@ -1,18 +1,11 @@
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
-import { Playfair_Display, Noto_Serif_JP } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const inter = Inter({
+  variable: "--font-sans",
   subsets: ["latin"],
-  display: "swap",
-});
-
-const notoSerifJP = Noto_Serif_JP({
-  variable: "--font-jp",
-  subsets: ["latin"],
-  weight: ["400", "700"],
   display: "swap",
 });
 
@@ -53,7 +46,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} className="h-full antialiased">
-      <body className={`${playfair.variable} ${notoSerifJP.variable} flex min-h-full flex-col bg-background text-foreground`}>
+      <body className={`${inter.variable} flex min-h-full flex-col bg-background text-foreground`}>
         {children}
       </body>
     </html>

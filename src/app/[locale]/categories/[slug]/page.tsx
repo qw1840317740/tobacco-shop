@@ -54,17 +54,17 @@ export async function generateMetadata({
 
 const groupStyles: Record<string, { gradient: string; badge: string; icon: string }> = {
   jt_japan: {
-    gradient: "from-amber-500/8 via-orange-500/4 to-transparent",
+    gradient: "",
     badge: "bg-amber-100 text-amber-700",
     icon: "🇯🇵",
   },
   jt_international: {
-    gradient: "from-blue-500/8 via-sky-500/4 to-transparent",
+    gradient: "",
     badge: "bg-blue-100 text-blue-700",
     icon: "🌍",
   },
   ploom: {
-    gradient: "from-purple-500/8 via-violet-500/4 to-transparent",
+    gradient: "",
     badge: "bg-purple-100 text-purple-700",
     icon: "🔥",
   },
@@ -113,7 +113,7 @@ export default async function CategoryPage({
       ]} />
 
       {/* Hero section */}
-      <div className={`mt-6 overflow-hidden rounded-2xl border bg-gradient-to-br ${style.gradient}`}>
+      <div className={`mt-6 overflow-hidden rounded-lg border bg-[#F5F5F5]`}>
         <div className="px-6 py-8 sm:px-8 sm:py-10">
           {/* Group badge */}
           {groupLabel && (
@@ -123,22 +123,22 @@ export default async function CategoryPage({
           )}
 
           {/* Brand name */}
-          <h1 className="font-heading text-3xl font-bold text-stone-800 sm:text-4xl">
+          <h1 className="text-3xl font-bold text-[#1A1A1A] sm:text-4xl">
             {localizedName}
           </h1>
 
           {/* Alt name (show Japanese/English when different) */}
           {altName && altName !== localizedName && (
-            <p className="mt-1 text-base text-stone-400">{altName}</p>
+            <p className="mt-1 text-base text-[#888888]">{altName}</p>
           )}
 
           {/* Description */}
           {category.description ? (
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-stone-500">
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[#888888]">
               {category.description}
             </p>
           ) : (
-            <p className="mt-4 text-sm text-stone-400 italic">
+            <p className="mt-4 text-sm text-[#888888] italic">
               {tBrands("comingSoon")}
             </p>
           )}
@@ -146,23 +146,23 @@ export default async function CategoryPage({
           {/* Stats bar */}
           {products.length > 0 && (
             <div className="mt-6 flex flex-wrap items-center gap-4">
-              <div className="flex items-center gap-2 rounded-lg bg-white/70 px-3 py-1.5">
-                <span className="text-xs text-stone-400">{tBrands("productCount", { count: "" }).replace(/\s*$/, "")}</span>
-                <span className="text-sm font-bold text-stone-700">{products.length}</span>
+              <div className="flex items-center gap-2 rounded-lg bg-white px-3 py-1.5">
+                <span className="text-xs text-[#888888]">{tBrands("productCount", { count: "" }).replace(/\s*$/, "")}</span>
+                <span className="text-sm font-bold text-[#333]">{products.length}</span>
               </div>
-              <div className="flex items-center gap-2 rounded-lg bg-white/70 px-3 py-1.5">
-                <span className="text-xs text-stone-400">{tCommon("price")}</span>
-                <span className="text-sm font-bold text-primary">
+              <div className="flex items-center gap-2 rounded-lg bg-white px-3 py-1.5">
+                <span className="text-xs text-[#888888]">{tCommon("price")}</span>
+                <span className="text-sm font-bold text-[#C8A97E]">
                   {minPrice === maxPrice ? formatPrice(minPrice) : `${formatPrice(minPrice)} 〜 ${formatPrice(maxPrice)}`}
                 </span>
               </div>
               {category.group === "ploom" ? (
-                <div className="flex items-center gap-2 rounded-lg bg-white/70 px-3 py-1.5">
-                  <span className="text-xs text-stone-400">{tBrands("heatedTobacco")}</span>
+                <div className="flex items-center gap-2 rounded-lg bg-white px-3 py-1.5">
+                  <span className="text-xs text-[#888888]">{tBrands("heatedTobacco")}</span>
                 </div>
               ) : (
-                <div className="flex items-center gap-2 rounded-lg bg-white/70 px-3 py-1.5">
-                  <span className="text-xs text-stone-400">{tBrands("fromJapan")}</span>
+                <div className="flex items-center gap-2 rounded-lg bg-white px-3 py-1.5">
+                  <span className="text-xs text-[#888888]">{tBrands("fromJapan")}</span>
                 </div>
               )}
             </div>
@@ -174,9 +174,9 @@ export default async function CategoryPage({
       {products.length > 0 ? (
         <div className="mt-8">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-stone-700">
+            <h2 className="text-lg font-semibold text-[#333]">
               {tBrands("viewProducts")}            </h2>
-            <span className="text-sm text-stone-400">{tBrands("productCount", { count: products.length })}</span>
+            <span className="text-sm text-[#888888]">{tBrands("productCount", { count: products.length })}</span>
           </div>
           <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
             {products.map((product) => (
@@ -186,11 +186,11 @@ export default async function CategoryPage({
         </div>
       ) : (
         <div className="mt-12 flex flex-col items-center justify-center py-16 text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-stone-100">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#F5F5F5]">
             <span className="text-2xl">📦</span>
           </div>
-          <h3 className="mt-4 text-lg font-semibold text-stone-600">{tBrands("comingSoon")}</h3>
-          <p className="mt-1 text-sm text-stone-400">
+          <h3 className="mt-4 text-lg font-semibold text-[#888888]">{tBrands("comingSoon")}</h3>
+          <p className="mt-1 text-sm text-[#888888]">
             {localizedName} — {tBrands("noProducts")}
           </p>
         </div>

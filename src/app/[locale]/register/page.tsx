@@ -76,18 +76,18 @@ export default function RegisterPage() {
     <div className="flex min-h-[80vh] items-center justify-center px-4 py-12">
       <Card className="w-full max-w-sm overflow-hidden">
         {/* Header */}
-        <div className="bg-stone-900 px-6 py-8 text-center">
+        <div className="bg-[#0F0F0F] px-6 py-8 text-center">
           <div className="inline-block rounded-lg bg-white/10 p-2.5">
             <img src="/images/logo.png" alt="TABACOYA" className="h-10 w-auto object-contain" />
           </div>
-          <p className="mt-2 text-sm text-stone-400">{t("registerTitle")}</p>
-          <div className="mx-auto mt-4 h-px w-16 bg-primary" />
+          <p className="mt-2 text-sm text-[#888888]">{t("registerTitle")}</p>
+          <div className="mx-auto mt-4 h-px w-16 bg-[#C8A97E]" />
         </div>
 
         {/* Form */}
         <div className="p-6 space-y-4">
           <div>
-            <label className="mb-1 block text-xs font-medium text-stone-500">{t("name")}</label>
+            <label className="mb-1 block text-xs font-medium text-[#888888]">{t("name")}</label>
             <Input
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -96,7 +96,7 @@ export default function RegisterPage() {
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-stone-500">{t("email")}</label>
+            <label className="mb-1 block text-xs font-medium text-[#888888]">{t("email")}</label>
             <Input
               type="email"
               value={email}
@@ -105,7 +105,7 @@ export default function RegisterPage() {
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-stone-500">{t("password")}</label>
+            <label className="mb-1 block text-xs font-medium text-[#888888]">{t("password")}</label>
             <Input
               type="password"
               value={password}
@@ -114,7 +114,7 @@ export default function RegisterPage() {
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-stone-500">{t("confirmPassword")}</label>
+            <label className="mb-1 block text-xs font-medium text-[#888888]">{t("confirmPassword")}</label>
             <Input
               type="password"
               value={confirmPassword}
@@ -124,15 +124,15 @@ export default function RegisterPage() {
             />
           </div>
           <Button
-            className="w-full bg-primary text-white hover:bg-primary/90"
+            className="w-full bg-[#1A1A1A] text-white hover:bg-[#333]"
             onClick={handleRegister}
             disabled={loading}
           >
             {loading ? t("registering") : t("registerButton")}
           </Button>
-          <p className="text-center text-xs text-stone-400">
+          <p className="text-center text-xs text-[#888888]">
             {t("hasAccount")}{" "}
-            <Link href="/login" className="text-primary hover:underline">{t("loginTitle")}</Link>
+            <Link href="/login" className="text-[#C8A97E] hover:underline">{t("loginTitle")}</Link>
           </p>
         </div>
       </Card>

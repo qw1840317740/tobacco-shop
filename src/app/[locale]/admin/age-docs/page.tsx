@@ -81,22 +81,22 @@ export default function AdminAgeDocsPage() {
   };
 
   if (loading) {
-    return <div className="p-6 text-stone-500">読み込み中...</div>;
+    return <div className="p-6 text-[#888888]">読み込み中...</div>;
   }
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="font-heading text-2xl font-bold text-stone-800">年齢確認書類</h1>
-          <p className="text-sm text-stone-500 mt-1">提出された年齢確認書類の審査</p>
+          <h1 className="text-2xl font-bold text-[#1A1A1A]">年齢確認書類</h1>
+          <p className="text-sm text-[#888888] mt-1">提出された年齢確認書類の審査</p>
         </div>
         <Badge variant="secondary">{docs.filter((d) => d.ageDocStatus === "pending").length} 件 審査待ち</Badge>
       </div>
 
       {docs.length === 0 ? (
         <Card className="p-8 text-center">
-          <p className="text-stone-500">提出された書類はありません</p>
+          <p className="text-[#888888]">提出された書類はありません</p>
         </Card>
       ) : (
         <div className="space-y-4">
@@ -108,7 +108,7 @@ export default function AdminAgeDocsPage() {
                   {/* Document thumbnail */}
                   {doc.ageDocUrl && (
                     <div
-                      className="w-20 h-20 rounded-lg border border-stone-200 overflow-hidden shrink-0 cursor-pointer hover:ring-2 hover:ring-primary"
+                      className="w-20 h-20 rounded-lg border border-[#E5E5E5] overflow-hidden shrink-0 cursor-pointer hover:ring-2 hover:ring-[#C8A97E]"
                       onClick={() => setSelectedDoc(doc)}
                     >
                       <img
@@ -121,11 +121,11 @@ export default function AdminAgeDocsPage() {
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className="font-medium text-stone-800">{doc.name}</p>
+                      <p className="font-medium text-[#1A1A1A]">{doc.name}</p>
                       <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>
                     </div>
-                    <p className="text-sm text-stone-500">{doc.email}</p>
-                    <p className="text-sm text-stone-400 mt-1">
+                    <p className="text-sm text-[#888888]">{doc.email}</p>
+                    <p className="text-sm text-[#888888] mt-1">
                       書類: {docTypeLabels[doc.ageDocType] || doc.ageDocType}
                     </p>
                     {doc.ageDocRejectReason && (
@@ -174,28 +174,28 @@ export default function AdminAgeDocsPage() {
           {selectedDoc && (
             <div>
               <div className="space-y-2 text-sm">
-                <p><span className="text-stone-500">氏名:</span> {selectedDoc.name}</p>
-                <p><span className="text-stone-500">メール:</span> {selectedDoc.email}</p>
-                <p><span className="text-stone-500">書類:</span> {docTypeLabels[selectedDoc.ageDocType] || selectedDoc.ageDocType}</p>
-                <p><span className="text-stone-500">ステータス:</span> {statusMap[selectedDoc.ageDocStatus]?.label}</p>
+                <p><span className="text-[#888888]">氏名:</span> {selectedDoc.name}</p>
+                <p><span className="text-[#888888]">メール:</span> {selectedDoc.email}</p>
+                <p><span className="text-[#888888]">書類:</span> {docTypeLabels[selectedDoc.ageDocType] || selectedDoc.ageDocType}</p>
+                <p><span className="text-[#888888]">ステータス:</span> {statusMap[selectedDoc.ageDocStatus]?.label}</p>
               </div>
               {selectedDoc.ageDocUrl && (
                 <div className="mt-4">
                   <img
                     src={selectedDoc.ageDocUrl}
                     alt="提出書類"
-                    className="w-full rounded-lg border border-stone-200"
+                    className="w-full rounded-lg border border-[#E5E5E5]"
                   />
                 </div>
               )}
               {selectedDoc.ageDocStatus === "pending" && (
                 <div className="mt-4 space-y-3">
                   <div>
-                    <label className="text-sm text-stone-600">却下理由（却下時必須）</label>
+                    <label className="text-sm text-[#333]">却下理由（却下時必須）</label>
                     <textarea
                       value={rejectReason}
                       onChange={(e) => setRejectReason(e.target.value)}
-                      className="mt-1 w-full rounded-md border border-stone-200 px-3 py-2 text-sm"
+                      className="mt-1 w-full rounded-md border border-[#E5E5E5] px-3 py-2 text-sm"
                       rows={3}
                       placeholder="却下する場合、理由を入力してください"
                     />
