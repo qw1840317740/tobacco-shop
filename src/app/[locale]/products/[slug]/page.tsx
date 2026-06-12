@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getProductBySlug } from "@/lib/data-store";
+import { getProductBySlug, getRelatedProducts } from "@/lib/data-store";
 import { ProductDetailClient } from "./ProductDetailClient";
 import { ProductJsonLd } from "@/components/seo-json-ld";
 import { routing } from "@/lib/routing";
@@ -60,6 +60,8 @@ export default async function ProductDetailPage({
     notFound();
   }
 
+  const relatedProducts = await getRelatedProducts(product.id, product.categoryId, 4);
+
   const name =
     locale === "en" && product.nameEn
       ? product.nameEn
@@ -79,7 +81,7 @@ export default async function ProductDetailPage({
         inStock={product.inStock !== false}
         url={`${SITE_URL}/${locale}/products/${product.slug}`}
       />
-      <ProductDetailClient product={product} />
+      <ProductDetailClient product={product} relatedProducts={relatedProducts} />
     </>
   );
 }

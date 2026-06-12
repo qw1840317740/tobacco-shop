@@ -34,7 +34,10 @@
     "removedFromWishlist": "已从收藏夹移除",
     "addedToCartToast": "{name} x{qty} 已加入购物车",
     "home": "首页",
-    "backToHome": "← 返回首页"
+    "backToHome": "← 返回首页",
+    "recentlyViewed": "最近浏览",
+    "quickView": "快速查看",
+    "account": "账户"
   },
   "ageGate": {
     "title": "年龄验证",
@@ -116,6 +119,9 @@
     "writeReview": "写评价",
     "addToWishlist": "加入收藏",
     "sku": "商品编号",
+    "rating": "评分",
+    "addedToWishlist": "已添加到收藏",
+    "removedFromWishlist": "已从收藏移除",
     "noReviews": "暂无评价，快来写第一条吧！",
     "defaultDescription": "是日本产的高品质香烟，以丰富的口感和顺滑的吸烟体验著称，深受日本烟民喜爱。",
     "productCount": "款优质烟草商品",
@@ -194,7 +200,16 @@
     "transferNote3": "确认到账后将发送确认邮件",
     "viewOrders": "查看订单历史",
     "backToHome": "返回首页",
-    "orderContents": "订单内容"
+    "orderContents": "订单内容",
+    "havePromoCode": "有优惠码？",
+    "applyCode": "使用",
+    "codeApplied": "优惠码已使用！节省{amount}",
+    "invalidCode": "无效优惠码",
+    "discount": "折扣",
+    "freeShipping": "免运费",
+    "removeCode": "删除",
+    "couponMinOrder": "需满¥{amount}方可使用",
+    "couponAlreadyUsed": "此优惠码已被使用"
   },
   "guide": {
     "title": "香烟新手指南",
@@ -415,6 +430,25 @@
       { "title": "浓度指南", "desc": "焦油和尼古丁浓度的选择方法。从淡味到浓味，找到适合您的强度。" },
       { "title": "口味指南", "desc": "口味与香气的种类。薄荷、水果、经典等多样风味。" }
     ]
+  },
+  "products": {
+    "filter": "筛选",
+    "sortBy": "排序",
+    "newest": "最新",
+    "priceLow": "价格从低到高",
+    "priceHigh": "价格从高到低",
+    "allCategories": "全部分类",
+    "allTypes": "全部类型",
+    "showing": "显示 {count} / {total} 件商品",
+    "previous": "上一页",
+    "next": "下一页",
+    "page": "第 {current} 页 / 共 {total} 页",
+    "gridView": "网格",
+    "listView": "列表",
+    "searchProducts": "搜索商品...",
+    "noResults": "没有符合筛选条件的商品",
+    "cigarette": "卷烟",
+    "heated": "加热烟"
   },
   "contactPage": {
     "title": "联系我们",

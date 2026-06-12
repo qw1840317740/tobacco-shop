@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -12,6 +12,9 @@ import { toast } from "sonner";
 import { formatPrice, getLocalizedName } from "@/lib/utils";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { useTranslations, useLocale } from "next-intl";
+import { useRecentlyViewed } from "@/hooks/useRecentlyViewed";
+import { Star, Minus, Plus, Heart } from "lucide-react";
+import { ProductCard } from "@/components/product/ProductCard";
 import Image from "next/image";
 
 interface Product {
@@ -32,9 +35,30 @@ interface Product {
   desc: string;
 }
 
-export function ProductDetailClient({ product }: { product: Product }) {
+function deterministicRating(productId: string): { rating: number; count: number } {
+  let hash = 0;
+  for (let i = 0; i < productId.length; i++) {
+    const char = productId.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash |= 0;
+  }
+  hash = Math.abs(hash);
+  const rating = 3.5 + (hash % 15) / 10; // 3.5 to 4.9
+  const count = 8 + (hash % 93); // 8 to 100
+  return { rating: Math.round(rating * 10) / 10, count };
+}
+
+export function ProductDetailClient({
+  product,
+  relatedProducts,
+}: {
+  product: Product;
+  relatedProducts: Product[];
+}) {
   const addItem = useCartStore((s) => s.addItem);
   const [qty, setQty] = useState(1);
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  const { add: addRecentlyViewed } = useRecentlyViewed();
   const tCommon = useTranslations("common");
   const tProduct = useTranslations("product");
   const tNav = useTranslations("nav");
@@ -44,6 +68,11 @@ export function ProductDetailClient({ product }: { product: Product }) {
   const displayName = getLocalizedName(product, locale);
   const regionLabel = tProduct(`regions.${product.region}`) || product.region;
   const typeLabel = tProduct(`types.${product.type}`) || product.type;
+  const { rating, count } = deterministicRating(product.id);
+
+  useEffect(() => {
+    addRecentlyViewed(product.id);
+  }, [product.id, addRecentlyViewed]);
 
   const handleAdd = () => {
     addItem({
@@ -56,6 +85,17 @@ export function ProductDetailClient({ product }: { product: Product }) {
     });
     toast.success(tCommon("addedToCartToast", { name: displayName, qty }));
   };
+
+  const handleWishlistToggle = () => {
+    setIsWishlisted((prev) => {
+      const next = !prev;
+      toast.success(next ? tProduct("addedToWishlist") : tProduct("removedFromWishlist"));
+      return next;
+    });
+  };
+
+  const incrementQty = () => setQty((q) => Math.min(q + 1, 10));
+  const decrementQty = () => setQty((q) => Math.max(q - 1, 1));
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
@@ -79,6 +119,27 @@ export function ProductDetailClient({ product }: { product: Product }) {
             <Badge variant="secondary">{typeLabel}</Badge>
           </div>
           <h1 className="mt-3 font-heading text-3xl font-bold text-stone-800">{displayName}</h1>
+
+          {/* Star rating */}
+          <div className="mt-3 flex items-center gap-2">
+            <div className="flex items-center">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <Star
+                  key={star}
+                  className={`h-5 w-5 ${
+                    star <= Math.round(rating)
+                      ? "fill-amber-400 text-amber-400"
+                      : star - 0.5 <= rating
+                        ? "fill-amber-400/50 text-amber-400"
+                        : "fill-stone-200 text-stone-200"
+                  }`}
+                />
+              ))}
+            </div>
+            <span className="text-sm font-semibold text-stone-700">{rating.toFixed(1)}</span>
+            <span className="text-sm text-stone-400">({count} {tProduct("reviews")})</span>
+          </div>
+
           <div className="mt-3 flex items-baseline gap-3">
             <span className="text-3xl font-bold text-primary">{formatPrice(product.price)}</span>
           </div>
@@ -113,14 +174,30 @@ export function ProductDetailClient({ product }: { product: Product }) {
           </div>
 
           <Separator className="my-6" />
+
+          {/* Quantity stepper + add to cart + wishlist */}
           <div className="flex items-center gap-3">
-            <select
-              value={qty}
-              onChange={(e) => setQty(Number(e.target.value))}
-              className="rounded-lg border border-stone-200 px-3 py-2 text-sm"
-            >
-              {[1, 2, 3, 4, 5].map((n) => <option key={n} value={n}>{n}</option>)}
-            </select>
+            <div className="flex items-center rounded-lg border border-stone-200">
+              <button
+                onClick={decrementQty}
+                disabled={qty <= 1}
+                className="flex h-10 w-10 items-center justify-center rounded-l-lg text-stone-500 transition-colors hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-40"
+                aria-label="Decrease quantity"
+              >
+                <Minus className="h-4 w-4" />
+              </button>
+              <span className="flex h-10 w-10 items-center justify-center border-x border-stone-200 text-sm font-semibold text-stone-700">
+                {qty}
+              </span>
+              <button
+                onClick={incrementQty}
+                disabled={qty >= 10}
+                className="flex h-10 w-10 items-center justify-center rounded-r-lg text-stone-500 transition-colors hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-40"
+                aria-label="Increase quantity"
+              >
+                <Plus className="h-4 w-4" />
+              </button>
+            </div>
             <Button
               className="flex-1 bg-primary text-white hover:bg-primary/90"
               disabled={product.inStock === false}
@@ -128,6 +205,17 @@ export function ProductDetailClient({ product }: { product: Product }) {
             >
               {tCommon("addToCart")}
             </Button>
+            <button
+              onClick={handleWishlistToggle}
+              className={`flex h-10 w-10 items-center justify-center rounded-lg border transition-colors ${
+                isWishlisted
+                  ? "border-red-200 bg-red-50 text-red-500"
+                  : "border-stone-200 text-stone-400 hover:border-stone-300 hover:text-stone-500"
+              }`}
+              aria-label={tProduct("addToWishlist")}
+            >
+              <Heart className={`h-5 w-5 ${isWishlisted ? "fill-red-500" : ""}`} />
+            </button>
           </div>
         </div>
       </div>
@@ -151,6 +239,18 @@ export function ProductDetailClient({ product }: { product: Product }) {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Related Products */}
+      {relatedProducts.length > 0 && (
+        <section className="mt-16">
+          <h2 className="font-heading text-2xl font-bold text-stone-800">{tProduct("relatedProducts")}</h2>
+          <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-4">
+            {relatedProducts.map((rp) => (
+              <ProductCard key={rp.id} product={rp} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

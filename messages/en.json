@@ -34,7 +34,10 @@
     "removedFromWishlist": "Removed from wishlist",
     "addedToCartToast": "{name} x{qty} added to cart",
     "home": "Home",
-    "backToHome": "← Back to Home"
+    "backToHome": "← Back to Home",
+    "recentlyViewed": "Recently Viewed",
+    "quickView": "Quick View",
+    "account": "Account"
   },
   "ageGate": {
     "title": "Age Verification",
@@ -116,6 +119,9 @@
     "writeReview": "Write a Review",
     "addToWishlist": "Add to Wishlist",
     "sku": "SKU",
+    "rating": "Rating",
+    "addedToWishlist": "Added to wishlist",
+    "removedFromWishlist": "Removed from wishlist",
     "noReviews": "No reviews yet. Be the first to write one!",
     "defaultDescription": "is a premium Japanese tobacco with rich flavor and smooth draw, loved by tobacco enthusiasts.",
     "productCount": "premium tobacco products",
@@ -194,7 +200,16 @@
     "transferNote3": "A confirmation email will be sent after payment is verified",
     "viewOrders": "View Order History",
     "backToHome": "Back to Home",
-    "orderContents": "Order Contents"
+    "orderContents": "Order Contents",
+    "havePromoCode": "Have a promo code?",
+    "applyCode": "Apply",
+    "codeApplied": "Code applied! You save {amount}",
+    "invalidCode": "Invalid promo code",
+    "discount": "Discount",
+    "freeShipping": "Free Shipping",
+    "removeCode": "Remove",
+    "couponMinOrder": "Minimum order of ¥{amount} required",
+    "couponAlreadyUsed": "This code has already been used"
   },
   "guide": {
     "title": "Beginner's Guide to Japanese Cigarettes",
@@ -415,6 +430,25 @@
       { "title": "Strength Guide", "desc": "How to choose tar and nicotine levels. From light to full flavor." },
       { "title": "Flavor Guide", "desc": "Flavor and aroma varieties. Menthol, fruit, classic — explore the options." }
     ]
+  },
+  "products": {
+    "filter": "Filter",
+    "sortBy": "Sort by",
+    "newest": "Newest",
+    "priceLow": "Price: Low to High",
+    "priceHigh": "Price: High to Low",
+    "allCategories": "All Categories",
+    "allTypes": "All Types",
+    "showing": "Showing {count} of {total} products",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {current} of {total}",
+    "gridView": "Grid",
+    "listView": "List",
+    "searchProducts": "Search products...",
+    "noResults": "No products match your filters",
+    "cigarette": "Cigarette",
+    "heated": "Heated Tobacco"
   },
   "contactPage": {
     "title": "Contact Us",

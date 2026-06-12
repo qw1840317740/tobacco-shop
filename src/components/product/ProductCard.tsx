@@ -1,11 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { useCartStore } from "@/stores/cart-store";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { formatPrice, getLocalizedName } from "@/lib/utils";
 import { useTranslations, useLocale } from "next-intl";
+import { Star, Eye } from "lucide-react";
+import { QuickView } from "@/components/product/QuickView";
 import Image from "next/image";
 
 interface Product {
@@ -23,13 +26,28 @@ interface Product {
   desc?: string;
 }
 
+function deterministicRating(productId: string): { rating: number; count: number } {
+  let hash = 0;
+  for (let i = 0; i < productId.length; i++) {
+    const char = productId.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash |= 0;
+  }
+  hash = Math.abs(hash);
+  const rating = 3.5 + (hash % 15) / 10; // 3.5 to 4.9
+  const count = 8 + (hash % 93); // 8 to 100
+  return { rating: Math.round(rating * 10) / 10, count };
+}
+
 export function ProductCard({ product, dark }: { product: Product; dark?: boolean }) {
   const addItem = useCartStore((s) => s.addItem);
   const tCommon = useTranslations("common");
   const tProduct = useTranslations("product");
   const locale = useLocale();
+  const [quickViewOpen, setQuickViewOpen] = useState(false);
 
   const displayName = getLocalizedName(product, locale);
+  const { rating, count } = deterministicRating(product.id);
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -71,12 +89,25 @@ export function ProductCard({ product, dark }: { product: Product; dark?: boolea
           )}
           {product.inStock !== false && (
             <div className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-black/40 to-transparent p-3 pt-8 transition-transform duration-300 group-hover:translate-y-0">
-              <button
-                onClick={handleAdd}
-                className="w-full rounded-xl bg-primary py-2 text-xs font-semibold text-white shadow-lg transition-colors hover:bg-primary/90"
-              >
-                {tCommon("addToCart")}
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleAdd}
+                  className="flex-1 rounded-xl bg-primary py-2 text-xs font-semibold text-white shadow-lg transition-colors hover:bg-primary/90"
+                >
+                  {tCommon("addToCart")}
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setQuickViewOpen(true);
+                  }}
+                  className="rounded-xl bg-white/90 p-2 text-stone-700 shadow-lg transition-colors hover:bg-white hover:text-primary"
+                  title={tCommon("quickView")}
+                >
+                  <Eye className="h-4 w-4" />
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -95,6 +126,25 @@ export function ProductCard({ product, dark }: { product: Product; dark?: boolea
             {displayName}
           </h3>
         </Link>
+        {/* Star rating */}
+        <div className="mt-1.5 flex items-center gap-1">
+          <div className="flex items-center">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Star
+                key={star}
+                className={`h-3.5 w-3.5 ${
+                  star <= Math.round(rating)
+                    ? "fill-amber-400 text-amber-400"
+                    : star - 0.5 <= rating
+                      ? "fill-amber-400/50 text-amber-400"
+                      : "fill-stone-200 text-stone-200"
+                }`}
+              />
+            ))}
+          </div>
+          <span className={`text-xs font-medium ${dark ? "text-stone-400" : "text-stone-500"}`}>{rating.toFixed(1)}</span>
+          <span className={`text-xs ${dark ? "text-stone-500" : "text-stone-400"}`}>({count})</span>
+        </div>
         <div className="mt-2 flex items-baseline gap-2">
           <span className="text-lg font-bold text-primary">{formatPrice(product.price)}</span>
         </div>
@@ -108,6 +158,7 @@ export function ProductCard({ product, dark }: { product: Product; dark?: boolea
           </button>
         )}
       </div>
+      <QuickView product={product} open={quickViewOpen} onOpenChange={setQuickViewOpen} />
     </div>
   );
 }

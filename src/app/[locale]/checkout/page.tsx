@@ -21,6 +21,12 @@ const BANK_INFO = {
   name: "タバコショップ　カ",
 };
 
+interface AppliedCoupon {
+  code: string;
+  discount: number;
+  type: "percentage" | "fixed" | "free_shipping";
+}
+
 export default function CheckoutPage() {
   const { items, totalPrice, clearCart } = useCartStore();
   const user = useAuthStore((s) => s.user);
@@ -35,10 +41,38 @@ export default function CheckoutPage() {
   const tCompliance = useTranslations("compliance");
   const tCheckout = useTranslations("checkout");
 
+  // Coupon state
+  const [couponOpen, setCouponOpen] = useState(false);
+  const [couponInput, setCouponInput] = useState("");
+  const [couponLoading, setCouponLoading] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState<AppliedCoupon | null>(null);
+  const [couponMessage, setCouponMessage] = useState("");
+
   const subtotal = totalPrice();
-  const shipping = 600;
+  const baseShipping = 600;
   const tax = subtotal * 0.1;
-  const total = subtotal + shipping + tax;
+
+  // Load used coupons from localStorage for one-time tracking
+  const [usedCoupons, setUsedCoupons] = useState<string[]>([]);
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("usedCoupons");
+      if (stored) {
+        setUsedCoupons(JSON.parse(stored));
+      }
+    } catch {}
+  }, []);
+
+  // Effective shipping after coupon
+  const effectiveShipping =
+    appliedCoupon?.type === "free_shipping" ? 0 : baseShipping;
+
+  const couponDiscount =
+    appliedCoupon && appliedCoupon.type !== "free_shipping"
+      ? appliedCoupon.discount
+      : 0;
+
+  const total = subtotal + effectiveShipping + tax - couponDiscount;
 
   // Load user's default address on mount
   useEffect(() => {
@@ -93,6 +127,52 @@ export default function CheckoutPage() {
     );
   }
 
+  const handleApplyCoupon = async () => {
+    if (!couponInput.trim()) return;
+    setCouponLoading(true);
+    setCouponMessage("");
+    try {
+      const res = await fetch("/api/coupon", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          code: couponInput,
+          subtotal,
+          shippingFee: baseShipping,
+          usedCoupons,
+        }),
+      });
+      const data = await res.json();
+      if (data.valid) {
+        setAppliedCoupon({
+          code: data.code,
+          discount: data.discount,
+          type: data.type,
+        });
+        const saveLabel = data.type === "free_shipping" ? tCheckout("freeShipping") : formatPrice(data.discount);
+        setCouponMessage(tCheckout("codeApplied", { amount: saveLabel }));
+      } else {
+        if (data.message?.includes("already been used")) {
+          setCouponMessage(tCheckout("couponAlreadyUsed"));
+        } else if (data.message?.includes("Minimum order")) {
+          setCouponMessage(tCheckout("couponMinOrder", { amount: "3,000" }));
+        } else {
+          setCouponMessage(tCheckout("invalidCode"));
+        }
+      }
+    } catch {
+      setCouponMessage(tCheckout("invalidCode"));
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponInput("");
+    setCouponMessage("");
+  };
+
   const handleConfirm = async () => {
     if (!shippingName || !shippingAddress) {
       toast.error(tCheckout("fillShippingInfo"));
@@ -115,7 +195,7 @@ export default function CheckoutPage() {
         body: JSON.stringify({
           items: orderItems,
           subtotal,
-          shippingFee: shipping,
+          shippingFee: effectiveShipping,
           tax,
           total,
           shippingName,
@@ -123,11 +203,20 @@ export default function CheckoutPage() {
           shippingPostalCode,
           shippingAddress,
           paymentMethod: "bank_transfer",
+          couponCode: appliedCoupon?.code || null,
+          couponDiscount,
         }),
       });
       const data = await res.json();
       if (data.success && data.order) {
         setOrderId(data.order.id);
+        // Track one-time coupons
+        if (appliedCoupon) {
+          try {
+            const updated = [...usedCoupons, appliedCoupon.code];
+            localStorage.setItem("usedCoupons", JSON.stringify(updated));
+          } catch {}
+        }
         clearCart();
         setStep("done");
       } else {
@@ -287,8 +376,24 @@ export default function CheckoutPage() {
                 <div className="flex justify-between"><span>{tCheckout("subtotal")}</span><span>{formatPrice(subtotal)}</span></div>
                 <div className="flex justify-between">
                   <span>{tCheckout("shippingFee")}</span>
-                  <span>{formatPrice(shipping)}</span>
+                  {appliedCoupon?.type === "free_shipping" ? (
+                    <span className="line-through text-stone-400">{formatPrice(baseShipping)}</span>
+                  ) : (
+                    <span>{formatPrice(effectiveShipping)}</span>
+                  )}
                 </div>
+                {appliedCoupon?.type === "free_shipping" && (
+                  <div className="flex justify-between text-green-600">
+                    <span>{tCheckout("freeShipping")}</span>
+                    <span>-{formatPrice(baseShipping)}</span>
+                  </div>
+                )}
+                {couponDiscount > 0 && (
+                  <div className="flex justify-between text-green-600">
+                    <span>{tCheckout("discount")} ({appliedCoupon?.code})</span>
+                    <span>-{formatPrice(couponDiscount)}</span>
+                  </div>
+                )}
                 <div className="flex justify-between"><span>{tCheckout("tax")}</span><span>{formatPrice(tax)}</span></div>
                 <Separator />
                 <div className="flex justify-between text-base font-bold"><span>{tCheckout("total")}</span><span className="text-primary">{formatPrice(total)}</span></div>
@@ -398,6 +503,104 @@ export default function CheckoutPage() {
                     <span className="text-sm font-medium">{formatPrice(item.price * item.quantity)}</span>
                   </div>
                 ))}
+              </div>
+
+              <Separator className="my-4" />
+
+              {/* Coupon section */}
+              <div>
+                <button
+                  type="button"
+                  onClick={() => setCouponOpen(!couponOpen)}
+                  className="flex w-full items-center justify-between text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                >
+                  <span>{tCheckout("havePromoCode")}</span>
+                  <svg
+                    className={`h-4 w-4 transition-transform ${couponOpen ? "rotate-180" : ""}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {couponOpen && (
+                  <div className="mt-3 space-y-2">
+                    {!appliedCoupon ? (
+                      <div className="flex gap-2">
+                        <Input
+                          value={couponInput}
+                          onChange={(e) => setCouponInput(e.target.value)}
+                          placeholder="WELCOME10"
+                          className="flex-1 text-sm uppercase"
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") handleApplyCoupon();
+                          }}
+                        />
+                        <Button
+                          size="sm"
+                          onClick={handleApplyCoupon}
+                          disabled={couponLoading || !couponInput.trim()}
+                          className="bg-primary text-white hover:bg-primary/90 shrink-0"
+                        >
+                          {couponLoading ? "..." : tCheckout("applyCode")}
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-between rounded-lg border border-green-200 bg-green-50 px-3 py-2">
+                        <div className="flex items-center gap-2">
+                          <svg className="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                          </svg>
+                          <span className="text-sm font-medium text-green-700">{appliedCoupon.code}</span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={handleRemoveCoupon}
+                          className="text-xs text-stone-500 hover:text-red-500 transition-colors"
+                        >
+                          {tCheckout("removeCode")}
+                        </button>
+                      </div>
+                    )}
+                    {couponMessage && (
+                      <p className={`text-xs ${appliedCoupon ? "text-green-600" : "text-red-500"}`}>
+                        {couponMessage}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              <Separator className="my-4" />
+
+              {/* Sidebar price summary */}
+              <div className="space-y-1 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-stone-500">{tCheckout("subtotal")}</span>
+                  <span>{formatPrice(subtotal)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-stone-500">{tCheckout("shippingFee")}</span>
+                  {appliedCoupon?.type === "free_shipping" ? (
+                    <span className="text-green-600">{tCheckout("freeShipping")}</span>
+                  ) : (
+                    <span>{formatPrice(baseShipping)}</span>
+                  )}
+                </div>
+                {couponDiscount > 0 && (
+                  <div className="flex justify-between text-green-600">
+                    <span>{tCheckout("discount")}</span>
+                    <span>-{formatPrice(couponDiscount)}</span>
+                  </div>
+                )}
+                <Separator />
+                <div className="flex justify-between font-bold">
+                  <span>{tCheckout("total")}</span>
+                  <span className="text-primary">{formatPrice(total)}</span>
+                </div>
               </div>
             </Card>
           </div>

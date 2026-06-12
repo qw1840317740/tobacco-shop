@@ -122,6 +122,19 @@ export async function getProductsByCategory(categoryId: string): Promise<Product
   return rows.map(toProduct);
 }
 
+export async function getRelatedProducts(productId: string, categoryId: string, limit = 4): Promise<Product[]> {
+  const rows = await db.product.findMany({
+    where: {
+      categoryId,
+      id: { not: productId },
+      inStock: true,
+    },
+    take: limit,
+    orderBy: { createdAt: "desc" },
+  });
+  return rows.map(toProduct);
+}
+
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   const row = await db.product.findUnique({ where: { slug } });
   return row ? toProduct(row) : null;

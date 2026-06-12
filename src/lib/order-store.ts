@@ -25,11 +25,26 @@ export interface Order {
   shippingAddress: string;
   paymentMethod: string;
   notes: string;
+  couponCode: string;
+  couponDiscount: number;
   createdAt: string;
   updatedAt: string;
 }
 
+function parseCouponFromNotes(notes: string): { couponCode: string; couponDiscount: number; cleanNotes: string } {
+  const match = notes.match(/\[COUPON:(.*?):(\d+)\]\n?/);
+  if (match) {
+    return {
+      couponCode: match[1],
+      couponDiscount: Number(match[2]),
+      cleanNotes: notes.replace(/\[COUPON:.*?:\d+\]\n?/, ""),
+    };
+  }
+  return { couponCode: "", couponDiscount: 0, cleanNotes: notes };
+}
+
 function toOrder(row: any): Order {
+  const { couponCode, couponDiscount, cleanNotes } = parseCouponFromNotes(row.notes || "");
   return {
     id: row.id,
     userId: row.userId,
@@ -44,7 +59,9 @@ function toOrder(row: any): Order {
     shippingPostalCode: row.shippingPostalCode,
     shippingAddress: row.shippingAddress,
     paymentMethod: row.paymentMethod,
-    notes: row.notes,
+    notes: cleanNotes,
+    couponCode,
+    couponDiscount,
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),
   };
@@ -63,11 +80,19 @@ export async function createOrder(data: {
   shippingAddress: string;
   paymentMethod: string;
   notes?: string;
+  couponCode?: string;
+  couponDiscount?: number;
 }): Promise<Order> {
   const date = new Date();
   const dateStr = date.toISOString().slice(0, 10).replace(/-/g, "");
   const rand = randomUUID().substring(0, 6).toUpperCase();
   const id = `ORD-${dateStr}-${rand}`;
+
+  // Encode coupon info into notes to avoid a schema migration
+  let notes = data.notes || "";
+  if (data.couponCode && data.couponDiscount && data.couponDiscount > 0) {
+    notes = `[COUPON:${data.couponCode}:${data.couponDiscount}]\n${notes}`;
+  }
 
   const row = await db.order.create({
     data: {
@@ -84,7 +109,7 @@ export async function createOrder(data: {
       shippingPostalCode: data.shippingPostalCode,
       shippingAddress: data.shippingAddress,
       paymentMethod: data.paymentMethod,
-      notes: data.notes || "",
+      notes,
     },
   });
   return toOrder(row);

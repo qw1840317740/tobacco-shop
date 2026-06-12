@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CartDrawer from "@/components/layout/CartDrawer";
+import MobileNav from "@/components/layout/MobileNav";
 import { OrganizationJsonLd } from "@/components/seo-json-ld";
 import type { Metadata } from "next";
 
@@ -76,6 +77,7 @@ export default async function LocaleLayout({
         </main>
         <Footer />
         <CartDrawer />
+        <MobileNav />
         <Toaster />
       </div>
     </NextIntlClientProvider>

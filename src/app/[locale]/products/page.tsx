@@ -1,8 +1,9 @@
-import { getProducts } from "@/lib/data-store";
-import { ProductCard } from "@/components/product/ProductCard";
+import { getProducts, getCategories } from "@/lib/data-store";
 import { getTranslations } from "next-intl/server";
 import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/lib/routing";
+import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { ProductsClient } from "./ProductsClient";
 import type { Metadata } from "next";
 
 const SITE_URL = "https://tabacoya.jp";
@@ -56,20 +57,27 @@ export default async function ProductsPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const products = await getProducts();
+  const [products, categories] = await Promise.all([
+    getProducts(),
+    getCategories(),
+  ]);
   const t = await getTranslations("nav");
   const tProduct = await getTranslations("product");
-  const tHome = await getTranslations("home");
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-      <h1 className="font-heading text-3xl font-bold text-stone-800">{t("products")}</h1>
-      <p className="mt-2 text-stone-500">{products.length}+ {tProduct("productCount")}</p>
-      <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+      <Breadcrumb items={[{ label: t("products") }]} />
+
+      <div className="mb-8">
+        <h1 className="font-heading text-3xl font-bold text-stone-800">
+          {t("products")}
+        </h1>
+        <p className="mt-2 text-stone-500">
+          {products.length}+ {tProduct("productCount")}
+        </p>
       </div>
+
+      <ProductsClient products={products} categories={categories} />
     </div>
   );
 }

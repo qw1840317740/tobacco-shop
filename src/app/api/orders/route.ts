@@ -3,6 +3,7 @@ import { verifyUserSession } from "@/lib/user-auth";
 import { getUserById } from "@/lib/user-store";
 import { createOrder, getOrdersByUserId } from "@/lib/order-store";
 import { getProductBySlug } from "@/lib/data-store";
+import { validateCoupon } from "@/lib/coupon-store";
 
 export async function POST(request: NextRequest) {
   const session = verifyUserSession(request.headers.get("cookie"));
@@ -12,7 +13,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { items, shippingName, shippingPhone, shippingPostalCode, shippingAddress, paymentMethod, notes } = body;
+    const { items, shippingName, shippingPhone, shippingPostalCode, shippingAddress, paymentMethod, notes, couponCode } = body;
 
     if (!items || !items.length) {
       return NextResponse.json({ error: "カートが空です" }, { status: 400 });
@@ -46,7 +47,17 @@ export async function POST(request: NextRequest) {
 
     const shippingFee = subtotal >= 5000 ? 0 : 500; // Free shipping over ¥5000
     const tax = Math.floor(subtotal * 0.1); // 10% tax
-    const total = subtotal + shippingFee + tax;
+
+    // Apply coupon if provided (server-side validation)
+    let couponDiscount = 0;
+    if (couponCode && typeof couponCode === "string") {
+      const couponResult = validateCoupon(couponCode, subtotal, shippingFee);
+      if (couponResult.valid) {
+        couponDiscount = couponResult.discount;
+      }
+    }
+
+    const total = subtotal + shippingFee + tax - couponDiscount;
 
     const order = await createOrder({
       userId: session.userId,
@@ -61,6 +72,8 @@ export async function POST(request: NextRequest) {
       shippingAddress,
       paymentMethod: paymentMethod || "bank_transfer",
       notes: notes || "",
+      couponCode: couponCode || "",
+      couponDiscount,
     });
 
     return NextResponse.json({ success: true, order });
