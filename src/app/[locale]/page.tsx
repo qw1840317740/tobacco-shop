@@ -91,45 +91,67 @@ export default async function HomePage({
 
   return (
     <div>
-      {/* ===== HERO — Full-bleed image ===== */}
-      <section className="relative h-[90vh] overflow-hidden">
-        <Image
-          src={HERO_IMAGES.main}
-          alt="Premium Japanese cigarettes"
-          fill
-          className="object-cover"
-          priority
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-        <div className="absolute bottom-16 left-0 max-w-2xl px-8">
-          <h1 className="text-5xl font-bold text-white tracking-tight sm:text-7xl">
-            {t("heroTitle")}
-            <br />
-            {t("heroTitleHighlight")}
-          </h1>
-          <p className="mt-4 text-base text-white/70">
-            {t("heroDescription")}
-          </p>
-          <div className="mt-8 flex gap-4">
-            <Link
-              href="/products"
-              className="inline-flex h-12 items-center gap-2 bg-[#C8A97E] px-8 text-sm font-semibold text-white uppercase tracking-wider transition-colors hover:bg-[#B8956A]"
-            >
-              {t("heroCtaProducts")}
-            </Link>
-            <Link
-              href="/guide"
-              className="inline-flex h-12 items-center border border-white/30 px-8 text-sm font-medium text-white uppercase tracking-wider transition-colors hover:bg-white/10"
-            >
-              {t("heroCtaGuide")}
-            </Link>
+      {/* ===== HERO — Split layout ===== */}
+      <section className="grid lg:grid-cols-2">
+        {/* Left: Image */}
+        <div className="relative h-[50vh] lg:h-auto lg:min-h-[70vh] overflow-hidden">
+          <Image
+            src={HERO_IMAGES.main}
+            alt="Premium Japanese cigarettes"
+            fill
+            className="object-cover"
+            priority
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
+        </div>
+
+        {/* Right: Content */}
+        <div className="flex items-center bg-[#0F0F0F] px-8 py-12 lg:px-16 lg:py-0">
+          <div className="max-w-lg">
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#C8A97E]">Est. 2001 · Japan</span>
+            <h1 className="mt-4 text-4xl font-bold text-white tracking-tight sm:text-5xl">
+              {t("heroTitle")}
+              <br />
+              <span className="text-[#C8A97E]">{t("heroTitleHighlight")}</span>
+            </h1>
+            <p className="mt-4 text-sm leading-relaxed text-[#888]">
+              {t("heroDescription")}
+            </p>
+            <div className="mt-8 flex gap-3">
+              <Link
+                href="/products"
+                className="inline-flex h-11 items-center bg-[#C8A97E] px-6 text-xs font-semibold text-white uppercase tracking-wider transition-colors hover:bg-[#B8956A]"
+              >
+                {t("heroCtaProducts")}
+              </Link>
+              <Link
+                href="/guide"
+                className="inline-flex h-11 items-center border border-[#2A2A2A] px-6 text-xs font-medium text-[#888] uppercase tracking-wider transition-colors hover:text-white hover:border-[#555]"
+              >
+                {t("heroCtaGuide")}
+              </Link>
+            </div>
+            {/* Stats row */}
+            <div className="mt-10 grid grid-cols-3 gap-6 border-t border-[#2A2A2A] pt-6">
+              <div>
+                <p className="text-2xl font-bold text-[#C8A97E]">500+</p>
+                <p className="mt-1 text-[10px] uppercase tracking-wider text-[#666]">{t("statBrands")}</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-[#C8A97E]">100%</p>
+                <p className="mt-1 text-[10px] uppercase tracking-wider text-[#666]">{t("statAuthentic")}</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-[#C8A97E]">🇯🇵</p>
+                <p className="mt-1 text-[10px] uppercase tracking-wider text-[#666]">{t("statMadeInJapan")}</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ===== ANNOUNCEMENT BAR ===== */}
-      <div className="bg-[#0F0F0F] py-2.5 text-center">
+      <div className="bg-[#0F0F0F] py-2.5 text-center border-t border-[#2A2A2A]">
         <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#888]">
           {t("marqueeText")}
         </span>
@@ -284,30 +306,10 @@ export default async function HomePage({
 
       {/* ===== ABOUT SECTION ===== */}
       <section className="bg-[#0F0F0F] py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="text-center">
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#888]">
-              About Us
-            </span>
-            <h2 className="mt-2 text-2xl font-bold uppercase tracking-wider text-white">
-              {t("aboutTitle")}
-            </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-[#888] leading-relaxed text-sm">
-              {t("aboutDescription")}
-            </p>
-          </div>
-          <div className="mt-10 grid grid-cols-3 gap-6">
-            {[
-              { num: "500+", label: t("statBrands") },
-              { num: "100%", label: t("statAuthentic") },
-              { num: "🇯🇵", label: t("statMadeInJapan") },
-            ].map((s) => (
-              <div key={s.label} className="text-center">
-                <p className="text-4xl font-bold text-[#C8A97E]">{s.num}</p>
-                <p className="mt-2 text-sm text-[#888]">{s.label}</p>
-              </div>
-            ))}
-          </div>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 text-center">
+          <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#888]">About Us</span>
+          <h2 className="mt-2 text-2xl font-bold uppercase tracking-wider text-white">{t("aboutTitle")}</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-[#888] leading-relaxed text-sm">{t("aboutDescription")}</p>
         </div>
       </section>
 
