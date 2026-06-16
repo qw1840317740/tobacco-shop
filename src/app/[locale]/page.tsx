@@ -147,7 +147,7 @@ export default async function HomePage({
 
       {/* ===== ANNOUNCEMENT BAR — Scrolling ===== */}
       <div className="bg-[#0F0F0F] py-2.5 text-center border-t border-[#2A2A2A] overflow-hidden">
-        <div className="flex animate-[scroll_15s_linear_infinite] whitespace-nowrap">
+        <div className="flex animate-[scroll_15s_linear_infinite] whitespace-nowrap" style={{ willChange: "transform" }}>
           {[...Array(4)].map((_, i) => (
             <span key={i} className="mx-8 text-[10px] font-medium tracking-[0.2em] uppercase text-[#C8A97E]">
               {announcements.map((a, j) => (
@@ -163,7 +163,7 @@ export default async function HomePage({
 
       {/* ===== TRUST BAR ===== */}
       <section className="border-b border-[#E5E5E5] bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 py-6">
+        <div className="mx-auto max-w-[1440px] px-6 sm:px-10 py-6">
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
             {[
               { icon: "🚚", title: locale === "en" ? "Free Shipping" : locale === "zh" ? "免费配送" : "送料無料", desc: locale === "en" ? "Orders over ¥5,000" : locale === "zh" ? "订单满¥5,000" : "¥5,000以上" },
@@ -185,7 +185,7 @@ export default async function HomePage({
 
       {/* ===== BRAND SHOWCASE ===== */}
       <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="mx-auto max-w-[1440px] px-6 sm:px-10">
           <h2 className="text-2xl font-bold uppercase tracking-wider text-center text-[#1A1A1A]">{t("brandsTitle")}</h2>
           <p className="mt-2 text-sm text-center text-[#888]">{t("brandsSubtitle")}</p>
 
@@ -232,7 +232,7 @@ export default async function HomePage({
 
       {/* ===== FEATURED PRODUCTS ===== */}
       <section className="py-16 sm:py-20 bg-[#F5F5F5]">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="mx-auto max-w-[1440px] px-6 sm:px-10">
           <div className="mb-8 flex items-end justify-between">
             <h2 className="text-2xl font-bold uppercase tracking-wider text-[#1A1A1A]">{t("featuredTitle")}</h2>
             <Link href="/products" className="hidden sm:flex items-center gap-1 text-sm font-medium text-[#C8A97E] hover:gap-2 transition-all">{t("viewAll")} &rarr;</Link>
@@ -266,7 +266,7 @@ export default async function HomePage({
 
       {/* ===== EDITORIAL SECTION ===== */}
       <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="mx-auto max-w-[1440px] px-6 sm:px-10">
           <h2 className="text-2xl font-bold uppercase tracking-wider text-[#1A1A1A]">
             {locale === "en" ? "Buying Guide" : locale === "zh" ? "选购指南" : "購入ガイド"}
           </h2>
@@ -324,7 +324,7 @@ export default async function HomePage({
       <section className="relative py-20 overflow-hidden">
         <Image src={HERO_IMAGES.barn} alt="Tobacco heritage" fill className="object-cover" loading="lazy" sizes="100vw" />
         <div className="absolute inset-0 bg-[#0F0F0F]/90" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 text-center">
+        <div className="relative mx-auto max-w-[1440px] px-6 sm:px-10 text-center">
           <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#C8A97E]">About Us</span>
           <h2 className="mt-2 text-2xl font-bold uppercase tracking-wider text-white">{t("aboutTitle")}</h2>
           <p className="mx-auto mt-3 max-w-2xl text-[#888] leading-relaxed text-sm">{t("aboutDescription")}</p>
@@ -351,7 +351,7 @@ export default async function HomePage({
           <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#888]">Newsletter</span>
           <h2 className="mt-2 text-2xl font-bold uppercase tracking-wider text-white">{t("newsletterTitle")}</h2>
           <p className="mt-2 text-sm text-[#666]">
-            {locale === "en" ? "Get 10% off your first order + weekly recommendations" : locale === "zh" ? "首次订购享9折优惠 + 每周推荐" : "初回購入10%OFF + 毎週のおすすめ"}
+            {locale === "en" ? "Subscribe for new arrivals, restocks & recommendations" : locale === "zh" ? "订阅获取新品上架、补货通知与精选推荐" : "新着・再入荷・おすすめ情報をお届け"}
           </p>
           <NewsletterForm />
         </div>

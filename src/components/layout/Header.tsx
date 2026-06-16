@@ -38,7 +38,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-[#E5E5E5]">
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
+      <div className="mx-auto flex h-14 max-w-[1440px] items-center justify-between px-6 sm:px-10">
         {/* Logo */}
         <Link href="/" className="flex items-center group">
           <Image

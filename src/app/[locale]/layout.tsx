@@ -67,7 +67,7 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <div className="flex min-h-screen flex-col">
+      <div className="flex min-h-screen flex-col overflow-x-hidden">
         <OrganizationJsonLd />
         <Header />
         <main className="flex-1 bg-white">

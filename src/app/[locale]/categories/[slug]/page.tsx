@@ -102,7 +102,7 @@ export default async function CategoryPage({
   const maxPrice = prices.length > 0 ? Math.max(...prices) : 0;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+    <div className="mx-auto max-w-[1440px] px-6 py-8 sm:px-6">
       <BreadcrumbJsonLd items={[
         { name: tNav("brands"), url: `${SITE_URL}/${locale}/categories` },
         { name: localizedName, url: `${SITE_URL}/${locale}/categories/${slug}` },

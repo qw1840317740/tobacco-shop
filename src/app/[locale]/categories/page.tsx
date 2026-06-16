@@ -107,7 +107,7 @@ export default async function BrandsPage({
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+    <div className="mx-auto max-w-[1440px] px-6 py-8 sm:px-6">
       <Breadcrumb items={[{ label: tBrands("title") }]} />
 
       <div className="mb-10">
