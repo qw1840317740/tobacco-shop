@@ -300,7 +300,7 @@ export function ProductsClient({ products, categories }: ProductsClientProps) {
           )}
         </div>
       ) : view === "grid" ? (
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
           {paginatedProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -374,7 +374,7 @@ function ListProductCard({ product, locale }: { product: Product; locale: string
       href={`/products/${product.slug}`}
       className="group flex items-center gap-4 rounded-lg border border-[#E5E5E5] bg-white p-3 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 sm:gap-5 sm:p-4"
     >
-      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-[#F5F5F5] sm:h-24 sm:w-24">
+      <div className="relative aspect-[3/4] h-20 shrink-0 overflow-hidden rounded-lg bg-[#F5F5F5] sm:h-24">
         <Image
           src={product.image}
           alt={displayName}

@@ -420,7 +420,7 @@ export default function CheckoutPage() {
               </label>
 
               <div className="mt-6 flex gap-3">
-                <Button variant="outline" onClick={() => setStep("payment")} className="flex-1">←</Button>
+                <Button variant="outline" onClick={() => setStep("payment")} className="flex-1">{tCheckout("back")}</Button>
                 <Button className="flex-1 bg-[#1A1A1A] text-white hover:bg-[#333]" onClick={handleConfirm} disabled={submitting || !identityConfirmed}>
                   {submitting ? "..." : tCheckout("placeOrder")}
                 </Button>
@@ -465,7 +465,7 @@ export default function CheckoutPage() {
 
               <div className="rounded-lg border border-[#E5E5E5] bg-[#F5F5F5] p-4 text-xs text-[#888888] leading-relaxed">
                 <p className="font-medium text-[#888888] mb-1">💡 {tCheckout("transferNotesTitle")}</p>
-                <ul className="list-disc pl-4 space-by-1">
+                <ul className="list-disc pl-4 space-y-1">
                   <li>{tCheckout("transferNote1")}</li>
                   <li>{tCheckout("transferNote2")}</li>
                   <li>{tCheckout("transferNote3")}</li>
@@ -498,7 +498,7 @@ export default function CheckoutPage() {
               <div className="mt-4 space-y-3">
                 {items.map((item) => (
                   <div key={item.productId} className="flex gap-3">
-                    <img src={item.image} alt={item.name} className="h-12 w-12 rounded object-cover" />
+                    <img src={item.image} alt={item.name} className="aspect-[3/4] h-12 rounded object-cover" />
                     <div className="flex-1"><p className="text-sm font-medium line-clamp-1">{item.name}</p><p className="text-xs text-[#888888]">x{item.quantity}</p></div>
                     <span className="text-sm font-medium">{formatPrice(item.price * item.quantity)}</span>
                   </div>

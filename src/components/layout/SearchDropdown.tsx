@@ -134,7 +134,7 @@ export function SearchDropdown() {
                             <img src={p.image} alt={displayName} className="h-10 w-10 shrink-0 rounded-md object-cover" />
                           ) : (
                             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-stone-100">
-                              <Search className="h-4 w-4 text-stone-300" />
+                              <Search className="h-4 w-4 text-[#888]" />
                             </div>
                           )}
                           <div className="min-w-0 flex-1">

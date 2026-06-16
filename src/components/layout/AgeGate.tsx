@@ -74,7 +74,7 @@ export default function AgeGate() {
                 size="lg"
                 variant="outline"
                 onClick={handleDeny}
-                className="border-stone-600 text-stone-300 hover:bg-stone-800"
+                className="border-stone-600 text-[#aaa] hover:bg-stone-800"
               >
                 {t("deny")}
               </Button>

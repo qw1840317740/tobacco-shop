@@ -15,7 +15,7 @@ function CartItemRow({ item }: { item: CartItem }) {
 
   return (
     <div className="flex gap-3 py-3">
-      <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md bg-[#F5F5F5]">
+      <div className="aspect-[3/4] h-16 flex-shrink-0 overflow-hidden rounded-md bg-[#F5F5F5]">
         {item.image && (
           <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
         )}
@@ -88,7 +88,7 @@ export default function CartDrawer() {
               <Link
                 href="/checkout"
                 onClick={() => setCartOpen(false)}
-                className="inline-flex h-10 w-full items-center justify-center bg-[#1A1A1A] px-2.5 text-sm font-medium text-white uppercase tracking-wider hover:bg-[#333] transition-colors"
+                className="inline-flex h-10 w-full items-center justify-center rounded-lg bg-[#1A1A1A] px-2.5 text-sm font-medium text-white uppercase tracking-wider hover:bg-[#333] transition-colors"
               >
                 {t("checkout")}
               </Link>

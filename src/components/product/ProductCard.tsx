@@ -66,7 +66,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <div className="group relative overflow-hidden rounded-lg bg-white border border-[#E5E5E5] transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
       <Link href={`/products/${product.slug}`}>
-        <div className="relative aspect-[2/3] overflow-hidden bg-[#F5F5F5]">
+        <div className="relative aspect-[3/4] overflow-hidden bg-[#F5F5F5]">
           <Image
             src={product.image}
             alt={displayName}
@@ -146,7 +146,7 @@ export function ProductCard({ product }: { product: Product }) {
         {product.inStock !== false && (
           <button
             onClick={handleAdd}
-            className="mt-3 w-full rounded-none bg-[#1A1A1A] py-2 text-xs font-medium text-white uppercase tracking-wider transition-colors hover:bg-[#333] sm:hidden"
+            className="mt-3 w-full rounded-lg bg-[#1A1A1A] py-2 text-xs font-medium text-white uppercase tracking-wider transition-colors hover:bg-[#333] sm:hidden"
           >
             {tCommon("addToCart")}
           </button>

@@ -85,7 +85,7 @@ export function QuickView({ product, open, onOpenChange }: QuickViewProps) {
         </DialogHeader>
         <div className="grid gap-4 sm:grid-cols-2">
           {/* Image */}
-          <div className="relative aspect-[2/3] overflow-hidden rounded-lg bg-[#F5F5F5]">
+          <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#F5F5F5]">
             <Image
               src={product.image}
               alt={displayName}
@@ -189,7 +189,7 @@ export function QuickView({ product, open, onOpenChange }: QuickViewProps) {
             {/* Add to cart */}
             <div className="mt-auto pt-4">
               <Button
-                className="w-full bg-[#1A1A1A] text-white rounded-none uppercase tracking-wider hover:bg-[#333]"
+                className="h-11 w-full bg-[#1A1A1A] text-white rounded-lg uppercase tracking-wider hover:bg-[#333]"
                 disabled={product.inStock === false}
                 onClick={handleAdd}
               >

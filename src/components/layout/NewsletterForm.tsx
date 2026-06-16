@@ -51,12 +51,12 @@ export function NewsletterForm() {
         onChange={(e) => { setEmail(e.target.value); setError(""); }}
         placeholder={t("placeholder")}
         required
-        className="flex-1 rounded-none border border-[#2A2A2A] bg-transparent px-5 py-2.5 text-sm text-white placeholder:text-[#666] transition-all focus:border-[#C8A97E] focus:outline-none focus:ring-0"
+        className="flex-1 rounded-lg border border-[#2A2A2A] bg-transparent px-5 py-2.5 text-sm text-white placeholder:text-[#999] transition-all focus:border-[#C8A97E] focus:outline-none focus:ring-0"
       />
       <Button
         type="submit"
         disabled={loading}
-        className="rounded-none bg-[#C8A97E] px-6 py-2.5 text-sm font-semibold text-white uppercase tracking-wider hover:bg-[#B8956A] disabled:opacity-50"
+        className="rounded-lg bg-[#C8A97E] px-6 py-2.5 text-sm font-semibold text-white uppercase tracking-wider hover:bg-[#B8956A] disabled:opacity-50"
       >
         {loading ? t("submitting") : t("submit")}
       </Button>

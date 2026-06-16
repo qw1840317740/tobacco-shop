@@ -130,15 +130,15 @@ export default async function HomePage({
             <div className="mt-10 grid grid-cols-3 gap-6 border-t border-[#2A2A2A] pt-6">
               <div>
                 <p className="text-2xl font-bold text-[#C8A97E]">500+</p>
-                <p className="mt-1 text-[10px] uppercase tracking-wider text-[#666]">{t("statBrands")}</p>
+                <p className="mt-1 text-[10px] uppercase tracking-wider text-[#999]">{t("statBrands")}</p>
               </div>
               <div>
                 <p className="text-2xl font-bold text-[#C8A97E]">100%</p>
-                <p className="mt-1 text-[10px] uppercase tracking-wider text-[#666]">{t("statAuthentic")}</p>
+                <p className="mt-1 text-[10px] uppercase tracking-wider text-[#999]">{t("statAuthentic")}</p>
               </div>
               <div>
                 <p className="text-2xl font-bold text-[#C8A97E]">🇯🇵</p>
-                <p className="mt-1 text-[10px] uppercase tracking-wider text-[#666]">{t("statMadeInJapan")}</p>
+                <p className="mt-1 text-[10px] uppercase tracking-wider text-[#999]">{t("statMadeInJapan")}</p>
               </div>
             </div>
           </div>
@@ -147,9 +147,9 @@ export default async function HomePage({
 
       {/* ===== ANNOUNCEMENT BAR — Scrolling ===== */}
       <div className="bg-[#0F0F0F] py-2.5 text-center border-t border-[#2A2A2A] overflow-hidden">
-        <div className="flex animate-[scroll_15s_linear_infinite] whitespace-nowrap" style={{ willChange: "transform" }}>
-          {[...Array(4)].map((_, i) => (
-            <span key={i} className="mx-8 text-[10px] font-medium tracking-[0.2em] uppercase text-[#C8A97E]">
+        <div className="flex animate-[scroll_18s_linear_infinite] whitespace-nowrap" style={{ willChange: "transform" }}>
+          {[0, 1].map((i) => (
+            <span key={i} className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#C8A97E]" aria-hidden={i === 1}>
               {announcements.map((a, j) => (
                 <span key={j} className="mx-6 inline-flex items-center gap-2">
                   <span className="inline-block h-1 w-1 rounded-full bg-[#C8A97E]" />
@@ -237,7 +237,7 @@ export default async function HomePage({
             <h2 className="text-2xl font-bold uppercase tracking-wider text-[#1A1A1A]">{t("featuredTitle")}</h2>
             <Link href="/products" className="hidden sm:flex items-center gap-1 text-sm font-medium text-[#C8A97E] hover:gap-2 transition-all">{t("viewAll")} &rarr;</Link>
           </div>
-          <div className="grid gap-4 sm:gap-5 grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
             {editorsPick && (
               <div className="col-span-2 row-span-2 hidden lg:block">
                 <div className="group relative h-full overflow-hidden rounded-lg">
@@ -331,15 +331,15 @@ export default async function HomePage({
           <div className="mt-10 grid grid-cols-3 gap-8 max-w-lg mx-auto">
             <div>
               <p className="text-3xl font-bold text-[#C8A97E]">20+</p>
-              <p className="mt-1 text-[10px] uppercase tracking-wider text-[#666]">{locale === "en" ? "Years" : locale === "zh" ? "年历史" : "年の歴史"}</p>
+              <p className="mt-1 text-[10px] uppercase tracking-wider text-[#999]">{locale === "en" ? "Years" : locale === "zh" ? "年历史" : "年の歴史"}</p>
             </div>
             <div>
               <p className="text-3xl font-bold text-[#C8A97E]">50K+</p>
-              <p className="mt-1 text-[10px] uppercase tracking-wider text-[#666]">{locale === "en" ? "Customers" : locale === "zh" ? "客户信赖" : "お客様"}</p>
+              <p className="mt-1 text-[10px] uppercase tracking-wider text-[#999]">{locale === "en" ? "Customers" : locale === "zh" ? "客户信赖" : "お客様"}</p>
             </div>
             <div>
               <p className="text-3xl font-bold text-[#C8A97E]">4.8</p>
-              <p className="mt-1 text-[10px] uppercase tracking-wider text-[#666]">{locale === "en" ? "Rating" : locale === "zh" ? "好评评分" : "評価"}</p>
+              <p className="mt-1 text-[10px] uppercase tracking-wider text-[#999]">{locale === "en" ? "Rating" : locale === "zh" ? "好评评分" : "評価"}</p>
             </div>
           </div>
         </div>
@@ -350,7 +350,7 @@ export default async function HomePage({
         <div className="mx-auto max-w-2xl px-4 text-center sm:px-6">
           <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#888]">Newsletter</span>
           <h2 className="mt-2 text-2xl font-bold uppercase tracking-wider text-white">{t("newsletterTitle")}</h2>
-          <p className="mt-2 text-sm text-[#666]">
+          <p className="mt-2 text-sm text-[#999]">
             {locale === "en" ? "Subscribe for new arrivals, restocks & recommendations" : locale === "zh" ? "订阅获取新品上架、补货通知与精选推荐" : "新着・再入荷・おすすめ情報をお届け"}
           </p>
           <NewsletterForm />

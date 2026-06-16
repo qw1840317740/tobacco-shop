@@ -96,7 +96,8 @@ export function ProductDetailClient({
   const decrementQty = () => setQty((q) => Math.max(q - 1, 1));
 
   return (
-    <div className="mx-auto max-w-[1440px] px-6 py-8 sm:px-6">
+    <div>
+    <div className="mx-auto max-w-3xl px-6 py-8 sm:px-10">
       <Breadcrumb items={[{ label: tNav("products"), href: "/products" }, { label: displayName }]} />
 
       {/* Health warning banner */}
@@ -105,19 +106,19 @@ export function ProductDetailClient({
       </div>
 
       {/* Hero image */}
-      <div className="relative w-full aspect-[16/9] lg:aspect-[2/1] overflow-hidden rounded-lg bg-[#F5F5F5]">
+      <div className="relative w-full aspect-square overflow-hidden rounded-lg bg-[#F5F5F5]">
         <Image
           src={product.image}
           alt={displayName}
           fill
           className="object-cover"
           priority
-          sizes="(max-width: 1024px) 100vw, 50vw"
+          sizes="(max-width: 768px) 100vw, 768px"
         />
       </div>
 
       {/* Product info below */}
-      <div className="max-w-2xl mx-auto px-4 py-8">
+      <div className="py-8">
         <div className="flex flex-wrap items-center gap-1.5">
           {product.code && (
             <span className="bg-[#F5F5F5] px-2 py-0.5 text-[10px] uppercase tracking-wider text-[#888] font-mono">
@@ -199,25 +200,25 @@ export function ProductDetailClient({
             <button
               onClick={decrementQty}
               disabled={qty <= 1}
-              className="flex h-10 w-10 items-center justify-center rounded-l-lg text-[#888] transition-colors hover:bg-[#F5F5F5] disabled:cursor-not-allowed disabled:opacity-40"
+              className="flex h-11 w-11 items-center justify-center rounded-l-lg text-[#888] transition-colors hover:bg-[#F5F5F5] disabled:cursor-not-allowed disabled:opacity-40"
               aria-label="Decrease quantity"
             >
               <Minus className="h-4 w-4" />
             </button>
-            <span className="flex h-10 w-10 items-center justify-center border-x border-[#E5E5E5] text-sm font-semibold text-[#1A1A1A]">
+            <span className="flex h-11 w-11 items-center justify-center border-x border-[#E5E5E5] text-sm font-semibold text-[#1A1A1A]">
               {qty}
             </span>
             <button
               onClick={incrementQty}
               disabled={qty >= 10}
-              className="flex h-10 w-10 items-center justify-center rounded-r-lg text-[#888] transition-colors hover:bg-[#F5F5F5] disabled:cursor-not-allowed disabled:opacity-40"
+              className="flex h-11 w-11 items-center justify-center rounded-r-lg text-[#888] transition-colors hover:bg-[#F5F5F5] disabled:cursor-not-allowed disabled:opacity-40"
               aria-label="Increase quantity"
             >
               <Plus className="h-4 w-4" />
             </button>
           </div>
           <Button
-            className="flex-1 bg-[#1A1A1A] text-white rounded-lg uppercase tracking-wider hover:bg-[#333]"
+            className="h-11 flex-1 bg-[#1A1A1A] text-white rounded-lg uppercase tracking-wider hover:bg-[#333]"
             disabled={product.inStock === false}
             onClick={handleAdd}
           >
@@ -225,7 +226,7 @@ export function ProductDetailClient({
           </Button>
           <button
             onClick={handleWishlistToggle}
-            className={`flex h-10 w-10 items-center justify-center rounded-lg border transition-colors ${
+            className={`flex h-11 w-11 items-center justify-center rounded-lg border transition-colors ${
               isWishlisted
                 ? "border-[#C8A97E] bg-[#C8A97E]/10 text-[#C8A97E]"
                 : "border-[#E5E5E5] text-[#888] hover:border-[#C8A97E] hover:text-[#C8A97E]"
@@ -237,7 +238,7 @@ export function ProductDetailClient({
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto px-4">
+      <div>
         <Tabs defaultValue="description" className="mt-4">
           <TabsList>
             <TabsTrigger value="description">{tProduct("description")}</TabsTrigger>
@@ -258,14 +259,15 @@ export function ProductDetailClient({
           </TabsContent>
         </Tabs>
       </div>
+      </div>
 
       {/* Related Products */}
       {relatedProducts.length > 0 && (
-        <section className="mt-16">
+        <section className="mx-auto mt-16 max-w-[1440px] px-6 py-8 sm:px-10">
           <h2 className="text-xl font-bold uppercase tracking-wider text-[#1A1A1A]">
             {tProduct("relatedProducts")}
           </h2>
-          <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-4">
+          <div className="mt-6 grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
             {relatedProducts.map((rp) => (
               <ProductCard key={rp.id} product={rp} />
             ))}
