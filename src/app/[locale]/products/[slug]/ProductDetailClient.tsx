@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "@/i18n/navigation";
 import { useCartStore } from "@/stores/cart-store";
+import { useWishlistStore } from "@/stores/wishlist-store";
 import { toast } from "sonner";
 import { formatPrice, getLocalizedName } from "@/lib/utils";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
@@ -54,8 +55,9 @@ export function ProductDetailClient({
   relatedProducts: Product[];
 }) {
   const addItem = useCartStore((s) => s.addItem);
+  const toggleWishlist = useWishlistStore((s) => s.toggle);
+  const wishlisted = useWishlistStore((s) => s.items.some((i) => i.id === product.id));
   const [qty, setQty] = useState(1);
-  const [isWishlisted, setIsWishlisted] = useState(false);
   const { add: addRecentlyViewed } = useRecentlyViewed();
   const tCommon = useTranslations("common");
   const tProduct = useTranslations("product");
@@ -85,11 +87,14 @@ export function ProductDetailClient({
   };
 
   const handleWishlistToggle = () => {
-    setIsWishlisted((prev) => {
-      const next = !prev;
-      toast.success(next ? tProduct("addedToWishlist") : tProduct("removedFromWishlist"));
-      return next;
+    const added = toggleWishlist({
+      id: product.id,
+      slug: product.slug,
+      name: displayName,
+      price: product.price,
+      image: product.image,
     });
+    toast.success(added ? tProduct("addedToWishlist") : tProduct("removedFromWishlist"));
   };
 
   const incrementQty = () => setQty((q) => Math.min(q + 1, 10));
@@ -227,13 +232,13 @@ export function ProductDetailClient({
           <button
             onClick={handleWishlistToggle}
             className={`flex h-11 w-11 items-center justify-center rounded-lg border transition-colors ${
-              isWishlisted
+              wishlisted
                 ? "border-[#C8A97E] bg-[#C8A97E]/10 text-[#C8A97E]"
                 : "border-[#E5E5E5] text-[#888] hover:border-[#C8A97E] hover:text-[#C8A97E]"
             }`}
             aria-label={tProduct("addToWishlist")}
           >
-            <Heart className={`h-5 w-5 ${isWishlisted ? "fill-[#C8A97E]" : ""}`} />
+            <Heart className={`h-5 w-5 ${wishlisted ? "fill-[#C8A97E]" : ""}`} />
           </button>
         </div>
       </div>

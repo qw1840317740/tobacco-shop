@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { useCartStore } from "@/stores/cart-store";
+import { useWishlistStore } from "@/stores/wishlist-store";
 import { Link } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { formatPrice, getLocalizedName } from "@/lib/utils";
 import { useTranslations, useLocale } from "next-intl";
-import { Star, Eye } from "lucide-react";
+import { Star, Eye, Heart } from "lucide-react";
 import { QuickView } from "@/components/product/QuickView";
 import Image from "next/image";
 
@@ -40,6 +41,8 @@ function deterministicRating(productId: string): { rating: number; count: number
 
 export function ProductCard({ product }: { product: Product }) {
   const addItem = useCartStore((s) => s.addItem);
+  const toggleWishlist = useWishlistStore((s) => s.toggle);
+  const wishlisted = useWishlistStore((s) => s.items.some((i) => i.id === product.id));
   const tCommon = useTranslations("common");
   const tProduct = useTranslations("product");
   const locale = useLocale();
@@ -47,6 +50,19 @@ export function ProductCard({ product }: { product: Product }) {
 
   const displayName = getLocalizedName(product, locale);
   const { rating, count } = deterministicRating(product.id);
+
+  const handleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const added = toggleWishlist({
+      id: product.id,
+      slug: product.slug,
+      name: displayName,
+      price: product.price,
+      image: product.image,
+    });
+    toast.success(added ? tProduct("addedToWishlist") : tProduct("removedFromWishlist"));
+  };
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -83,6 +99,20 @@ export function ProductCard({ product }: { product: Product }) {
               </span>
             </div>
           )}
+
+          {/* Wishlist heart — top-left */}
+          <button
+            onClick={handleWishlist}
+            className={`absolute left-3 top-3 flex h-8 w-8 items-center justify-center rounded-lg backdrop-blur-sm transition-all duration-300 ${
+              wishlisted
+                ? "bg-[#C8A97E] text-white opacity-100"
+                : "bg-white/90 text-[#1A1A1A] opacity-0 group-hover:opacity-100 hover:bg-white hover:text-[#C8A97E]"
+            }`}
+            title={wishlisted ? tProduct("removedFromWishlist") : tProduct("addedToWishlist")}
+            aria-label={wishlisted ? tProduct("removedFromWishlist") : tProduct("addedToWishlist")}
+          >
+            <Heart className={`h-4 w-4 ${wishlisted ? "fill-white" : ""}`} />
+          </button>
 
           {/* QuickView eye icon — top-right on hover */}
           {product.inStock !== false && (
