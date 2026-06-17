@@ -25,41 +25,35 @@ export default function AgeGate() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-stone-950/90 via-stone-900/90 to-stone-950/95 backdrop-blur-md">
-      <Card className="relative mx-4 max-w-lg overflow-hidden border-primary/30 bg-stone-900/95 p-8 text-center shadow-2xl">
-        {/* Decorative border */}
-        <div className="pointer-events-none absolute inset-0 rounded-lg border border-primary/20" />
-
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0F0F0F]/95 backdrop-blur-md">
+      <Card className="relative mx-4 max-w-lg overflow-hidden border border-[#2A2A2A] bg-[#1A1A1A] p-8 text-center shadow-2xl">
         {/* Logo */}
         <div className="relative mb-6">
-          <div className="inline-block rounded-xl bg-white/10 p-3 backdrop-blur-sm">
+          <div className="inline-block rounded-xl bg-white/10 p-3">
             <img
               src="/images/logo.png"
               alt="TABACOYA"
               className="h-14 w-auto object-contain"
             />
           </div>
-          <div className="mx-auto mt-2 h-px w-24 bg-gradient-to-r from-transparent via-primary to-transparent" />
         </div>
 
         {/* Warning icon */}
-        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border-2 border-primary/30 bg-primary/10">
-          <svg className="h-8 w-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-          </svg>
+        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border-2 border-[#C8A97E]/40 bg-[#C8A97E]/10">
+          <AlertTriangle className="h-8 w-8 text-[#C8A97E]" strokeWidth={1.5} />
         </div>
 
-        <h2 className="mb-2 font-heading text-xl font-semibold text-stone-100">
+        <h2 className="mb-2 text-xl font-bold text-white">
           {t("title")}
         </h2>
 
-        <p className="mb-6 text-sm text-stone-400">
+        <p className="mb-6 text-sm text-[#bbb]">
           {t("message")}
         </p>
 
         {denied ? (
-          <div className="rounded-lg border border-red-800/30 bg-red-950/30 p-4">
-            <p className="text-sm text-red-300">{t("denyMessage")}</p>
+          <div className="rounded-lg border border-[#3A2A2A] bg-[#2A1A1A] p-4">
+            <p className="text-sm text-[#e8b4b4]">{t("denyMessage")}</p>
           </div>
         ) : (
           <>
@@ -67,7 +61,7 @@ export default function AgeGate() {
               <Button
                 size="lg"
                 onClick={handleConfirm}
-                className="bg-primary text-white hover:bg-primary/90"
+                className="h-12 bg-[#C8A97E] text-[#0F0F0F] font-semibold hover:bg-[#B8956A]"
               >
                 {t("confirm")}
               </Button>
@@ -75,19 +69,19 @@ export default function AgeGate() {
                 size="lg"
                 variant="outline"
                 onClick={handleDeny}
-                className="border-stone-600 text-[#aaa] hover:bg-stone-800"
+                className="h-12 border-[#3A3A3A] bg-[#0F0F0F] text-[#ddd] hover:bg-[#2A2A2A] hover:text-white"
               >
                 {t("deny")}
               </Button>
             </div>
 
-            <p className="text-xs text-stone-500">
+            <p className="text-xs text-[#999]">
               {t("warning")}
             </p>
 
             {/* Legal declarations */}
-            <div className="mt-4 rounded-lg border border-red-800/20 bg-red-950/20 p-3">
-              <ul className="space-y-1 text-left text-xs text-red-300">
+            <div className="mt-4 rounded-lg border border-[#3A3220] bg-[#2A2418] p-3">
+              <ul className="space-y-1 text-left text-xs text-[#d8c9a8]">
                 <li className="flex items-start gap-1.5">
                   <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#C8A97E]" strokeWidth={1.5} />
                   {t("declaration1")}

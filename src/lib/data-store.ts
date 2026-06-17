@@ -66,17 +66,31 @@ function toProduct(row: {
 
 // ===== CATEGORIES =====
 
+// Compute real product counts per category so displayed numbers always
+// match the actual catalog (never a hardcoded inflated figure).
+async function withRealCounts(rows: any[]): Promise<Category[]> {
+  if (rows.length === 0) return [];
+  const grouped = await db.product.groupBy({
+    by: ["categoryId"],
+    _count: { _all: true },
+  });
+  const countMap = new Map<string, number>(
+    grouped.map((g) => [g.categoryId, g._count._all])
+  );
+  return rows.map((r) => toCategory({ ...r, count: countMap.get(r.id) ?? 0 }));
+}
+
 export async function getCategories(): Promise<Category[]> {
   const rows = await db.category.findMany({
     where: { visible: true },
     orderBy: { sortOrder: "asc" },
   });
-  return rows.map(toCategory);
+  return withRealCounts(rows);
 }
 
 export async function getAllCategories(): Promise<Category[]> {
   const rows = await db.category.findMany({ orderBy: { sortOrder: "asc" } });
-  return rows.map(toCategory);
+  return withRealCounts(rows);
 }
 
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {

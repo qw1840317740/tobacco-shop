@@ -7,6 +7,7 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { getCategories, getFeaturedProducts, getProducts } from "@/lib/data-store";
 import { formatPrice } from "@/lib/utils";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
+import { HomeSearch } from "@/components/layout/HomeSearch";
 import { Truck, ShieldCheck, Lock, Package } from "lucide-react";
 
 const HERO_IMAGES = {
@@ -24,17 +25,17 @@ export async function generateMetadata({
     ja: {
       title: "日本製たばこ専門オンラインショップ",
       description:
-        "TABACOYA（タバコ屋）は日本製たばこの専門オンラインショップ。JT国内ブランド・国際ブランド・Ploom加熱たばこなど500銘柄以上を厳選してお届けします。",
+        "TABACOYA（タバコ屋）は日本製たばこの専門オンラインショップ。JT国内ブランド・国際ブランド・Ploom加熱たばこなど厳選した銘柄をお届けします。",
     },
     en: {
       title: "Premium Japanese Cigarettes Online Shop",
       description:
-        "TABACOYA is a specialty online shop for authentic Japanese cigarettes. Browse 500+ curated brands including JT domestic, international, and Ploom heated tobacco.",
+        "TABACOYA is a specialty online shop for authentic Japanese cigarettes. Browse curated brands including JT domestic, international, and Ploom heated tobacco.",
     },
     zh: {
       title: "日本制造香烟专营网店",
       description:
-        "TABACOYA是日本制造香烟的专营网店。精选JT国内品牌、国际品牌、Ploom加热烟等500种以上的优质香烟。",
+        "TABACOYA是日本制造香烟的专营网店。精选JT国内品牌、国际品牌、Ploom加热烟等优质香烟。",
     },
   };
   const d = data[locale] ?? data.ja;
@@ -130,7 +131,7 @@ export default async function HomePage({
             </div>
             <div className="mt-10 grid grid-cols-3 gap-6 border-t border-[#2A2A2A] pt-6">
               <div>
-                <p className="text-2xl font-bold text-[#C8A97E]">500+</p>
+                <p className="text-2xl font-bold text-[#C8A97E]">{allProducts.length}</p>
                 <p className="mt-1 text-[10px] uppercase tracking-wider text-[#999]">{t("statBrands")}</p>
               </div>
               <div>
@@ -186,13 +187,16 @@ export default async function HomePage({
         </div>
       </section>
 
+      {/* ===== HOME SEARCH ===== */}
+      <HomeSearch />
+
       {/* ===== BRAND SHOWCASE ===== */}
-      <section className="py-16 sm:py-20">
+      <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-[1440px] px-6 sm:px-10">
           <h2 className="text-2xl font-bold uppercase tracking-wider text-center text-[#1A1A1A]">{t("brandsTitle")}</h2>
           <p className="mt-2 text-sm text-center text-[#888]">{t("brandsSubtitle")}</p>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-3">
+          <div className="mt-8 grid gap-4 sm:grid-cols-3">
             {(["jt_japan", "jt_international", "ploom"] as const).map((key) => {
               if (!groups[key]) return null;
               const meta = groupMeta[key];
@@ -209,7 +213,7 @@ export default async function HomePage({
             })}
           </div>
 
-          <div className="mt-10">
+          <div className="mt-8">
             <div className="flex items-center justify-between mb-5">
               <span className="text-xs font-bold tracking-wider text-[#888] uppercase">{t("popularBrands")}</span>
               <Link href="/categories" className="text-xs font-medium text-[#C8A97E] hover:underline">{t("viewAll")} &rarr;</Link>
@@ -234,7 +238,7 @@ export default async function HomePage({
       </section>
 
       {/* ===== FEATURED PRODUCTS ===== */}
-      <section className="py-16 sm:py-20 bg-[#F5F5F5]">
+      <section className="py-12 sm:py-16 bg-[#F5F5F5]">
         <div className="mx-auto max-w-[1440px] px-6 sm:px-10">
           <div className="mb-8 flex items-end justify-between">
             <h2 className="text-2xl font-bold uppercase tracking-wider text-[#1A1A1A]">{t("featuredTitle")}</h2>
@@ -268,7 +272,7 @@ export default async function HomePage({
       </section>
 
       {/* ===== EDITORIAL SECTION ===== */}
-      <section className="py-16 sm:py-20">
+      <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-[1440px] px-6 sm:px-10">
           <h2 className="text-2xl font-bold uppercase tracking-wider text-[#1A1A1A]">
             {locale === "en" ? "Buying Guide" : locale === "zh" ? "选购指南" : "購入ガイド"}
@@ -324,7 +328,7 @@ export default async function HomePage({
       </section>
 
       {/* ===== ABOUT SECTION — with background ===== */}
-      <section className="relative py-20 overflow-hidden">
+      <section className="relative py-16 overflow-hidden">
         <Image src={HERO_IMAGES.barn} alt="Tobacco heritage" fill className="object-cover" loading="lazy" sizes="100vw" />
         <div className="absolute inset-0 bg-[#0F0F0F]/90" />
         <div className="relative mx-auto max-w-[1440px] px-6 sm:px-10 text-center">
@@ -349,7 +353,7 @@ export default async function HomePage({
       </section>
 
       {/* ===== NEWSLETTER ===== */}
-      <section className="bg-[#0F0F0F] py-16 border-t border-[#1A1A1A]">
+      <section className="bg-[#0F0F0F] py-14 border-t border-[#1A1A1A]">
         <div className="mx-auto max-w-2xl px-4 text-center sm:px-6">
           <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#888]">Newsletter</span>
           <h2 className="mt-2 text-2xl font-bold uppercase tracking-wider text-white">{t("newsletterTitle")}</h2>

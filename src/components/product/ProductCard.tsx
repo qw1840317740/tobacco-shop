@@ -80,8 +80,11 @@ export function ProductCard({ product }: { product: Product }) {
   const regionLabel = tProduct(`regions.${product.region}`) || product.region;
 
   return (
-    <div className="group relative overflow-hidden rounded-lg bg-white border border-[#E5E5E5] transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
-      <Link href={`/products/${product.slug}`}>
+    <div className="group relative">
+      <Link
+        href={`/products/${product.slug}`}
+        className="block overflow-hidden rounded-lg bg-white border border-[#D4D4D4] shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 hover:border-[#C8A97E]"
+      >
         <div className="relative aspect-[3/4] overflow-hidden bg-[#F5F5F5]">
           <Image
             src={product.image}
@@ -129,59 +132,63 @@ export function ProductCard({ product }: { product: Product }) {
             </button>
           )}
         </div>
-      </Link>
-      <div className="p-4">
-        <div className="flex items-center gap-1.5">
-          {product.code && (
-            <span className="text-[10px] uppercase tracking-wider text-[#888] font-mono">
-              #{product.code}
+        <div className="p-4">
+          <div className="flex items-center gap-1.5">
+            {product.code && (
+              <span className="text-[10px] uppercase tracking-wider text-[#888] font-mono">
+                #{product.code}
+              </span>
+            )}
+            <span className="text-[10px] uppercase tracking-wider text-[#888]">
+              {regionLabel}
             </span>
-          )}
-          <span className="text-[10px] uppercase tracking-wider text-[#888]">
-            {regionLabel}
-          </span>
-        </div>
-        <Link href={`/products/${product.slug}`}>
-          <h3 className="mt-1.5 text-sm font-medium text-[#1A1A1A] line-clamp-1 transition-colors hover:text-[#C8A97E]">
+          </div>
+          <h3 className="mt-1.5 text-sm font-medium text-[#1A1A1A] line-clamp-1 transition-colors group-hover:text-[#C8A97E]">
             {displayName}
           </h3>
-        </Link>
-        {/* Star rating */}
-        <div className="mt-1.5 flex items-center gap-1">
-          <div className="flex items-center">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <Star
-                key={star}
-                className={`h-3 w-3 ${
-                  star <= Math.round(rating)
-                    ? "fill-amber-400 text-amber-400"
-                    : star - 0.5 <= rating
-                      ? "fill-amber-400/50 text-amber-400"
-                      : "fill-stone-200 text-stone-200"
-                }`}
-              />
-            ))}
+          {/* Star rating */}
+          <div className="mt-1.5 flex items-center gap-1">
+            <div className="flex items-center">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <Star
+                  key={star}
+                  className={`h-3 w-3 ${
+                    star <= Math.round(rating)
+                      ? "fill-amber-400 text-amber-400"
+                      : star - 0.5 <= rating
+                        ? "fill-amber-400/50 text-amber-400"
+                        : "fill-stone-200 text-stone-200"
+                  }`}
+                />
+              ))}
+            </div>
+            <span className="text-[10px] font-medium text-[#888]">
+              {rating.toFixed(1)}
+            </span>
+            <span className="text-[10px] text-[#888]">({count})</span>
           </div>
-          <span className="text-[10px] font-medium text-[#888]">
-            {rating.toFixed(1)}
-          </span>
-          <span className="text-[10px] text-[#888]">({count})</span>
+          <div className="mt-2">
+            <span className="text-base font-bold text-[#C8A97E]">
+              {formatPrice(product.price)}
+            </span>
+          </div>
+          {/* Mobile add — in stock only */}
+          {product.inStock !== false && (
+            <button
+              onClick={handleAdd}
+              className="mt-3 w-full rounded-lg bg-[#1A1A1A] py-2 text-xs font-medium text-white uppercase tracking-wider transition-colors hover:bg-[#333] sm:hidden"
+            >
+              {tCommon("addToCart")}
+            </button>
+          )}
+          {/* Out of stock — disabled pill so the bottom isn't empty */}
+          {product.inStock === false && (
+            <span className="mt-3 block w-full rounded-lg border border-[#E5E5E5] bg-[#F5F5F5] py-2 text-center text-xs font-medium uppercase tracking-wider text-[#888]">
+              {tCommon("outOfStock")}
+            </span>
+          )}
         </div>
-        <div className="mt-2">
-          <span className="text-base font-bold text-[#C8A97E]">
-            {formatPrice(product.price)}
-          </span>
-        </div>
-        {/* Mobile add */}
-        {product.inStock !== false && (
-          <button
-            onClick={handleAdd}
-            className="mt-3 w-full rounded-lg bg-[#1A1A1A] py-2 text-xs font-medium text-white uppercase tracking-wider transition-colors hover:bg-[#333] sm:hidden"
-          >
-            {tCommon("addToCart")}
-          </button>
-        )}
-      </div>
+      </Link>
       <QuickView product={product} open={quickViewOpen} onOpenChange={setQuickViewOpen} />
     </div>
   );

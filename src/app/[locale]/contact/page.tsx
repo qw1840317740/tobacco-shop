@@ -118,12 +118,12 @@ export default async function ContactPage({
         <div className="lg:col-span-2 space-y-4">
           <Card className="p-5">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-[#C8A97E]">{t("phoneTitle")}</h3>
-            <p className="mt-3 text-2xl font-bold text-[#1A1A1A]">0120-XXX-XXX</p>
+            <a href="tel:0120000000" className="mt-3 block text-2xl font-bold text-[#1A1A1A] transition-colors hover:text-[#C8A97E]">0120-XXX-XXX</a>
             <p className="mt-1 text-xs text-[#888888]">{t("phoneHours")}</p>
           </Card>
           <Card className="p-5">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-[#C8A97E]">{t("emailTitle")}</h3>
-            <p className="mt-3 text-sm font-medium text-[#1A1A1A]">support@tabacoya.jp</p>
+            <a href="mailto:support@tabacoya.jp" className="mt-3 block text-sm font-medium text-[#1A1A1A] transition-colors hover:text-[#C8A97E]">support@tabacoya.jp</a>
             <p className="mt-1 text-xs text-[#888888]">{t("emailHours")}</p>
           </Card>
           <Card className="p-5">
