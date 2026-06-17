@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { Link } from "@/i18n/navigation";
 import { useAuthStore } from "@/stores/auth-store";
+import { Check, X, FileText } from "lucide-react";
 
 export default function AgeVerificationPage() {
   const user = useAuthStore((s) => s.user);
@@ -112,7 +113,7 @@ export default function AgeVerificationPage() {
         </div>
 
         {docStatus === "approved" && (
-          <p className="mt-3 text-sm text-green-600">✓ 年齢確認が完了しています。お買い物が可能です。</p>
+          <p className="mt-3 flex items-center gap-1.5 text-sm text-green-600"><Check className="h-4 w-4 shrink-0" strokeWidth={1.5} /> 年齢確認が完了しています。お買い物が可能です。</p>
         )}
         {docStatus === "pending" && (
           <p className="mt-3 text-sm text-amber-600">
@@ -121,7 +122,7 @@ export default function AgeVerificationPage() {
         )}
         {docStatus === "rejected" && (
           <div className="mt-3">
-            <p className="text-sm text-red-600">✗ 書類が却下されました。以下の理由を確認し、再提出してください。</p>
+            <p className="flex items-center gap-1.5 text-sm text-red-600"><X className="h-4 w-4 shrink-0" strokeWidth={1.5} /> 書類が却下されました。以下の理由を確認し、再提出してください。</p>
             {rejectReason && (
               <p className="mt-1 text-sm text-red-500 bg-red-50 rounded p-2">却下理由: {rejectReason}</p>
             )}
@@ -173,7 +174,7 @@ export default function AgeVerificationPage() {
             onClick={() => fileRef.current?.click()}
             style={{ cursor: "pointer" }}
           >
-            <div className="text-4xl mb-2">📄</div>
+            <FileText className="mx-auto mb-2 h-10 w-10 text-[#C8A97E]" strokeWidth={1.5} />
             <p className="text-sm text-[#888888]">
               クリックしてファイルを選択、またはドラッグ＆ドロップ
             </p>

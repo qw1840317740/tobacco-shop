@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { toast } from "sonner";
+import { Camera } from "lucide-react";
 
 interface ImageUploaderProps {
   currentImage?: string;
@@ -88,7 +89,7 @@ export function ImageUploader({ currentImage, onUpload, compact }: ImageUploader
           <img src={currentImage} alt="" className="h-full w-full object-cover" />
         ) : (
           <div className="flex h-full items-center justify-center bg-[#F5F5F5] text-[#888888]">
-            <span>📷</span>
+            <Camera className="h-8 w-8" strokeWidth={1.5} />
           </div>
         )}
         <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
@@ -119,7 +120,9 @@ export function ImageUploader({ currentImage, onUpload, compact }: ImageUploader
       {currentImage ? (
         <img src={currentImage} alt="Preview" className="mx-auto h-32 w-32 rounded-lg object-cover" />
       ) : (
-        <div className="text-4xl mb-2">📷</div>
+        <div className="mb-2 flex justify-center">
+          <Camera className="h-8 w-8 text-[#888888]" strokeWidth={1.5} />
+        </div>
       )}
       <p className="mt-2 text-sm text-[#888888]">
         {uploading ? "処理中..." : "クリックまたはドラッグして画像をアップロード"}

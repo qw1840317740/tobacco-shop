@@ -7,6 +7,7 @@ import { getPostBySlug, getLocalizedPost } from "@/lib/blog-data";
 import { routing } from "@/lib/routing";
 import Image from "next/image";
 import type { Metadata } from "next";
+import { AlertTriangle } from "lucide-react";
 
 const SITE_URL = "https://tabacoya.jp";
 
@@ -116,8 +117,8 @@ export default async function BlogArticlePage({
         />
 
         {/* Health warning */}
-        <div className="mt-12 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-800 leading-relaxed">
-          ⚠️ 喫煙は肺癌、脳卒中等の疾病のリスクを高めます。未満20歳の喫煙は法律で禁止されています。 / Smoking increases the risk of lung cancer, stroke, and other diseases.
+        <div className="mt-12 flex items-start gap-1.5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-800 leading-relaxed">
+          <AlertTriangle className="h-4 w-4 shrink-0 text-red-800" strokeWidth={1.5} /> 喫煙は肺癌、脳卒中等の疾病のリスクを高めます。未満20歳の喫煙は法律で禁止されています。 / Smoking increases the risk of lung cancer, stroke, and other diseases.
         </div>
 
         {/* Back to blog */}

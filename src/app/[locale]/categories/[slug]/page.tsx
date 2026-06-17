@@ -9,6 +9,8 @@ import { setRequestLocale } from "next-intl/server";
 import { formatPrice } from "@/lib/utils";
 import { routing } from "@/lib/routing";
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import { Globe, Flame, Package } from "lucide-react";
 
 const SITE_URL = "https://tabacoya.jp";
 
@@ -52,21 +54,21 @@ export async function generateMetadata({
   };
 }
 
-const groupStyles: Record<string, { gradient: string; badge: string; icon: string }> = {
+const groupStyles: Record<string, { gradient: string; badge: string; icon: ReactNode }> = {
   jt_japan: {
     gradient: "",
     badge: "bg-amber-100 text-amber-700",
-    icon: "🇯🇵",
+    icon: <span className="inline-flex h-5 w-5 items-center justify-center rounded-sm border-2 border-current text-[8px] font-bold leading-none">JP</span>,
   },
   jt_international: {
     gradient: "",
     badge: "bg-blue-100 text-blue-700",
-    icon: "🌍",
+    icon: <Globe className="h-5 w-5" strokeWidth={1.5} />,
   },
   ploom: {
     gradient: "",
     badge: "bg-purple-100 text-purple-700",
-    icon: "🔥",
+    icon: <Flame className="h-5 w-5" strokeWidth={1.5} />,
   },
 };
 
@@ -187,7 +189,7 @@ export default async function CategoryPage({
       ) : (
         <div className="mt-12 flex flex-col items-center justify-center py-16 text-center">
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#F5F5F5]">
-            <span className="text-2xl">📦</span>
+            <Package className="h-8 w-8 text-[#C8A97E]" strokeWidth={1.5} />
           </div>
           <h3 className="mt-4 text-lg font-semibold text-[#888888]">{tBrands("comingSoon")}</h3>
           <p className="mt-1 text-sm text-[#888888]">

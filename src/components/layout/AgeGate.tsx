@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useState } from "react";
+import { AlertTriangle } from "lucide-react";
 
 export default function AgeGate() {
   const t = useTranslations("ageGate");
@@ -88,15 +89,15 @@ export default function AgeGate() {
             <div className="mt-4 rounded-lg border border-red-800/20 bg-red-950/20 p-3">
               <ul className="space-y-1 text-left text-xs text-red-300">
                 <li className="flex items-start gap-1.5">
-                  <span className="mt-0.5 text-red-400">⚠</span>
+                  <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#C8A97E]" strokeWidth={1.5} />
                   {t("declaration1")}
                 </li>
                 <li className="flex items-start gap-1.5">
-                  <span className="mt-0.5 text-red-400">⚠</span>
+                  <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#C8A97E]" strokeWidth={1.5} />
                   {t("declaration2")}
                 </li>
                 <li className="flex items-start gap-1.5">
-                  <span className="mt-0.5 text-red-400">⚠</span>
+                  <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#C8A97E]" strokeWidth={1.5} />
                   {t("declaration3")}
                 </li>
               </ul>

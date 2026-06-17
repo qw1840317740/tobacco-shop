@@ -7,6 +7,7 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { getCategories, getFeaturedProducts, getProducts } from "@/lib/data-store";
 import { formatPrice } from "@/lib/utils";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
+import { Truck, ShieldCheck, Lock, Package } from "lucide-react";
 
 const HERO_IMAGES = {
   main: "https://images.unsplash.com/photo-1502389872488-08725e638945?w=1920&q=80",
@@ -137,7 +138,9 @@ export default async function HomePage({
                 <p className="mt-1 text-[10px] uppercase tracking-wider text-[#999]">{t("statAuthentic")}</p>
               </div>
               <div>
-                <p className="text-2xl font-bold text-[#C8A97E]">🇯🇵</p>
+                <p className="text-2xl font-bold text-[#C8A97E]">
+                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-sm border-2 border-[#C8A97E] text-[10px] font-bold text-[#C8A97E]">JP</span>
+                </p>
                 <p className="mt-1 text-[10px] uppercase tracking-wider text-[#999]">{t("statMadeInJapan")}</p>
               </div>
             </div>
@@ -166,13 +169,13 @@ export default async function HomePage({
         <div className="mx-auto max-w-[1440px] px-6 sm:px-10 py-6">
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
             {[
-              { icon: "🚚", title: locale === "en" ? "Free Shipping" : locale === "zh" ? "免费配送" : "送料無料", desc: locale === "en" ? "Orders over ¥5,000" : locale === "zh" ? "订单满¥5,000" : "¥5,000以上" },
-              { icon: "✅", title: locale === "en" ? "100% Authentic" : locale === "zh" ? "正品保障" : "正規品保証", desc: locale === "en" ? "Directly from Japan" : locale === "zh" ? "日本直邮" : "日本直送" },
-              { icon: "🔒", title: locale === "en" ? "Discreet Package" : locale === "zh" ? "隐私包装" : "厳重梱包", desc: locale === "en" ? "Privacy protected" : locale === "zh" ? "保护您的隐私" : "プライバシー保護" },
-              { icon: "📦", title: locale === "en" ? "Fast Delivery" : locale === "zh" ? "快速配送" : "迅速配送", desc: locale === "en" ? "2-5 business days" : locale === "zh" ? "2-5个工作日" : "2〜5営業日" },
+              { icon: <Truck className="h-6 w-6 text-[#1A1A1A]" strokeWidth={1.5} />, title: locale === "en" ? "Free Shipping" : locale === "zh" ? "免费配送" : "送料無料", desc: locale === "en" ? "Orders over ¥5,000" : locale === "zh" ? "订单满¥5,000" : "¥5,000以上" },
+              { icon: <ShieldCheck className="h-6 w-6 text-[#1A1A1A]" strokeWidth={1.5} />, title: locale === "en" ? "100% Authentic" : locale === "zh" ? "正品保障" : "正規品保証", desc: locale === "en" ? "Directly from Japan" : locale === "zh" ? "日本直邮" : "日本直送" },
+              { icon: <Lock className="h-6 w-6 text-[#1A1A1A]" strokeWidth={1.5} />, title: locale === "en" ? "Discreet Package" : locale === "zh" ? "隐私包装" : "厳重梱包", desc: locale === "en" ? "Privacy protected" : locale === "zh" ? "保护您的隐私" : "プライバシー保護" },
+              { icon: <Package className="h-6 w-6 text-[#1A1A1A]" strokeWidth={1.5} />, title: locale === "en" ? "Fast Delivery" : locale === "zh" ? "快速配送" : "迅速配送", desc: locale === "en" ? "2-5 business days" : locale === "zh" ? "2-5个工作日" : "2〜5営業日" },
             ].map((item) => (
               <div key={item.title} className="flex items-center gap-3">
-                <span className="text-2xl">{item.icon}</span>
+                <span className="text-[#1A1A1A]">{item.icon}</span>
                 <div>
                   <p className="text-sm font-bold text-[#1A1A1A]">{item.title}</p>
                   <p className="text-[11px] text-[#888]">{item.desc}</p>

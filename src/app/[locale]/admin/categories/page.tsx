@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { toast } from "sonner";
+import { Tag } from "lucide-react";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
 
@@ -110,7 +111,9 @@ export default function AdminCategoriesPage() {
               {cat.image ? (
                 <img src={cat.image} alt={cat.nameJa} className="h-full w-full object-cover" />
               ) : (
-                <div className="flex h-full items-center justify-center bg-[#F5F5F5] text-[#888888] text-3xl">🏷️</div>
+                <div className="flex h-full items-center justify-center bg-[#F5F5F5] text-[#888888]">
+                  <Tag className="h-8 w-8" strokeWidth={1.5} />
+                </div>
               )}
               <div className="absolute bottom-3 left-3">
                 <h3 className="text-lg font-bold text-white">{cat.nameJa}</h3>

@@ -6,6 +6,7 @@ import { getAllPosts, getLocalizedPost } from "@/lib/blog-data";
 import { routing } from "@/lib/routing";
 import Image from "next/image";
 import type { Metadata } from "next";
+import { PenLine } from "lucide-react";
 
 const SITE_URL = "https://tabacoya.jp";
 
@@ -131,7 +132,7 @@ export default async function BlogPage({
       ) : (
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#F5F5F5]">
-            <span className="text-2xl">📝</span>
+            <PenLine className="h-8 w-8 text-[#C8A97E]" strokeWidth={1.5} />
           </div>
           <p className="mt-4 text-[#888888]">{t("noArticles")}</p>
         </div>

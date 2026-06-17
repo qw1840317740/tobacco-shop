@@ -2,6 +2,7 @@ import { Link } from "@/i18n/navigation";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { routing } from "@/lib/routing";
 import type { Metadata } from "next";
+import { AlertTriangle } from "lucide-react";
 
 const SITE_URL = "https://tabacoya.jp";
 
@@ -68,8 +69,9 @@ export default function AgeVerificationPage() {
             本サイトにアクセスする際、年齢確認ゲートにより20歳以上であることの確認を行っております。「私は法定年齢です」ボタンをクリックすることで、お客様が20歳以上であることを自己申告されたものとみなします。
           </p>
           <div className="mt-3 rounded-lg border-l-4 border-[#C8A97E] bg-[#F5F5F5] p-4">
-            <p className="font-medium text-[#333]">
-              ⚠️ 20歳未満の方は、本サイトを直ちに離脱してください。年齢を詐称してたばこ製品を購入することは法律で禁止されています。
+            <p className="flex items-start gap-2 font-medium text-[#333]">
+              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-[#C8A97E]" strokeWidth={1.5} />
+              <span>20歳未満の方は、本サイトを直ちに離脱してください。年齢を詐称してたばこ製品を購入することは法律で禁止されています。</span>
             </p>
           </div>
         </section>

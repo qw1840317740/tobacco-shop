@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/lib/routing";
 import type { Metadata } from "next";
+import { Tag, Truck, BookOpen } from "lucide-react";
 
 const SITE_URL = "https://tabacoya.jp";
 
@@ -78,22 +79,30 @@ export default async function AboutPage({
           <h2 className="text-lg font-semibold text-[#1A1A1A]">{t("reasonsTitle")}</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <div className="rounded-lg border border-[#E5E5E5] p-5">
-              <div className="text-2xl mb-2">🏷️</div>
+              <div className="mb-2">
+                <Tag className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />
+              </div>
               <h3 className="font-medium text-[#1A1A1A]">{t("reasonAuthentic")}</h3>
               <p className="mt-1 text-xs text-[#888888]">{t("reasonAuthenticDesc")}</p>
             </div>
             <div className="rounded-lg border border-[#E5E5E5] p-5">
-              <div className="text-2xl mb-2">🚚</div>
+              <div className="mb-2">
+                <Truck className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />
+              </div>
               <h3 className="font-medium text-[#1A1A1A]">{t("reasonShipping")}</h3>
               <p className="mt-1 text-xs text-[#888888]">{t("reasonShippingDesc")}</p>
             </div>
             <div className="rounded-lg border border-[#E5E5E5] p-5">
-              <div className="text-2xl mb-2">🇯🇵</div>
+              <div className="mb-2">
+                <span className="inline-flex h-6 w-6 items-center justify-center rounded-sm border-2 border-[#C8A97E] text-[9px] font-bold text-[#C8A97E]">JP</span>
+              </div>
               <h3 className="font-medium text-[#1A1A1A]">{t("reasonJapanese")}</h3>
               <p className="mt-1 text-xs text-[#888888]">{t("reasonJapaneseDesc")}</p>
             </div>
             <div className="rounded-lg border border-[#E5E5E5] p-5">
-              <div className="text-2xl mb-2">📖</div>
+              <div className="mb-2">
+                <BookOpen className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />
+              </div>
               <h3 className="font-medium text-[#1A1A1A]">{t("reasonGuide")}</h3>
               <p className="mt-1 text-xs text-[#888888]">{t("reasonGuideDesc")}</p>
             </div>

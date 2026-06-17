@@ -3,6 +3,7 @@ import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/lib/routing";
 import type { Metadata } from "next";
+import { User, ShieldCheck, Search, ShoppingCart, Package, Landmark, Truck, ClipboardList } from "lucide-react";
 
 const SITE_URL = "https://tabacoya.jp";
 
@@ -49,7 +50,7 @@ export async function generateMetadata({
 
 type Step = {
   n: number;
-  icon: string;
+  icon: React.ReactNode;
   title: string;
   desc: string;
 };
@@ -68,14 +69,14 @@ export default async function GuidePage({
         hero: { title: "How to Shop", subtitle: "A simple step-by-step guide to ordering from TABACOYA." },
         cta: { register: "Create Account", products: "Browse Products", contact: "Contact Us" },
         steps: [
-          { n: 1, icon: "👤", title: "Create an Account", desc: "Register with your email and password. Your shipping address is saved for faster checkout next time." },
-          { n: 2, icon: "🪪", title: "Age Verification", desc: "By law, you must be of legal smoking age. Upload an ID (driver's license, etc.) from your profile. We review it within 1 business day." },
-          { n: 3, icon: "🔍", title: "Find Your Product", desc: "Browse by brand or category, use the search bar, or open Quick View for details. Add items to your cart and choose quantity." },
-          { n: 4, icon: "🛒", title: "Review Your Cart", desc: "Open the cart from the top-right icon. Adjust quantities or remove items. Orders over ¥5,000 ship free." },
-          { n: 5, icon: "📦", title: "Checkout", desc: "Enter your shipping address and select Bank Transfer as the payment method. Confirm your order summary and submit." },
-          { n: 6, icon: "🏦", title: "Bank Transfer Payment", desc: "After ordering, you'll receive our bank account details. Transfer the total within 7 days via ATM, bank counter, or online banking." },
-          { n: 7, icon: "🚚", title: "Shipping", desc: "Once payment is confirmed, your order ships in 1–2 business days. Delivery takes 2–5 business days nationwide." },
-          { n: 8, icon: "📋", title: "Track Your Order", desc: "Check order status anytime from My Page > Orders. You'll see 'pending → paid → shipped → delivered'." },
+          { n: 1, icon: <User className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "Create an Account", desc: "Register with your email and password. Your shipping address is saved for faster checkout next time." },
+          { n: 2, icon: <ShieldCheck className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "Age Verification", desc: "By law, you must be of legal smoking age. Upload an ID (driver's license, etc.) from your profile. We review it within 1 business day." },
+          { n: 3, icon: <Search className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "Find Your Product", desc: "Browse by brand or category, use the search bar, or open Quick View for details. Add items to your cart and choose quantity." },
+          { n: 4, icon: <ShoppingCart className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "Review Your Cart", desc: "Open the cart from the top-right icon. Adjust quantities or remove items. Orders over ¥5,000 ship free." },
+          { n: 5, icon: <Package className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "Checkout", desc: "Enter your shipping address and select Bank Transfer as the payment method. Confirm your order summary and submit." },
+          { n: 6, icon: <Landmark className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "Bank Transfer Payment", desc: "After ordering, you'll receive our bank account details. Transfer the total within 7 days via ATM, bank counter, or online banking." },
+          { n: 7, icon: <Truck className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "Shipping", desc: "Once payment is confirmed, your order ships in 1–2 business days. Delivery takes 2–5 business days nationwide." },
+          { n: 8, icon: <ClipboardList className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "Track Your Order", desc: "Check order status anytime from My Page > Orders. You'll see 'pending → paid → shipped → delivered'." },
         ],
         faqTitle: "Frequently Asked Questions",
         faq: [
@@ -92,14 +93,14 @@ export default async function GuidePage({
         hero: { title: "购物指南", subtitle: "在 TABACOYA 下单的简单分步指南。" },
         cta: { register: "注册账号", products: "浏览商品", contact: "联系我们" },
         steps: [
-          { n: 1, icon: "👤", title: "注册账号", desc: "用邮箱和密码注册。收货地址会保存，下次下单更快捷。" },
-          { n: 2, icon: "🪪", title: "年龄认证", desc: "依法律规定须达法定吸烟年龄。请在个人中心上传身份证件（驾照等），我们会在1个工作日内审核。" },
-          { n: 3, icon: "🔍", title: "挑选商品", desc: "按品牌/分类浏览，用搜索栏查找，或点击「快速查看」看详情。加入购物车并选择数量。" },
-          { n: 4, icon: "🛒", title: "确认购物车", desc: "点右上角购物车图标。可调整数量或移除商品。订单满¥5,000免运费。" },
-          { n: 5, icon: "📦", title: "提交订单", desc: "填写收货地址，选择银行转账付款。确认订单明细后提交。" },
-          { n: 6, icon: "🏦", title: "银行转账", desc: "下单后会收到我们的收款账户。请在7天内通过ATM、银行柜台或网银转账付款。" },
-          { n: 7, icon: "🚚", title: "发货配送", desc: "确认到账后，订单会在1-2个工作日内发出。全国2-5个工作日送达。" },
-          { n: 8, icon: "📋", title: "查询订单", desc: "随时在「我的 > 订单」查看状态：待付款 → 已付款 → 已发货 → 已送达。" },
+          { n: 1, icon: <User className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "注册账号", desc: "用邮箱和密码注册。收货地址会保存，下次下单更快捷。" },
+          { n: 2, icon: <ShieldCheck className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "年龄认证", desc: "依法律规定须达法定吸烟年龄。请在个人中心上传身份证件（驾照等），我们会在1个工作日内审核。" },
+          { n: 3, icon: <Search className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "挑选商品", desc: "按品牌/分类浏览，用搜索栏查找，或点击「快速查看」看详情。加入购物车并选择数量。" },
+          { n: 4, icon: <ShoppingCart className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "确认购物车", desc: "点右上角购物车图标。可调整数量或移除商品。订单满¥5,000免运费。" },
+          { n: 5, icon: <Package className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "提交订单", desc: "填写收货地址，选择银行转账付款。确认订单明细后提交。" },
+          { n: 6, icon: <Landmark className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "银行转账", desc: "下单后会收到我们的收款账户。请在7天内通过ATM、银行柜台或网银转账付款。" },
+          { n: 7, icon: <Truck className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "发货配送", desc: "确认到账后，订单会在1-2个工作日内发出。全国2-5个工作日送达。" },
+          { n: 8, icon: <ClipboardList className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "查询订单", desc: "随时在「我的 > 订单」查看状态：待付款 → 已付款 → 已发货 → 已送达。" },
         ],
         faqTitle: "常见问题",
         faq: [
@@ -115,14 +116,14 @@ export default async function GuidePage({
         hero: { title: "ご利用ガイド", subtitle: "TABACOYAでのお買い物の流れをステップでご案内します。" },
         cta: { register: "会員登録する", products: "商品を見る", contact: "お問い合わせ" },
         steps: [
-          { n: 1, icon: "👤", title: "会員登録", desc: "メールアドレスとパスワードでご登録ください。お届け先は保存され、次回からスムーズにご注文いただけます。" },
-          { n: 2, icon: "🪪", title: "年齢確認", desc: "法律により喫煙可能年齢の確認が必要です。マイページから身分証（運転免許証など）をご提出ください。1営業日以内に審査します。" },
-          { n: 3, icon: "🔍", title: "商品を選ぶ", desc: "ブランドやカテゴリーから探す、検索バーを使う、クイックビューで詳細を見るなど自由に。数量を選んでカートに入れます。" },
-          { n: 4, icon: "🛒", title: "カートを確認", desc: "右上のカートアイコンを開きます。数量の変更や商品の削除ができます。¥5,000以上で送料無料です。" },
-          { n: 5, icon: "📦", title: "ご注文手続き", desc: "お届け先を入力し、お支払い方法を「銀行振込」でお選びください。注文内容をご確認のうえ送信します。" },
-          { n: 6, icon: "🏦", title: "銀行振込でお支払い", desc: "ご注文後、振込先口座情報をお送りします。7日以内にATM・窓口・ネットバンキングで合計金額をお振込みください。" },
-          { n: 7, icon: "🚚", title: "発送・お届け", desc: "入金確認後、1〜2営業日で発送します。全国2〜5営業日でお届けします。" },
-          { n: 8, icon: "📋", title: "注文を確認", desc: "マイページの「注文履歴」でいつでもご確認いただけます（受付中→入金済み→発送済み→配達完了）。" },
+          { n: 1, icon: <User className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "会員登録", desc: "メールアドレスとパスワードでご登録ください。お届け先は保存され、次回からスムーズにご注文いただけます。" },
+          { n: 2, icon: <ShieldCheck className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "年齢確認", desc: "法律により喫煙可能年齢の確認が必要です。マイページから身分証（運転免許証など）をご提出ください。1営業日以内に審査します。" },
+          { n: 3, icon: <Search className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "商品を選ぶ", desc: "ブランドやカテゴリーから探す、検索バーを使う、クイックビューで詳細を見るなど自由に。数量を選んでカートに入れます。" },
+          { n: 4, icon: <ShoppingCart className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "カートを確認", desc: "右上のカートアイコンを開きます。数量の変更や商品の削除ができます。¥5,000以上で送料無料です。" },
+          { n: 5, icon: <Package className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "ご注文手続き", desc: "お届け先を入力し、お支払い方法を「銀行振込」でお選びください。注文内容をご確認のうえ送信します。" },
+          { n: 6, icon: <Landmark className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "銀行振込でお支払い", desc: "ご注文後、振込先口座情報をお送りします。7日以内にATM・窓口・ネットバンキングで合計金額をお振込みください。" },
+          { n: 7, icon: <Truck className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "発送・お届け", desc: "入金確認後、1〜2営業日で発送します。全国2〜5営業日でお届けします。" },
+          { n: 8, icon: <ClipboardList className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} />, title: "注文を確認", desc: "マイページの「注文履歴」でいつでもご確認いただけます（受付中→入金済み→発送済み→配達完了）。" },
         ],
         faqTitle: "よくある質問",
         faq: [
@@ -168,7 +169,7 @@ export default async function GuidePage({
                   <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0F0F0F] text-sm font-bold text-[#C8A97E]">
                     {String(s.n).padStart(2, "0")}
                   </span>
-                  <span className="text-2xl">{s.icon}</span>
+                  {s.icon}
                 </div>
                 <h3 className="mt-4 text-base font-bold text-[#1A1A1A]">{s.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-[#888]">{s.desc}</p>
@@ -182,7 +183,7 @@ export default async function GuidePage({
       <section className="bg-[#F5F5F5] px-6 py-16 sm:px-10">
         <div className="mx-auto max-w-3xl rounded-lg border border-[#E5E5E5] bg-white p-8">
           <div className="flex items-center gap-3">
-            <span className="text-2xl">🏦</span>
+            <Landmark className="h-7 w-7 text-[#1A1A1A]" strokeWidth={1.5} />
             <h2 className="text-xl font-bold uppercase tracking-wider text-[#1A1A1A]">
               {locale === "en" ? "Bank Transfer" : locale === "zh" ? "银行转账付款" : "銀行振込でのお支払い"}
             </h2>

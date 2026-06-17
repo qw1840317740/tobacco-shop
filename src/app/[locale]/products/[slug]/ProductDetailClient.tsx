@@ -12,7 +12,7 @@ import { formatPrice, getLocalizedName } from "@/lib/utils";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { useTranslations, useLocale } from "next-intl";
 import { useRecentlyViewed } from "@/hooks/useRecentlyViewed";
-import { Star, Minus, Plus, Heart } from "lucide-react";
+import { Star, Minus, Plus, Heart, AlertTriangle } from "lucide-react";
 import { ProductCard } from "@/components/product/ProductCard";
 import Image from "next/image";
 
@@ -106,8 +106,8 @@ export function ProductDetailClient({
       <Breadcrumb items={[{ label: tNav("products"), href: "/products" }, { label: displayName }]} />
 
       {/* Health warning banner */}
-      <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-2.5 text-xs text-red-800 leading-relaxed">
-        ⚠️ {product.type === "HEATED" ? tCompliance("healthWarningHeated") : tCompliance("healthWarning")}
+      <div className="mb-6 flex items-start gap-1.5 rounded-lg border border-red-200 bg-red-50 px-4 py-2.5 text-xs text-red-800 leading-relaxed">
+        <AlertTriangle className="h-4 w-4 shrink-0 text-red-800" strokeWidth={1.5} /> {product.type === "HEATED" ? tCompliance("healthWarningHeated") : tCompliance("healthWarning")}
       </div>
 
       {/* Hero image */}

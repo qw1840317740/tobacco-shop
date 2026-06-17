@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
 import { useParams, usePathname } from "next/navigation";
 import { Link } from "@/i18n/navigation";
+import { Package, Tag, ShieldCheck, ClipboardList, Users } from "lucide-react";
 
 interface AdminInfo {
   username: string;
@@ -25,13 +27,13 @@ export default function AdminSidebar({ children }: { children: React.ReactNode }
       .catch(() => {});
   }, []);
 
-  const navItems = [
-    { href: `/${locale}/admin/products`, label: "商品管理", icon: "📦" },
-    { href: `/${locale}/admin/categories`, label: "カテゴリー", icon: "🏷️" },
-    { href: `/${locale}/admin/age-docs`, label: "年齢確認", icon: "🪪" },
-    { href: `/${locale}/admin/orders`, label: "注文管理", icon: "📋" },
+  const navItems: { href: string; label: string; icon: ReactNode }[] = [
+    { href: `/${locale}/admin/products`, label: "商品管理", icon: <Package className="h-5 w-5" strokeWidth={1.5} /> },
+    { href: `/${locale}/admin/categories`, label: "カテゴリー", icon: <Tag className="h-5 w-5" strokeWidth={1.5} /> },
+    { href: `/${locale}/admin/age-docs`, label: "年齢確認", icon: <ShieldCheck className="h-5 w-5" strokeWidth={1.5} /> },
+    { href: `/${locale}/admin/orders`, label: "注文管理", icon: <ClipboardList className="h-5 w-5" strokeWidth={1.5} /> },
     ...(admin?.role === "superadmin"
-      ? [{ href: `/${locale}/admin/users`, label: "管理者", icon: "👥" }]
+      ? [{ href: `/${locale}/admin/users`, label: "管理者", icon: <Users className="h-5 w-5" strokeWidth={1.5} /> as ReactNode }]
       : []),
   ];
 

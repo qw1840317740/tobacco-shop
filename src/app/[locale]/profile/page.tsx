@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { Link } from "@/i18n/navigation";
 import { useAuthStore } from "@/stores/auth-store";
+import { MapPin, Package, Heart } from "lucide-react";
 
 export default function ProfilePage() {
   const user = useAuthStore((s) => s.user);
@@ -197,19 +198,19 @@ export default function ProfilePage() {
       <div className="mt-6 grid gap-3 sm:grid-cols-3">
         <Link href="/profile/addresses">
           <Card className="p-4 hover:bg-[#F5F5F5] transition-colors cursor-pointer">
-            <p className="font-medium text-[#333]">📍 住所管理</p>
+            <p className="flex items-center gap-2 font-medium text-[#333]"><MapPin className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} /> 住所管理</p>
             <p className="text-sm text-[#888888] mt-1">配送先住所の管理</p>
           </Card>
         </Link>
         <Link href="/orders">
           <Card className="p-4 hover:bg-[#F5F5F5] transition-colors cursor-pointer">
-            <p className="font-medium text-[#333]">📦 注文履歴</p>
+            <p className="flex items-center gap-2 font-medium text-[#333]"><Package className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} /> 注文履歴</p>
             <p className="text-sm text-[#888888] mt-1">過去の注文を確認</p>
           </Card>
         </Link>
         <Link href="/wishlist">
           <Card className="p-4 hover:bg-[#F5F5F5] transition-colors cursor-pointer">
-            <p className="font-medium text-[#333]">❤️ お気に入り</p>
+            <p className="flex items-center gap-2 font-medium text-[#333]"><Heart className="h-6 w-6 text-[#C8A97E]" strokeWidth={1.5} /> お気に入り</p>
             <p className="text-sm text-[#888888] mt-1">保存した商品</p>
           </Card>
         </Link>

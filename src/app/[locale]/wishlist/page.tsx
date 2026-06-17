@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { formatPrice, getLocalizedName } from "@/lib/utils";
 import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
+import { Heart } from "lucide-react";
 
 export default function WishlistPage() {
   const items = useWishlistStore((s) => s.items);
@@ -48,7 +49,8 @@ export default function WishlistPage() {
         <p className="mt-8 text-center text-[#888]">{tCommon("loading")}</p>
       ) : items.length === 0 ? (
         <div className="mt-16 text-center">
-          <p className="text-[#888]">{tCommon("wishlistEmpty")}</p>
+          <Heart className="mx-auto h-12 w-12 text-[#E5E5E5]" strokeWidth={1.5} />
+          <p className="mt-4 text-[#888]">{tCommon("wishlistEmpty")}</p>
           <Link href="/products" className="mt-4 inline-block text-[#C8A97E] hover:underline">
             {tCommon("viewProducts")} →
           </Link>

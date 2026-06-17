@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { toast } from "sonner";
+import { Star, X } from "lucide-react";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
 
@@ -205,11 +206,12 @@ export default function AdminProductsPage() {
               {/* Featured badge */}
               <button
                 onClick={() => inlineSave(product.id, "featured", !product.featured)}
-                className={`absolute left-2 top-2 rounded-full px-2 py-0.5 text-[10px] font-bold transition-colors ${
+                className={`absolute left-2 top-2 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold transition-colors ${
                   product.featured ? "bg-[#1A1A1A] text-white" : "bg-[#E5E5E5] text-[#888888] hover:bg-[#E5E5E5]"
                 }`}
               >
-                {product.featured ? "★ おすすめ" : "おすすめ"}
+                {product.featured ? <Star className="h-3 w-3 fill-[#C8A97E] text-[#C8A97E]" /> : <Star className="h-3 w-3" strokeWidth={1.5} />}
+                おすすめ
               </button>
               {/* Stock toggle */}
               <button
@@ -282,7 +284,9 @@ export default function AdminProductsPage() {
           <div className="relative w-full max-w-md overflow-y-auto bg-white shadow-sm">
             <div className="sticky top-0 z-10 flex items-center justify-between border-b bg-white px-6 py-4">
               <h2 className="text-lg font-semibold text-[#1A1A1A]">商品詳細編集</h2>
-              <button onClick={() => setDrawerOpen(false)} className="text-[#888888] hover:text-[#333]">✕</button>
+              <button onClick={() => setDrawerOpen(false)} className="text-[#888888] hover:text-[#333]">
+                <X className="h-4 w-4" strokeWidth={1.5} />
+              </button>
             </div>
             <ProductForm
               form={editForm}

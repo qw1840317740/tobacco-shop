@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { formatPrice } from "@/lib/utils";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import { AlertTriangle, MapPin, Package, Lightbulb } from "lucide-react";
 
 const BANK_INFO = {
   bank: "三菱UFJ銀行",
@@ -333,8 +334,8 @@ export default function CheckoutPage() {
                   {tCheckout("bankTransferInstruction")}
                 </p>
                 <BankInfoCard />
-                <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800 leading-relaxed">
-                  ⚠️ {tCheckout("transferDeadline")}
+                <div className="flex items-start gap-1.5 rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800 leading-relaxed">
+                  <AlertTriangle className="h-4 w-4 shrink-0" strokeWidth={1.5} /> {tCheckout("transferDeadline")}
                 </div>
               </div>
               <div className="mt-6 flex gap-3">
@@ -350,8 +351,8 @@ export default function CheckoutPage() {
               <h2 className="text-lg font-semibold">{tCheckout("orderSummary")}</h2>
 
               {/* Health warning */}
-              <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-800 leading-relaxed">
-                ⚠️ {tCompliance("healthWarning")}
+              <div className="mt-4 flex items-start gap-1.5 rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-800 leading-relaxed">
+                <AlertTriangle className="h-4 w-4 shrink-0" strokeWidth={1.5} /> {tCompliance("healthWarning")}
               </div>
 
               <div className="mt-4 space-y-2 text-sm">
@@ -367,8 +368,8 @@ export default function CheckoutPage() {
               </div>
 
               {/* Address match warning */}
-              <div className="mt-3 rounded-lg border border-amber-200 bg-amber-50 p-2.5 text-xs text-amber-800 leading-relaxed">
-                📍 {tCompliance("addressMatch")}
+              <div className="mt-3 flex items-start gap-1.5 rounded-lg border border-amber-200 bg-amber-50 p-2.5 text-xs text-amber-800 leading-relaxed">
+                <MapPin className="h-4 w-4 shrink-0" strokeWidth={1.5} /> {tCompliance("addressMatch")}
               </div>
 
               <Separator className="my-4" />
@@ -400,8 +401,8 @@ export default function CheckoutPage() {
               </div>
 
               {/* Shipping note */}
-              <div className="mt-3 rounded-lg border border-[#E5E5E5] bg-[#F5F5F5] p-2.5 text-xs text-[#888888] leading-relaxed">
-                📦 {tCompliance("shippingNote")}
+              <div className="mt-3 flex items-start gap-1.5 rounded-lg border border-[#E5E5E5] bg-[#F5F5F5] p-2.5 text-xs text-[#888888] leading-relaxed">
+                <Package className="h-4 w-4 shrink-0" strokeWidth={1.5} /> {tCompliance("shippingNote")}
               </div>
 
               <div className="mt-4 rounded-lg border border-[#E5E5E5] bg-[#F5F5F5] p-3 text-xs text-[#888888]">
@@ -464,7 +465,7 @@ export default function CheckoutPage() {
               </Card>
 
               <div className="rounded-lg border border-[#E5E5E5] bg-[#F5F5F5] p-4 text-xs text-[#888888] leading-relaxed">
-                <p className="font-medium text-[#888888] mb-1">💡 {tCheckout("transferNotesTitle")}</p>
+                <p className="mb-1 flex items-center gap-1.5 font-medium text-[#888888]"><Lightbulb className="h-4 w-4 shrink-0" strokeWidth={1.5} /> {tCheckout("transferNotesTitle")}</p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>{tCheckout("transferNote1")}</li>
                   <li>{tCheckout("transferNote2")}</li>
