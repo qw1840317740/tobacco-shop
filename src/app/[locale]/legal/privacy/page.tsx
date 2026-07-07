@@ -141,9 +141,9 @@ export default function PrivacyPolicyPage() {
             プライバシーポリシーに関するご質問・ご要望は、以下までお問い合わせください。
           </p>
           <div className="mt-3 rounded-lg bg-[#F5F5F5] p-4 text-[#333]">
-            <p>タバコ屋 カスタマーサポート</p>
-            <p>メール：privacy@tabacoya.jp</p>
-            <p>電話：03-XXXX-XXXX（平日 9:00〜18:00）<span className="ml-1 text-[10px] text-[#999]">（※本稼働時に正式な情報を記載します）</span></p>
+            <p>開成産業合同会社 カスタマーサポート</p>
+            <p>メール：kaiseisg@kaiseisg.com</p>
+            <p>電話：049-257-4332（平日 9:00〜18:00）</p>
           </div>
         </section>
       </div>
