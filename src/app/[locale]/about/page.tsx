@@ -116,7 +116,24 @@ export default async function AboutPage({
               <tbody className="divide-y">
                 <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyStoreName")}</th><td className="px-4 py-3">TABACOYA（タバコ屋）</td></tr>
                 <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyOperator")}</th><td className="px-4 py-3">開成産業合同会社</td></tr>
-                <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyAddress")}</th><td className="px-4 py-3">〒354-0015 埼玉県富士見市東みずほ台2-4-16 1F</td></tr>
+                <tr>
+                  <th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyAddress")}</th>
+                  <td className="px-4 py-3">
+                    〒354-0015 埼玉県富士見市東みずほ台2-4-16 1F
+                    <p className="mt-0.5 text-[10px] text-[#999]">{t("companyAddressHint")}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyHeadquarters")}</th>
+                  <td className="px-4 py-3">
+                    〒354-0044 埼玉県入間郡三芳町北永井500-2
+                    <p className="mt-0.5 text-[10px] text-[#999]">{t("companyHeadquartersHint")}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyCorporateNumber")}</th>
+                  <td className="px-4 py-3">1030003010546</td>
+                </tr>
                 <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyEstablished")}</th><td className="px-4 py-3">平成29年7月11日</td></tr>
                 <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyBusiness")}</th><td className="px-4 py-3">{t("specialtyTitle")}</td></tr>
                 <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyEmail")}</th><td className="px-4 py-3">kaiseisg@kaiseisg.com</td></tr>
@@ -135,7 +152,24 @@ export default async function AboutPage({
               <tbody className="divide-y">
                 <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalSeller")}</th><td className="px-4 py-3">開成産業合同会社</td></tr>
                 <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalRepresentative")}</th><td className="px-4 py-3">本田 徳寛</td></tr>
-                <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalAddressLabel")}</th><td className="px-4 py-3">〒354-0015 埼玉県富士見市東みずほ台2-4-16 1F</td></tr>
+                <tr>
+                  <th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalAddressLabel")}</th>
+                  <td className="px-4 py-3">
+                    〒354-0044 埼玉県入間郡三芳町北永井500-2
+                    <p className="mt-0.5 text-[10px] text-[#999]">{t("legalAddressHint")}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalShopAddress")}</th>
+                  <td className="px-4 py-3">
+                    〒354-0015 埼玉県富士見市東みずほ台2-4-16 1F
+                    <p className="mt-0.5 text-[10px] text-[#999]">{t("legalShopAddressHint")}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalCorporateNumber")}</th>
+                  <td className="px-4 py-3">1030003010546</td>
+                </tr>
                 <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalPhoneNumber")}</th><td className="px-4 py-3">049-257-4332</td></tr>
                 <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalEmailLabel")}</th><td className="px-4 py-3">kaiseisg@kaiseisg.com</td></tr>
                 <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalUrl")}</th><td className="px-4 py-3">https://tabacoya.jp</td></tr>
