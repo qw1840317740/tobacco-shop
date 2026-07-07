@@ -11,7 +11,12 @@ export function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
   const t = useTranslations("nav");
 
   return (
-    <nav className="mb-6 flex items-center gap-1.5 bg-[#F5F5F5] border border-[#E5E5E5] rounded-lg px-4 py-2.5 text-sm">
+    <nav
+      // Sticky just below the global header. z-30 keeps it above product
+      // cards/images; backdrop-blur + translucent bg lets the user see
+      // content scrolling behind it without obscuring it.
+      className="sticky top-16 z-30 mb-6 flex items-center gap-1.5 rounded-lg border border-[#E5E5E5] bg-white/95 px-4 py-2.5 text-sm shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/80"
+    >
       <Link href="/" className="flex items-center gap-1 text-[#888] transition-colors hover:text-[#C8A97E]">
         <Home className="h-3.5 w-3.5" />
         <span className="hidden sm:inline">{t("home")}</span>
