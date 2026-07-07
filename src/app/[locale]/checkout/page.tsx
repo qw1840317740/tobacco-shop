@@ -15,11 +15,14 @@ import { useTranslations } from "next-intl";
 import { AlertTriangle, MapPin, Package, Lightbulb } from "lucide-react";
 
 const BANK_INFO = {
-  bank: "三菱UFJ銀行",
-  branch: "丸の内支店",
+  bank: "三井住友銀行",
+  branch: "志木ニュータウン支店",
   type: "普通",
-  number: "1234567",
-  name: "タバコショップ　カ",
+  number: "0833358",
+  name: "カイセイサンギョウ(ド",
+  swift: "SMBCJPJT",
+  branchCode: "354",
+  bankCode: "0009",
 };
 
 interface AppliedCoupon {
