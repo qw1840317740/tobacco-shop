@@ -1,31 +1,70 @@
-import { createHmac, timingSafeEqual } from "crypto";
+// Stateless admin session — uses Web Crypto (works in both Node 18+ and Edge runtime).
+// Token format: base64(json{adminId,username,role,iat}).hex(hmac-sha256)
 
-// Stateless session — no file storage needed (works on Vercel)
-// Token format: base64(json{adminId,username,role,iat}).hmacSignature
+const enc = new TextEncoder();
+const SESSION_SECRET =
+  process.env.SESSION_SECRET || "tabacoya-session-secret-key-2026-dev-only";
 
-const SESSION_SECRET = process.env.SESSION_SECRET;
-if (!SESSION_SECRET) {
-  console.warn("[WARN] SESSION_SECRET is not set. Using insecure default. Set SESSION_SECRET in .env for production.");
+let keyPromise: Promise<CryptoKey> | null = null;
+function getKey(): Promise<CryptoKey> {
+  if (!keyPromise) {
+    keyPromise = crypto.subtle.importKey(
+      "raw",
+      enc.encode(SESSION_SECRET),
+      { name: "HMAC", hash: "SHA-256" },
+      false,
+      ["sign", "verify"]
+    );
+  }
+  return keyPromise;
 }
-const SECRET = SESSION_SECRET || "tabacoya-session-secret-key-2026-dev-only";
 
-function sign(data: string): string {
-  return createHmac("sha256", SECRET).update(data).digest("hex");
+function bytesToHex(buf: ArrayBuffer): string {
+  const bytes = new Uint8Array(buf);
+  let out = "";
+  for (let i = 0; i < bytes.length; i++) {
+    out += bytes[i].toString(16).padStart(2, "0");
+  }
+  return out;
 }
 
-export function createSession(admin: {
+async function sign(data: string): Promise<string> {
+  const key = await getKey();
+  const sig = await crypto.subtle.sign("HMAC", key, enc.encode(data));
+  return bytesToHex(sig);
+}
+
+function b64encode(s: string): string {
+  if (typeof btoa === "function") return btoa(unescape(encodeURIComponent(s)));
+  // @ts-ignore
+  return Buffer.from(s, "utf-8").toString("base64");
+}
+
+function b64decode<T = unknown>(s: string): T | null {
+  try {
+    // @ts-ignore
+    const json = typeof Buffer !== "undefined"
+      ? Buffer.from(s, "base64").toString("utf-8")
+      : decodeURIComponent(escape(atob(s)));
+    return JSON.parse(json) as T;
+  } catch {
+    return null;
+  }
+}
+
+export async function createSession(admin: {
   id: string;
   username: string;
   role: string;
-}): { token: string; cookieString: string } {
+}): Promise<{ token: string; cookieString: string }> {
   const payload = JSON.stringify({
     adminId: admin.id,
     username: admin.username,
     role: admin.role,
     iat: Date.now(),
   });
-  const encoded = Buffer.from(payload).toString("base64");
-  const signature = sign(encoded);
+  const encoded = b64encode(payload);
+  const signature = await sign(encoded);
   const token = `${encoded}.${signature}`;
   return {
     token,
@@ -33,9 +72,9 @@ export function createSession(admin: {
   };
 }
 
-export function verifySession(
+export async function verifySession(
   cookieHeader: string | null
-): { adminId: string; username: string; role: string } | null {
+): Promise<{ adminId: string; username: string; role: string } | null> {
   if (!cookieHeader) return null;
   const token = parseCookie(cookieHeader, "admin_session");
   if (!token) return null;
@@ -44,34 +83,21 @@ export function verifySession(
   if (parts.length !== 2) return null;
 
   const [encoded, signature] = parts;
-  const expected = sign(encoded);
+  const expected = await sign(encoded);
+  if (expected.length !== signature.length) return null;
+  if (expected !== signature) return null;
 
-  // Timing-safe comparison to prevent timing attacks
-  try {
-    const sigBuf = Buffer.from(signature);
-    const expBuf = Buffer.from(expected);
-    if (sigBuf.length !== expBuf.length) return null;
-    if (!timingSafeEqual(sigBuf, expBuf)) return null;
-  } catch {
-    return null;
-  }
-
-  try {
-    const payload = JSON.parse(Buffer.from(encoded, "base64").toString("utf-8"));
-    // Check token age (24 hours max)
-    if (Date.now() - payload.iat > 86400000) return null;
-    return {
-      adminId: payload.adminId,
-      username: payload.username,
-      role: payload.role,
-    };
-  } catch {
-    return null;
-  }
+  const payload = b64decode<{ adminId: string; username: string; role: string; iat: number }>(encoded);
+  if (!payload) return null;
+  if (Date.now() - payload.iat > 86400000) return null;
+  return {
+    adminId: payload.adminId,
+    username: payload.username,
+    role: payload.role,
+  };
 }
 
 export function destroySession(_cookieHeader: string | null): string | null {
-  // Stateless — just return something (cookie gets deleted by Set-Cookie header)
   return "destroyed";
 }
 
@@ -89,7 +115,6 @@ function parseCookie(header: string, name: string): string | null {
   return null;
 }
 
-// Backward compatibility — existing API routes use this
-export function isAdminAuthenticated(cookieHeader: string | null): boolean {
-  return verifySession(cookieHeader) !== null;
+export async function isAdminAuthenticated(cookieHeader: string | null): Promise<boolean> {
+  return (await verifySession(cookieHeader)) !== null;
 }

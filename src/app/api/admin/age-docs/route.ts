@@ -3,7 +3,7 @@ import { verifySession } from "@/lib/admin-auth";
 import { listAllAgeDocs, approveAgeDoc, rejectAgeDoc } from "@/lib/user-store";
 
 export async function GET(request: NextRequest) {
-  const adminSession = verifySession(request.headers.get("cookie"));
+  const adminSession = await verifySession(request.headers.get("cookie"));
   if (!adminSession) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-  const adminSession = verifySession(request.headers.get("cookie"));
+  const adminSession = await verifySession(request.headers.get("cookie"));
   if (!adminSession) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

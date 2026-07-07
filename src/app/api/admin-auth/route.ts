@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { cookieString } = createSession(admin);
+    const { cookieString } = await createSession(admin);
     return NextResponse.json(
       { success: true, admin: { id: admin.id, username: admin.username, role: admin.role } },
       { headers: { "Set-Cookie": cookieString } }
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  const session = verifySession(request.headers.get("cookie"));
+  const session = await verifySession(request.headers.get("cookie"));
   if (!session) {
     return NextResponse.json({ authenticated: false }, { status: 401 });
   }

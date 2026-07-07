@@ -8,7 +8,7 @@ function hashPassword(password: string): string {
 }
 
 export async function PUT(request: NextRequest) {
-  const session = verifyUserSession(request.headers.get("cookie"));
+  const session = await verifyUserSession(request.headers.get("cookie"));
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

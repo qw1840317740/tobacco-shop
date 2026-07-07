@@ -6,7 +6,7 @@ const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 export async function POST(request: NextRequest) {
-  const session = verifyUserSession(request.headers.get("cookie"));
+  const session = await verifyUserSession(request.headers.get("cookie"));
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  const session = verifyUserSession(request.headers.get("cookie"));
+  const session = await verifyUserSession(request.headers.get("cookie"));
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

@@ -13,7 +13,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  if (!isAdminAuthenticated(request.headers.get("cookie"))) {
+  if (!await isAdminAuthenticated(request.headers.get("cookie"))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   try {
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-  if (!isAdminAuthenticated(request.headers.get("cookie"))) {
+  if (!await isAdminAuthenticated(request.headers.get("cookie"))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   try {
@@ -49,7 +49,7 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  if (!isAdminAuthenticated(request.headers.get("cookie"))) {
+  if (!await isAdminAuthenticated(request.headers.get("cookie"))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   try {

@@ -6,7 +6,7 @@ import { getProductBySlug } from "@/lib/data-store";
 import { validateCoupon } from "@/lib/coupon-store";
 
 export async function POST(request: NextRequest) {
-  const session = verifyUserSession(request.headers.get("cookie"));
+  const session = await verifyUserSession(request.headers.get("cookie"));
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  const session = verifyUserSession(request.headers.get("cookie"));
+  const session = await verifyUserSession(request.headers.get("cookie"));
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

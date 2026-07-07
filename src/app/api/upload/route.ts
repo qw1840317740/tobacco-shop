@@ -5,7 +5,7 @@ const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const MAX_SIZE = 5 * 1024 * 1024; // 5MB
 
 export async function POST(request: NextRequest) {
-  if (!isAdminAuthenticated(request.headers.get("cookie"))) {
+  if (!await isAdminAuthenticated(request.headers.get("cookie"))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

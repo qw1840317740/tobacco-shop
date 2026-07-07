@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 
 // Admin only — list all subscribers
 export async function GET(request: NextRequest) {
-  if (!isAdminAuthenticated(request.headers.get("cookie"))) {
+  if (!await isAdminAuthenticated(request.headers.get("cookie"))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   try {

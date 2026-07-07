@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifySession } from "@/lib/admin-auth";
 import { listAdmins, createAdmin, deleteAdmin, resetPassword } from "@/lib/admin-store";
 
-function checkSuperAdmin(request: NextRequest): boolean {
-  const session = verifySession(request.headers.get("cookie"));
+async function checkSuperAdmin(request: NextRequest): Promise<boolean> {
+  const session = await verifySession(request.headers.get("cookie"));
   return session?.role === "superadmin";
 }
 

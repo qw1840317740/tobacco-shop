@@ -37,7 +37,7 @@ function isCrawler(ua: string | null): boolean {
   return CRAWLER_PATTERNS.some((pattern) => ua.includes(pattern));
 }
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const localeMatch = pathname.match(/^\/(en|ja|zh)/);
   const locale = localeMatch ? localeMatch[1] : routing.defaultLocale;
@@ -60,7 +60,7 @@ export function middleware(request: NextRequest) {
       return intlMiddleware(request);
     }
     // Check session
-    const session = verifySession(request.headers.get("cookie"));
+    const session = await verifySession(request.headers.get("cookie"));
     if (!session) {
       const url = request.nextUrl.clone();
       url.pathname = `/${locale}/admin/login`;
@@ -74,7 +74,7 @@ export function middleware(request: NextRequest) {
   const isLoginPage = pathname.includes("/login");
   const isRegisterPage = pathname.includes("/register");
   if (userProtectedMatch) {
-    const userSession = verifyUserSession(request.headers.get("cookie"));
+    const userSession = await verifyUserSession(request.headers.get("cookie"));
     if (!userSession) {
       const url = request.nextUrl.clone();
       url.pathname = `/${locale}/login`;

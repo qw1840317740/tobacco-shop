@@ -3,7 +3,7 @@ import { verifyUserSession } from "@/lib/user-auth";
 import { db } from "@/lib/db";
 
 export async function GET(request: NextRequest) {
-  const session = verifyUserSession(request.headers.get("cookie"));
+  const session = await verifyUserSession(request.headers.get("cookie"));
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const session = verifyUserSession(request.headers.get("cookie"));
+  const session = await verifyUserSession(request.headers.get("cookie"));
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-  const session = verifyUserSession(request.headers.get("cookie"));
+  const session = await verifyUserSession(request.headers.get("cookie"));
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -115,7 +115,7 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  const session = verifyUserSession(request.headers.get("cookie"));
+  const session = await verifyUserSession(request.headers.get("cookie"));
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

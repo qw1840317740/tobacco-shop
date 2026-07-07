@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { cookieString } = createUserSession(user);
+    const { cookieString } = await createUserSession(user);
     const profile = {
       id: user.id,
       email: user.email,
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  const session = verifyUserSession(request.headers.get("cookie"));
+  const session = await verifyUserSession(request.headers.get("cookie"));
   if (!session) {
     return NextResponse.json({ authenticated: false }, { status: 401 });
   }
