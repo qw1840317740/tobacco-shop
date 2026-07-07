@@ -343,13 +343,6 @@ export default async function HomePage({
               <p className="text-3xl font-bold text-[#C8A97E]">{allProducts.length}</p>
               <p className="mt-1 text-[10px] uppercase tracking-wider text-[#999]">{t("statBrands")}</p>
             </div>
-            <p className="mt-4 text-[10px] text-[#777] leading-relaxed">
-              {locale === "en"
-                ? "Product count is the only metric we display — we don't make claims we can't verify."
-                : locale === "zh"
-                ? "我们仅展示可验证的商品数量,不作其他未经证实的声明。"
-                : "商品数のみ表示しており、検証できない数値は記載しておりません。"}
-            </p>
           </div>
         </div>
       </section>
