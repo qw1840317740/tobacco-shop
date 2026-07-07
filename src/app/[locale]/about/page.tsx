@@ -134,7 +134,7 @@ export default async function AboutPage({
             <table className="w-full text-left text-sm">
               <tbody className="divide-y">
                 <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalSeller")}</th><td className="px-4 py-3">開成産業合同会社</td></tr>
-                <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalRepresentative")}</th><td className="px-4 py-3">[代表者名]<span className="ml-2 text-[10px] text-[#999]">（※本稼働時に正式な情報を記載します）</span></td></tr>
+                <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalRepresentative")}</th><td className="px-4 py-3">本田 徳寛</td></tr>
                 <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalAddressLabel")}</th><td className="px-4 py-3">〒354-0015 埼玉県富士見市東みずほ台2-4-16 1F</td></tr>
                 <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalPhoneNumber")}</th><td className="px-4 py-3">049-257-4332</td></tr>
                 <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalEmailLabel")}</th><td className="px-4 py-3">kaiseisg@kaiseisg.com</td></tr>
