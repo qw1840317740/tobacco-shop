@@ -67,7 +67,11 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <div className="flex min-h-screen flex-col overflow-x-hidden">
+      {/* No overflow-x-hidden here — it would create a scroll container and
+          break `position: sticky` on the breadcrumb (and any other sticky
+          child). Horizontal overflow is prevented per-section (the home
+          announcement marquee is the main culprit; it has its own clip). */}
+      <div className="flex min-h-screen flex-col">
         <OrganizationJsonLd />
         <Header />
         <main className="flex-1 bg-white pb-16 sm:pb-0">
