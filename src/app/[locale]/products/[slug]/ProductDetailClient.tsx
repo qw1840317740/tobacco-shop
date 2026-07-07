@@ -105,13 +105,10 @@ export function ProductDetailClient({
     <div className="mx-auto max-w-3xl px-6 py-8 sm:px-10">
       <Breadcrumb items={[{ label: tNav("products"), href: "/products" }, { label: displayName }]} />
 
-      {/* Health warning banner */}
-      <div className="mb-6 flex items-start gap-1.5 rounded-lg border border-red-200 bg-red-50 px-4 py-2.5 text-xs text-red-800 leading-relaxed">
-        <AlertTriangle className="h-4 w-4 shrink-0 text-red-800" strokeWidth={1.5} /> {product.type === "HEATED" ? tCompliance("healthWarningHeated") : tCompliance("healthWarning")}
-      </div>
-
-      {/* Hero image */}
-      <div className="relative w-full aspect-square overflow-hidden rounded-lg bg-[#F5F5F5]">
+      {/* Hero image — health warning overlay occupies the bottom 20% (≥15% of the image area)
+          per Japanese tobacco compliance convention; uses compliance strings from
+          messages/*.json. Pointer-events disabled so the underlying image stays clickable. */}
+      <div className="relative mb-6 w-full aspect-square overflow-hidden rounded-lg bg-[#F5F5F5]">
         <Image
           src={product.image}
           alt={displayName}
@@ -120,6 +117,16 @@ export function ProductDetailClient({
           priority
           sizes="(max-width: 768px) 100vw, 768px"
         />
+        <div
+          role="note"
+          aria-label={tCompliance("healthWarning")}
+          className="pointer-events-none absolute inset-x-0 bottom-0 flex h-[20%] items-center justify-center gap-2 bg-red-600/95 px-4 py-2 text-center text-[11px] font-semibold leading-tight text-white sm:text-xs md:text-sm"
+        >
+          <AlertTriangle className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" strokeWidth={2} />
+          <span className="line-clamp-3">
+            {product.type === "HEATED" ? tCompliance("healthWarningHeated") : tCompliance("healthWarning")}
+          </span>
+        </div>
       </div>
 
       {/* Product info below */}
