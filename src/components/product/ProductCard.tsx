@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useCartStore } from "@/stores/cart-store";
 import { useWishlistStore } from "@/stores/wishlist-store";
+import { useUIStore } from "@/stores/ui-store";
 import { Link } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { formatPrice, getLocalizedName } from "@/lib/utils";
@@ -53,14 +54,22 @@ export function ProductCard({ product }: { product: Product }) {
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addItem({
+    const r = addItem({
       productId: product.id,
       slug: product.slug,
       name: displayName,
       price: product.price,
       image: product.image,
+      inStock: product.inStock !== false,
     });
+    if (!r.ok) {
+      if (r.reason === "out_of_stock") toast.error("在庫切れです");
+      else if (r.reason === "exceeds_max") toast.error(tCommon("cartMaxReached") || "数量の上限に達しました");
+      else toast.error("カートに追加できませんでした");
+      return;
+    }
     toast.success(tCommon("addedToCartToast", { name: displayName, qty: 1 }));
+    useUIStore.getState().setCartOpen(true);
   };
 
   const regionLabel = tProduct(`regions.${product.region}`) || product.region;

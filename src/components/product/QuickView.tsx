@@ -2,6 +2,7 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { useCartStore } from "@/stores/cart-store";
+import { useUIStore } from "@/stores/ui-store";
 import { formatPrice, getLocalizedName } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -48,15 +49,23 @@ export function QuickView({ product, open, onOpenChange }: QuickViewProps) {
   const typeLabel = tProduct(`types.${product.type}`) || product.type;
 
   const handleAdd = () => {
-    addItem({
+    const r = addItem({
       productId: product.id,
       slug: product.slug,
       name: displayName,
       price: product.price,
       image: product.image,
+      inStock: product.inStock !== false,
     });
+    if (!r.ok) {
+      if (r.reason === "out_of_stock") toast.error("在庫切れです");
+      else if (r.reason === "exceeds_max") toast.error(tCommon("cartMaxReached") || "数量の上限に達しました");
+      else toast.error("カートに追加できませんでした");
+      return;
+    }
     toast.success(tCommon("addedToCartToast", { name: displayName, qty: 1 }));
     onOpenChange(false);
+    useUIStore.getState().setCartOpen(true);
   };
 
   return (

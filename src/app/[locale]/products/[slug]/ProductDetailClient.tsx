@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "@/i18n/navigation";
 import { useCartStore } from "@/stores/cart-store";
 import { useWishlistStore } from "@/stores/wishlist-store";
+import { useUIStore } from "@/stores/ui-store";
 import { toast } from "sonner";
 import { formatPrice, getLocalizedName } from "@/lib/utils";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
@@ -61,15 +62,23 @@ export function ProductDetailClient({
   }, [product.id, addRecentlyViewed]);
 
   const handleAdd = () => {
-    addItem({
+    const r = addItem({
       productId: product.id,
       slug: product.slug,
       name: displayName,
       price: product.price,
       image: product.image,
       quantity: qty,
+      inStock: product.inStock !== false,
     });
+    if (!r.ok) {
+      if (r.reason === "out_of_stock") toast.error("在庫切れです");
+      else if (r.reason === "exceeds_max") toast.error("数量の上限に達しました");
+      else toast.error("カートに追加できませんでした");
+      return;
+    }
     toast.success(tCommon("addedToCartToast", { name: displayName, qty }));
+    useUIStore.getState().setCartOpen(true);
   };
 
   const handleWishlistToggle = () => {
