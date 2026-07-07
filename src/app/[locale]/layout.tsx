@@ -24,9 +24,9 @@ export async function generateMetadata({
     zh: "日本制造香烟专营网店",
   };
   const descriptions: Record<string, string> = {
-    ja: "日本製たばこの専門オンラインショップ。JTをはじめ国内全メーカーの厳選した500銘柄以上のプレミアムたばこを全国にお届けします。",
-    en: "Specialty online shop for premium Japanese cigarettes. Curated selection of 500+ authentic brands from JT and domestic manufacturers.",
-    zh: "日本制造香烟的专营网店。精选JT等国内全品牌500种以上的优质香烟，配送到全国各地。",
+    ja: "日本製たばこの専門オンラインショップ。JTをはじめ国内メーカーの厳選した本物のたばこを全国にお届けします。",
+    en: "Specialty online shop for Japanese cigarettes. Curated authentic selection from JT and domestic manufacturers.",
+    zh: "日本制造香烟的专营网店。精选JT等国内品牌的正品香烟，配送到全国各地。",
   };
 
   const languages: Record<string, string> = {};

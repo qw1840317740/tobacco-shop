@@ -18,17 +18,17 @@ export async function generateMetadata({
     ja: {
       title: "当店について",
       description:
-        "TABACOYA（タバコ屋）は日本製たばこの専門オンラインショップ。2001年設立、500銘柄以上のプレミアムたばこを正規品として全国にお届けします。",
+        "TABACOYA（タバコ屋）は日本製たばこの専門オンラインショップ。JTをはじめ国内メーカーの本物のたばこを正規品として全国にお届けします。",
     },
     en: {
       title: "About Us",
       description:
-        "TABACOYA is a specialty online shop for authentic Japanese cigarettes. Established in 2001, we deliver 500+ premium brands across Japan with guaranteed authenticity.",
+        "TABACOYA is a specialty online shop for authentic Japanese cigarettes. We deliver genuine, JT-sourced and domestically produced tobacco across Japan.",
     },
     zh: {
       title: "关于我们",
       description:
-        "TABACOYA是日本制造香烟的专营网店。成立于2001年，以正品保证向全国配送500种以上的优质香烟。",
+        "TABACOYA是日本制造香烟的专营网店。以正品保证向全国配送JT及国内品牌的真品香烟。",
     },
   };
   const d = data[locale] ?? data.ja;
@@ -117,7 +117,7 @@ export default async function AboutPage({
                 <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyStoreName")}</th><td className="px-4 py-3">TABACOYA（タバコ屋）</td></tr>
                 <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyOperator")}</th><td className="px-4 py-3">TABACOYA 株式会社</td></tr>
                 <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyAddress")}</th><td className="px-4 py-3">〒354-0015 埼玉県富士見市東みずほ台2-4-16 1F</td></tr>
-                <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyEstablished")}</th><td className="px-4 py-3">2001</td></tr>
+                <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyEstablished")}</th><td className="px-4 py-3">[<span className="text-[10px] text-[#999]">※本稼働時に正式な情報を記載します</span>]</td></tr>
                 <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyBusiness")}</th><td className="px-4 py-3">{t("specialtyTitle")}</td></tr>
                 <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyEmail")}</th><td className="px-4 py-3">info@tabacoya.jp</td></tr>
                 <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyPhone")}</th><td className="px-4 py-3">03-XXXX-XXXX（平日 9:00〜18:00）<span className="ml-2 text-[10px] text-[#999]">（※本稼働時に正式な情報を記載します）</span></td></tr>

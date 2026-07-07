@@ -12,7 +12,6 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Star } from "lucide-react";
 import Image from "next/image";
 
 interface Product {
@@ -32,19 +31,6 @@ interface Product {
   nicotine?: number;
 }
 
-function deterministicRating(productId: string): { rating: number; count: number } {
-  let hash = 0;
-  for (let i = 0; i < productId.length; i++) {
-    const char = productId.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash |= 0;
-  }
-  hash = Math.abs(hash);
-  const rating = 3.5 + (hash % 15) / 10;
-  const count = 8 + (hash % 93);
-  return { rating: Math.round(rating * 10) / 10, count };
-}
-
 interface QuickViewProps {
   product: Product;
   open: boolean;
@@ -58,7 +44,6 @@ export function QuickView({ product, open, onOpenChange }: QuickViewProps) {
   const locale = useLocale();
 
   const displayName = getLocalizedName(product, locale);
-  const { rating, count } = deterministicRating(product.id);
   const regionLabel = tProduct(`regions.${product.region}`) || product.region;
   const typeLabel = tProduct(`types.${product.type}`) || product.type;
 
@@ -115,27 +100,8 @@ export function QuickView({ product, open, onOpenChange }: QuickViewProps) {
               {displayName}
             </h3>
 
-            {/* Rating */}
-            <div className="mt-2 flex items-center gap-1">
-              <div className="flex items-center">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <Star
-                    key={star}
-                    className={`h-3.5 w-3.5 ${
-                      star <= Math.round(rating)
-                        ? "fill-amber-400 text-amber-400"
-                        : star - 0.5 <= rating
-                          ? "fill-amber-400/50 text-amber-400"
-                          : "fill-stone-200 text-stone-200"
-                    }`}
-                  />
-                ))}
-              </div>
-              <span className="text-xs font-medium text-[#888]">
-                {rating.toFixed(1)}
-              </span>
-              <span className="text-xs text-[#888]">({count})</span>
-            </div>
+            {/* No reviews yet — only real customer reviews are displayed */}
+            <p className="mt-2 text-xs text-[#888]">{tProduct("noReviewsShort")}</p>
 
             {/* Price */}
             <div className="mt-2">

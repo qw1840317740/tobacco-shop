@@ -19,7 +19,7 @@ export async function generateMetadata({
     ja: {
       title: "商品一覧",
       description:
-        "日本製たばこ500銘柄以上の商品一覧。JT国内ブランド・国際ブランド・Ploom加熱たばこを幅広く取り揃えています。",
+        "日本製たばこの商品一覧。JT国内ブランド・国際ブランド・Ploom加熱たばこを取り揃えています。",
     },
     en: {
       title: "All Products",

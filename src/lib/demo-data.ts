@@ -3,7 +3,7 @@ export const DEMO_PRODUCTS = [
     id: "1", slug: "seven-stars", name: "Seven Stars", price: 6.50, comparePrice: 8.00,
     image: "https://upload.wikimedia.org/wikipedia/en/6/69/Sevenstars.jpg",
     type: "CIGARETTE", region: "Japan", inStock: true, strength: 4,
-    desc: "JT人気ブランド。1969年発売の日本を代表するプレミアムたばこ。豊かで深い味わい。",
+    desc: "1969年発売のJTを代表する銘柄。豊かで深い味わい。",
   },
   {
     id: "2", slug: "caster", name: "Caster", price: 5.50, comparePrice: 7.00,
@@ -27,7 +27,7 @@ export const DEMO_PRODUCTS = [
     id: "5", slug: "lark", name: "Lark", price: 6.50, comparePrice: 8.00,
     image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/LARK_Black_Label.JPG/800px-LARK_Black_Label.JPG",
     type: "CIGARETTE", region: "Japan", inStock: true, strength: 4,
-    desc: "日本での知名度が高いプレミアムブランド。深みのある豊かな味わい。",
+    desc: "日本国内で知名度の高い銘柄。深みのある味わい。",
   },
   {
     id: "6", slug: "parliament", name: "Parliament", price: 7.00,
@@ -57,7 +57,7 @@ export const DEMO_PRODUCTS = [
     id: "10", slug: "natural-american-spirit", name: "Natural American Spirit", price: 7.50, comparePrice: 9.00,
     image: "https://upload.wikimedia.org/wikipedia/en/7/7a/NASlogo.png",
     type: "CIGARETTE", region: "Japan", inStock: true, strength: 4,
-    desc: "100%オーガニックタバコ葉を使用。添加物不使用の自然派ブランド。",
+    desc: "添加物を極力抑えた、自然派志向のアメリカンブランド。",
   },
   {
     id: "11", slug: "cabin", name: "Cabin", price: 5.00,

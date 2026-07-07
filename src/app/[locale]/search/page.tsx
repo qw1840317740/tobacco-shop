@@ -14,7 +14,7 @@ export async function generateMetadata({
     ja: {
       title: "商品検索",
       description:
-        "TABACOYAの商品検索。日本製たばこ500銘柄以上からお好みのたばこをお探しください。",
+        "TABACOYAの商品検索。日本製たばこのラインナップからお好みのたばこをお探しください。",
     },
     en: {
       title: "Search Products",

@@ -94,10 +94,10 @@ export default async function HomePage({
 
   // Announcement messages
   const announcements = locale === "en"
-    ? ["Shipping paid by buyer (tobacco law)", "100% authentic Japanese products", "Discreet packaging for all orders"]
+    ? ["Shipping paid by buyer (tobacco law)", "Authorized distribution", "Discreet packaging for all orders"]
     : locale === "zh"
-    ? ["运费由购买者承担（烟草法律规定）", "100%日本正品保障", "所有订单隐私包装"]
-    : ["送料は購入者負担（たばこ事業法）", "100%正規品保証", "すべてのご注文を厳重に梱包"];
+    ? ["运费由购买者承担（烟草法律规定）", "正规渠道采购", "所有订单隐私包装"]
+    : ["送料は購入者負担（たばこ事業法）", "正規ルートで仕入れ", "すべてのご注文を厳重に梱包"];
 
   return (
     <div>
@@ -115,7 +115,7 @@ export default async function HomePage({
         </div>
         <div className="flex items-center bg-[#0F0F0F] px-8 py-12 lg:px-16 lg:py-0">
           <div className="max-w-lg">
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#C8A97E]">Est. 2001 · Japan</span>
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#C8A97E]">Japan</span>
             <h1 className="mt-4 text-4xl font-bold text-white tracking-tight sm:text-5xl">
               {t("heroTitle")}
               <br />
@@ -130,14 +130,10 @@ export default async function HomePage({
                 {t("heroCtaGuide")}
               </Link>
             </div>
-            <div className="mt-10 grid grid-cols-3 gap-6 border-t border-[#2A2A2A] pt-6">
+            <div className="mt-10 grid grid-cols-2 gap-6 border-t border-[#2A2A2A] pt-6">
               <div>
                 <p className="text-2xl font-bold text-[#C8A97E]">{allProducts.length}</p>
                 <p className="mt-1 text-[10px] uppercase tracking-wider text-[#999]">{t("statBrands")}</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-[#C8A97E]">100%</p>
-                <p className="mt-1 text-[10px] uppercase tracking-wider text-[#999]">{t("statAuthentic")}</p>
               </div>
               <div>
                 <p className="text-2xl font-bold text-[#C8A97E]">
@@ -178,7 +174,7 @@ export default async function HomePage({
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
             {[
               { icon: <Truck className="h-6 w-6 text-[#1A1A1A]" strokeWidth={1.5} />, title: locale === "en" ? "Buyer-Pays Shipping" : locale === "zh" ? "运费买家承担" : "購入者負担", desc: locale === "en" ? "Required by tobacco law" : locale === "zh" ? "烟草法规定" : "たばこ事業法" },
-              { icon: <ShieldCheck className="h-6 w-6 text-[#1A1A1A]" strokeWidth={1.5} />, title: locale === "en" ? "100% Authentic" : locale === "zh" ? "正品保障" : "正規品保証", desc: locale === "en" ? "Directly from Japan" : locale === "zh" ? "日本直邮" : "日本直送" },
+              { icon: <ShieldCheck className="h-6 w-6 text-[#1A1A1A]" strokeWidth={1.5} />, title: locale === "en" ? "Authorized" : locale === "zh" ? "正规渠道" : "正規ルート", desc: locale === "en" ? "Sourced from JT" : locale === "zh" ? "JT直采" : "JT直送" },
               { icon: <Lock className="h-6 w-6 text-[#1A1A1A]" strokeWidth={1.5} />, title: locale === "en" ? "Discreet Package" : locale === "zh" ? "隐私包装" : "厳重梱包", desc: locale === "en" ? "Privacy protected" : locale === "zh" ? "保护您的隐私" : "プライバシー保護" },
               { icon: <Package className="h-6 w-6 text-[#1A1A1A]" strokeWidth={1.5} />, title: locale === "en" ? "Fast Delivery" : locale === "zh" ? "快速配送" : "迅速配送", desc: locale === "en" ? "2-5 business days" : locale === "zh" ? "2-5个工作日" : "2〜5営業日" },
             ].map((item) => (
@@ -342,19 +338,18 @@ export default async function HomePage({
           <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#C8A97E]">About Us</span>
           <h2 className="mt-2 text-2xl font-bold uppercase tracking-wider text-white">{t("aboutTitle")}</h2>
           <p className="mx-auto mt-3 max-w-2xl text-[#888] leading-relaxed text-sm">{t("aboutDescription")}</p>
-          <div className="mt-10 grid grid-cols-3 gap-8 max-w-lg mx-auto">
+          <div className="mt-10 grid grid-cols-1 gap-6 max-w-md mx-auto">
             <div>
-              <p className="text-3xl font-bold text-[#C8A97E]">20+</p>
-              <p className="mt-1 text-[10px] uppercase tracking-wider text-[#999]">{locale === "en" ? "Years" : locale === "zh" ? "年历史" : "年の歴史"}</p>
+              <p className="text-3xl font-bold text-[#C8A97E]">{allProducts.length}</p>
+              <p className="mt-1 text-[10px] uppercase tracking-wider text-[#999]">{t("statBrands")}</p>
             </div>
-            <div>
-              <p className="text-3xl font-bold text-[#C8A97E]">50K+</p>
-              <p className="mt-1 text-[10px] uppercase tracking-wider text-[#999]">{locale === "en" ? "Customers" : locale === "zh" ? "客户信赖" : "お客様"}</p>
-            </div>
-            <div>
-              <p className="text-3xl font-bold text-[#C8A97E]">4.8</p>
-              <p className="mt-1 text-[10px] uppercase tracking-wider text-[#999]">{locale === "en" ? "Rating" : locale === "zh" ? "好评评分" : "評価"}</p>
-            </div>
+            <p className="mt-4 text-[10px] text-[#777] leading-relaxed">
+              {locale === "en"
+                ? "Product count is the only metric we display — we don't make claims we can't verify."
+                : locale === "zh"
+                ? "我们仅展示可验证的商品数量,不作其他未经证实的声明。"
+                : "商品数のみ表示しており、検証できない数値は記載しておりません。"}
+            </p>
           </div>
         </div>
       </section>

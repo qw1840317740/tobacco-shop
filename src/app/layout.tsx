@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     default: "TABACOYA（タバコ屋） - Premium Japanese Cigarettes",
   },
   description:
-    "日本製たばこの専門オンラインショップ。JTをはじめ国内全メーカーの厳選した500銘柄以上のプレミアムたばこを全国にお届けします。",
+    "日本製たばこの専門オンラインショップ。JTをはじめ国内メーカーの厳選した本物のたばこを全国にお届けします。",
   metadataBase: new URL("https://tabacoya.jp"),
   openGraph: {
     type: "website",

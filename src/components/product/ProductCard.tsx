@@ -26,19 +26,6 @@ interface Product {
   desc?: string;
 }
 
-function deterministicRating(productId: string): { rating: number; count: number } {
-  let hash = 0;
-  for (let i = 0; i < productId.length; i++) {
-    const char = productId.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash |= 0;
-  }
-  hash = Math.abs(hash);
-  const rating = 3.5 + (hash % 15) / 10;
-  const count = 8 + (hash % 93);
-  return { rating: Math.round(rating * 10) / 10, count };
-}
-
 export function ProductCard({ product }: { product: Product }) {
   const addItem = useCartStore((s) => s.addItem);
   const toggleWishlist = useWishlistStore((s) => s.toggle);
@@ -49,7 +36,6 @@ export function ProductCard({ product }: { product: Product }) {
   const [quickViewOpen, setQuickViewOpen] = useState(false);
 
   const displayName = getLocalizedName(product, locale);
-  const { rating, count } = deterministicRating(product.id);
 
   const handleWishlist = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -146,27 +132,8 @@ export function ProductCard({ product }: { product: Product }) {
           <h3 className="mt-1.5 text-sm font-medium text-[#1A1A1A] line-clamp-1 transition-colors group-hover:text-[#C8A97E]">
             {displayName}
           </h3>
-          {/* Star rating */}
-          <div className="mt-1.5 flex items-center gap-1">
-            <div className="flex items-center">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <Star
-                  key={star}
-                  className={`h-3 w-3 ${
-                    star <= Math.round(rating)
-                      ? "fill-amber-400 text-amber-400"
-                      : star - 0.5 <= rating
-                        ? "fill-amber-400/50 text-amber-400"
-                        : "fill-stone-200 text-stone-200"
-                  }`}
-                />
-              ))}
-            </div>
-            <span className="text-[10px] font-medium text-[#888]">
-              {rating.toFixed(1)}
-            </span>
-            <span className="text-[10px] text-[#888]">({count})</span>
-          </div>
+          {/* No reviews yet — only show real customer reviews, never fabricated ones */}
+          <p className="mt-1.5 text-[10px] text-[#888]">{tProduct("noReviewsShort")}</p>
           <div className="mt-2">
             <span className="text-base font-bold text-[#C8A97E]">
               {formatPrice(product.price)}

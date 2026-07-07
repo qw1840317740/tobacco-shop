@@ -12,7 +12,7 @@ import { formatPrice, getLocalizedName } from "@/lib/utils";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { useTranslations, useLocale } from "next-intl";
 import { useRecentlyViewed } from "@/hooks/useRecentlyViewed";
-import { Star, Minus, Plus, Heart, AlertTriangle } from "lucide-react";
+import { Minus, Plus, Heart, AlertTriangle } from "lucide-react";
 import { ProductCard } from "@/components/product/ProductCard";
 import Image from "next/image";
 
@@ -32,19 +32,6 @@ interface Product {
   tar: number;
   nicotine: number;
   desc: string;
-}
-
-function deterministicRating(productId: string): { rating: number; count: number } {
-  let hash = 0;
-  for (let i = 0; i < productId.length; i++) {
-    const char = productId.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash |= 0;
-  }
-  hash = Math.abs(hash);
-  const rating = 3.5 + (hash % 15) / 10;
-  const count = 8 + (hash % 93);
-  return { rating: Math.round(rating * 10) / 10, count };
 }
 
 export function ProductDetailClient({
@@ -68,7 +55,6 @@ export function ProductDetailClient({
   const displayName = getLocalizedName(product, locale);
   const regionLabel = tProduct(`regions.${product.region}`) || product.region;
   const typeLabel = tProduct(`types.${product.type}`) || product.type;
-  const { rating, count } = deterministicRating(product.id);
 
   useEffect(() => {
     addRecentlyViewed(product.id);
@@ -149,25 +135,8 @@ export function ProductDetailClient({
           {displayName}
         </h1>
 
-        {/* Star rating */}
-        <div className="mt-3 flex items-center gap-2">
-          <div className="flex items-center">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <Star
-                key={star}
-                className={`h-5 w-5 ${
-                  star <= Math.round(rating)
-                    ? "fill-amber-400 text-amber-400"
-                    : star - 0.5 <= rating
-                      ? "fill-amber-400/50 text-amber-400"
-                      : "fill-stone-200 text-stone-200"
-                }`}
-              />
-            ))}
-          </div>
-          <span className="text-sm font-semibold text-[#1A1A1A]">{rating.toFixed(1)}</span>
-          <span className="text-sm text-[#888]">({count} {tProduct("reviews")})</span>
-        </div>
+        {/* No reviews yet — only real customer reviews are displayed */}
+        <p className="mt-3 text-sm text-[#888]">{tProduct("noReviewsShort")}</p>
 
         <div className="mt-3">
           <span className="text-3xl font-bold text-[#C8A97E]">
