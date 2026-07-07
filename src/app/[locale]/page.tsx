@@ -94,10 +94,10 @@ export default async function HomePage({
 
   // Announcement messages
   const announcements = locale === "en"
-    ? ["Free shipping on orders over ¥5,000", "100% authentic Japanese products", "Discreet packaging for all orders"]
+    ? ["Shipping paid by buyer (tobacco law)", "100% authentic Japanese products", "Discreet packaging for all orders"]
     : locale === "zh"
-    ? ["订单满¥5,000免运费", "100%日本正品保障", "所有订单隐私包装"]
-    : ["¥5,000以上で送料無料", "100%正規品保証", "すべてのご注文を厳重に梱包"];
+    ? ["运费由购买者承担（烟草法律规定）", "100%日本正品保障", "所有订单隐私包装"]
+    : ["送料は購入者負担（たばこ事業法）", "100%正規品保証", "すべてのご注文を厳重に梱包"];
 
   return (
     <div>
@@ -177,7 +177,7 @@ export default async function HomePage({
         <div className="mx-auto max-w-[1440px] px-6 sm:px-10 py-6">
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
             {[
-              { icon: <Truck className="h-6 w-6 text-[#1A1A1A]" strokeWidth={1.5} />, title: locale === "en" ? "Free Shipping" : locale === "zh" ? "免费配送" : "送料無料", desc: locale === "en" ? "Orders over ¥5,000" : locale === "zh" ? "订单满¥5,000" : "¥5,000以上" },
+              { icon: <Truck className="h-6 w-6 text-[#1A1A1A]" strokeWidth={1.5} />, title: locale === "en" ? "Buyer-Pays Shipping" : locale === "zh" ? "运费买家承担" : "購入者負担", desc: locale === "en" ? "Required by tobacco law" : locale === "zh" ? "烟草法规定" : "たばこ事業法" },
               { icon: <ShieldCheck className="h-6 w-6 text-[#1A1A1A]" strokeWidth={1.5} />, title: locale === "en" ? "100% Authentic" : locale === "zh" ? "正品保障" : "正規品保証", desc: locale === "en" ? "Directly from Japan" : locale === "zh" ? "日本直邮" : "日本直送" },
               { icon: <Lock className="h-6 w-6 text-[#1A1A1A]" strokeWidth={1.5} />, title: locale === "en" ? "Discreet Package" : locale === "zh" ? "隐私包装" : "厳重梱包", desc: locale === "en" ? "Privacy protected" : locale === "zh" ? "保护您的隐私" : "プライバシー保護" },
               { icon: <Package className="h-6 w-6 text-[#1A1A1A]" strokeWidth={1.5} />, title: locale === "en" ? "Fast Delivery" : locale === "zh" ? "快速配送" : "迅速配送", desc: locale === "en" ? "2-5 business days" : locale === "zh" ? "2-5个工作日" : "2〜5営業日" },

@@ -69,6 +69,17 @@ export function validateCoupon(
     };
   }
 
+  // Tobacco Business Act Article 36: shipping fees must be paid by the buyer —
+  // never waive shipping. Reject any free_shipping coupon.
+  if (coupon.type === "free_shipping") {
+    return {
+      valid: false,
+      discount: 0,
+      type: null,
+      message: "Promo code unavailable (tobacco shipping law)",
+    };
+  }
+
   if (coupon.oneTime && usedCoupons.includes(coupon.code)) {
     return {
       valid: false,
@@ -87,9 +98,7 @@ export function validateCoupon(
     case "fixed":
       discount = coupon.value;
       break;
-    case "free_shipping":
-      discount = shippingFee;
-      break;
+    // "free_shipping" is rejected above — never reaches here
   }
 
   return {

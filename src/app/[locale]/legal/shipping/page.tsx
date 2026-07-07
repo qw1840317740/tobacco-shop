@@ -15,17 +15,17 @@ export async function generateMetadata({
     ja: {
       title: "配送ポリシー",
       description:
-        "TABACOYAの配送ポリシー。日本国内の送料、お届け日数、配送状況の確認についてご説明します。5,000円以上で送料無料。",
+        "TABACOYAの配送ポリシー。日本国内の送料、お届け日数、配送状況の確認についてご説明します。たばこ事業法第36条により、送料はご注文金額にかかわらず購入者負担となります。",
     },
     en: {
       title: "Shipping Policy",
       description:
-        "TABACOYA shipping policy. Learn about domestic shipping fees, delivery times, and order tracking. Free shipping on orders over ¥5,000.",
+        "TABACOYA shipping policy. Learn about domestic shipping fees, delivery times, and order tracking. Per Japan's Tobacco Business Act (Article 36), shipping fees are paid by the buyer regardless of order amount.",
     },
     zh: {
       title: "配送政策",
       description:
-        "TABACOYA配送政策。了解日本国内运费、送达时间和配送状态确认。满5,000日元免运费。",
+        "TABACOYA配送政策。了解日本国内运费、送达时间和配送状态确认。根据日本《烟草事业法》第36条，运费由购买者承担，不因订单金额免除。",
     },
   };
   const d = data[locale] ?? data.ja;
@@ -85,9 +85,9 @@ export default function ShippingPolicyPage() {
                   <td className="px-4 py-3 text-[#888888]">-</td>
                 </tr>
                 <tr className="bg-[#F5F5F5]">
-                  <td className="px-4 py-3 font-medium">5,000円以上のご注文</td>
-                  <td className="px-4 py-3 font-medium text-[#C8A97E]">無料</td>
-                  <td className="px-4 py-3 text-[#888888]">全国対象</td>
+                  <td className="px-4 py-3 font-medium" colSpan={3}>
+                    ※ たばこ事業法第36条により、送料はご注文金額にかかわらず購入者負担となります。ご注文1回ごとに上記送料が発生します。
+                  </td>
                 </tr>
               </tbody>
             </table>

@@ -45,7 +45,9 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const shippingFee = subtotal >= 5000 ? 0 : 500; // Free shipping over ¥5000
+    // Tobacco Business Act Article 36: shipping fees must be paid by the buyer
+    // regardless of order amount — no free-shipping threshold.
+    const shippingFee = 600;
     const tax = Math.floor(subtotal * 0.1); // 10% tax
 
     // Apply coupon if provided (server-side validation)
