@@ -88,6 +88,42 @@ export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
     const { name, phone, birthdate } = body;
+
+    // Server-side validation — defense in depth
+    if (typeof name === "string" && name.trim().length < 2) {
+      return NextResponse.json(
+        { error: "氏名は2文字以上で入力してください" },
+        { status: 400 }
+      );
+    }
+    if (phone !== undefined && phone !== null && phone !== "") {
+      if (typeof phone !== "string" || !/^[\d\-\s]+$/.test(phone) || phone.replace(/\D/g, "").length < 10) {
+        return NextResponse.json(
+          { error: "電話番号の形式が正しくありません" },
+          { status: 400 }
+        );
+      }
+    }
+    if (birthdate) {
+      const dt = new Date(birthdate);
+      if (isNaN(dt.getTime()) || dt > new Date()) {
+        return NextResponse.json(
+          { error: "正しい生年月日を入力してください" },
+          { status: 400 }
+        );
+      }
+      const today = new Date();
+      let age = today.getFullYear() - dt.getFullYear();
+      const m = today.getMonth() - dt.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < dt.getDate())) age--;
+      if (age < 20) {
+        return NextResponse.json(
+          { error: "20歳未満の方はご利用いただけません" },
+          { status: 400 }
+        );
+      }
+    }
+
     const profile = await updateUserProfile(session.userId, { name, phone, birthdate });
     if (!profile) {
       return NextResponse.json({ error: "Update failed" }, { status: 500 });
