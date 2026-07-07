@@ -8,7 +8,7 @@ import { getCategories, getFeaturedProducts, getProducts } from "@/lib/data-stor
 import { formatPrice } from "@/lib/utils";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
 import { HomeSearch } from "@/components/layout/HomeSearch";
-import { Truck, ShieldCheck, Lock, Package } from "lucide-react";
+import { Truck, ShieldCheck, Lock, Package, AlertTriangle } from "lucide-react";
 
 const HERO_IMAGES = {
   main: "https://images.unsplash.com/photo-1502389872488-08725e638945?w=1920&q=80",
@@ -55,6 +55,7 @@ export default async function HomePage({
   setRequestLocale(locale);
   const t = await getTranslations("home");
   const tBrands = await getTranslations("brands");
+  const tCompliance = await getTranslations("compliance");
 
   const [categories, featuredProducts, allProducts] = await Promise.all([
     getCategories(),
@@ -150,6 +151,12 @@ export default async function HomePage({
       </section>
 
       {/* ===== ANNOUNCEMENT BAR — Scrolling ===== */}
+      {/* Site-wide health warning band — required on every page that displays tobacco.
+          TIOJ compliance: must occupy ≥15% of the visible above-the-fold area. */}
+      <div role="note" aria-label={tCompliance("healthWarning")} className="flex items-center justify-center gap-2 bg-red-600 px-4 py-3 text-center text-[11px] font-semibold leading-snug text-white sm:text-xs">
+        <AlertTriangle className="h-4 w-4 shrink-0" strokeWidth={2} />
+        <span>{tCompliance("healthWarning")}</span>
+      </div>
       <div className="bg-[#0F0F0F] py-2.5 text-center border-t border-[#2A2A2A] overflow-hidden">
         <div className="flex animate-[scroll_18s_linear_infinite] whitespace-nowrap" style={{ willChange: "transform" }}>
           {[0, 1].map((i) => (

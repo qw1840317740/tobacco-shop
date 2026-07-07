@@ -116,11 +116,11 @@ export default async function AboutPage({
               <tbody className="divide-y">
                 <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyStoreName")}</th><td className="px-4 py-3">TABACOYA（タバコ屋）</td></tr>
                 <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyOperator")}</th><td className="px-4 py-3">TABACOYA 株式会社</td></tr>
-                <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyAddress")}</th><td className="px-4 py-3">〒100-0001 東京都千代田区千代田1-1</td></tr>
+                <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyAddress")}</th><td className="px-4 py-3">〒354-0015 埼玉県富士見市東みずほ台2-4-16 1F</td></tr>
                 <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyEstablished")}</th><td className="px-4 py-3">2001</td></tr>
                 <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyBusiness")}</th><td className="px-4 py-3">{t("specialtyTitle")}</td></tr>
                 <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyEmail")}</th><td className="px-4 py-3">info@tabacoya.jp</td></tr>
-                <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyPhone")}</th><td className="px-4 py-3">0120-XXX-XXX（平日 9:00〜18:00）</td></tr>
+                <tr><th className="w-32 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("companyPhone")}</th><td className="px-4 py-3">03-XXXX-XXXX（平日 9:00〜18:00）<span className="ml-2 text-[10px] text-[#999]">（※本稼働時に正式な情報を記載します）</span></td></tr>
               </tbody>
             </table>
           </div>
@@ -132,9 +132,9 @@ export default async function AboutPage({
             <table className="w-full text-left text-sm">
               <tbody className="divide-y">
                 <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalSeller")}</th><td className="px-4 py-3">TABACOYA 株式会社</td></tr>
-                <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalRepresentative")}</th><td className="px-4 py-3">山田 太郎</td></tr>
-                <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalAddressLabel")}</th><td className="px-4 py-3">東京都千代田区千代田1-1</td></tr>
-                <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalPhoneNumber")}</th><td className="px-4 py-3">0120-XXX-XXX</td></tr>
+                <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalRepresentative")}</th><td className="px-4 py-3">[代表者名]<span className="ml-2 text-[10px] text-[#999]">（※本稼働時に正式な情報を記載します）</span></td></tr>
+                <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalAddressLabel")}</th><td className="px-4 py-3">〒354-0015 埼玉県富士見市東みずほ台2-4-16 1F</td></tr>
+                <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalPhoneNumber")}</th><td className="px-4 py-3">03-XXXX-XXXX<span className="ml-2 text-[10px] text-[#999]">（※本稼働時に正式な情報を記載します）</span></td></tr>
                 <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalEmailLabel")}</th><td className="px-4 py-3">info@tabacoya.jp</td></tr>
                 <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalUrl")}</th><td className="px-4 py-3">https://tabacoya.jp</td></tr>
                 <tr><th className="w-40 bg-[#F5F5F5] px-4 py-3 font-medium text-[#1A1A1A]">{t("legalPrice")}</th><td className="px-4 py-3">{t("legalPriceNote")}</td></tr>

@@ -7,7 +7,7 @@ import { getLocalizedName, formatPrice } from "@/lib/utils";
 import type { Product, Category } from "@/lib/data-store";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
-import { Search, Grid3X3, List, SlidersHorizontal, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { Search, Grid3X3, List, SlidersHorizontal, ChevronLeft, ChevronRight, X, AlertTriangle } from "lucide-react";
 
 const ITEMS_PER_PAGE = 12;
 
@@ -21,6 +21,7 @@ interface ProductsClientProps {
 
 export function ProductsClient({ products, categories }: ProductsClientProps) {
   const t = useTranslations("products");
+  const tCompliance = useTranslations("compliance");
   const locale = useLocale();
 
   const [search, setSearch] = useState("");
@@ -137,6 +138,13 @@ export function ProductsClient({ products, categories }: ProductsClientProps) {
 
   return (
     <div>
+      {/* Site-wide health warning band — TIOJ compliance: required on any page
+          that displays tobacco products. Occupies ≥15% of the visible area. */}
+      <div role="note" aria-label={tCompliance("healthWarning")} className="mb-6 flex items-center justify-center gap-2 rounded-lg bg-red-600 px-4 py-3 text-center text-[11px] font-semibold leading-snug text-white sm:text-xs">
+        <AlertTriangle className="h-4 w-4 shrink-0" strokeWidth={2} />
+        <span>{tCompliance("healthWarning")}</span>
+      </div>
+
       {/* Filter bar */}
       <div className="mb-6 rounded-lg border border-[#E5E5E5] bg-white">
         {/* Mobile filter toggle */}
