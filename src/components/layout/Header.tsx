@@ -1,7 +1,7 @@
 "use client";
 
-import { Link, usePathname, useRouter } from "@/i18n/navigation";
-import { useTranslations, useLocale } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useCartStore } from "@/stores/cart-store";
@@ -25,8 +25,6 @@ export default function Header() {
   const t = useTranslations("common");
   const tNav = useTranslations("nav");
   const pathname = usePathname();
-  const locale = useLocale();
-  const router = useRouter();
   const setCartOpen = useUIStore((s) => s.setCartOpen);
 
   const navItems = [
@@ -92,23 +90,6 @@ export default function Header() {
             <CartBadge />
           </Button>
 
-          {/* Language switcher */}
-          <div className="hidden sm:flex items-center">
-            {(["en", "ja", "zh"] as const).map((loc, i) => (
-              <button
-                key={loc}
-                onClick={() => router.replace(pathname || "/", { locale: loc })}
-                className={`px-1.5 py-1 text-[10px] font-medium uppercase tracking-wider transition-colors ${
-                  locale === loc
-                    ? "text-[#1A1A1A]"
-                    : "text-[#888] hover:text-[#1A1A1A]"
-                }`}
-              >
-                {loc.toUpperCase()}
-              </button>
-            ))}
-          </div>
-
           {/* Mobile menu */}
           <Sheet>
             <SheetTrigger className="lg:hidden inline-flex size-9 items-center justify-center rounded-lg outline-none transition-colors hover:bg-[#F5F5F5]">
@@ -131,11 +112,6 @@ export default function Header() {
                 ))}
                 <div className="my-3 border-t border-[#E5E5E5]" />
                 <Link href="/search" className="px-3 py-2.5 text-xs font-medium uppercase tracking-[0.1em] text-[#888] hover:text-[#1A1A1A]">{t("search")}</Link>
-                <div className="flex gap-3 px-3 py-2.5">
-                  <Link href={pathname || "/"} locale="en" className="text-[10px] font-medium uppercase tracking-wider text-[#888] hover:text-[#1A1A1A]">EN</Link>
-                  <Link href={pathname || "/"} locale="ja" className="text-[10px] font-medium uppercase tracking-wider text-[#888] hover:text-[#1A1A1A]">JA</Link>
-                  <Link href={pathname || "/"} locale="zh" className="text-[10px] font-medium uppercase tracking-wider text-[#888] hover:text-[#1A1A1A]">ZH</Link>
-                </div>
               </nav>
             </SheetContent>
           </Sheet>

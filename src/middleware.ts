@@ -39,8 +39,19 @@ function isCrawler(ua: string | null): boolean {
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const localeMatch = pathname.match(/^\/(en|ja|zh)/);
-  const locale = localeMatch ? localeMatch[1] : routing.defaultLocale;
+
+  // Force every request onto the Japanese locale: /en/* and /zh/* are 301'd
+  // to /ja/*. The site is now mono-language (Japanese-only) — see
+  // src/lib/routing.ts.
+  const legacyLocaleMatch = pathname.match(/^\/(en|zh)(\/|$)/);
+  if (legacyLocaleMatch) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/ja${pathname.slice(3)}` || "/ja";
+    return NextResponse.redirect(url, 301);
+  }
+
+  const localeMatch = pathname.match(/^\/ja/);
+  const locale = localeMatch ? "ja" : routing.defaultLocale;
 
   // Skip for API routes, static files, _next
   if (
